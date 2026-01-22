@@ -193,8 +193,8 @@ console.log(surround.value)
             </div>
           </template>
         </UAccordion> -->
-        <MDC :value="`![Image](${project.thumbnail})`"></MDC>
-        <!-- <NuxtImg :src="project.thumbnail" class="rounded" :zoom="true"/> -->
+        <!-- <MDC :value="`![Image](${project.thumbnail})`"></MDC> -->
+        <NuxtImg :src="project.thumbnail" class="rounded"/>
         <ContentRenderer :value="projectContent"/>
         <!-- <UContentSurround></UContentSurround> -->
         <UContentSurround :surround="surround">

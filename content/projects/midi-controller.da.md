@@ -3,6 +3,8 @@
 This is Foo blog post.
 Proident exercitation duis occaecat nostrud voluptate irure anim officia qui. Nulla aute ullamco anim qui magna est duis aliquip occaecat sint. Nisi veniam sunt ipsum deserunt consequat dolore nulla elit tempor laboris. Dolore Lorem fugiat velit Lorem occaecat ex ea. Consectetur pariatur excepteur occaecat occaecat nisi ipsum officia non aliqua sunt cillum sunt. Dolor nisi do dolor et dolore occaecat aute consectetur cupidatat enim enim.
 
+![Image](/img/profile.jpg)
+
 Qui ad officia non ea cupidatat consectetur ea. Fugiat labore in proident eiusmod excepteur dolor dolor. Id deserunt ut cillum ex cupidatat et Lorem est excepteur ipsum occaecat. Amet occaecat ut magna nulla nisi. Occaecat duis ex anim ut ea pariatur magna do. Excepteur occaecat enim magna aliqua esse officia commodo ullamco sunt irure enim nostrud. Voluptate voluptate est aliquip officia anim nulla aliquip sint ut.
 
 Lorem consectetur aliquip minim deserunt deserunt aliqua. Sunt ipsum mollit laboris velit occaecat minim aliqua ex fugiat eiusmod enim aliqua aute. Esse excepteur fugiat laborum amet ipsum non officia est eu. Nostrud tempor veniam elit cillum deserunt voluptate do dolor adipisicing proident ullamco proident laboris. Magna aliqua laboris laborum commodo dolore ipsum. Veniam duis in excepteur do est qui consequat ut.
