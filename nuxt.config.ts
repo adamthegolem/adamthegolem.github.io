@@ -7,6 +7,7 @@ export default defineNuxtConfig({
   nitro: {
     preset: 'github-pages'
   },
+  ssr: false,
   modules: [
     '@nuxt/eslint',
     '@nuxt/ui',
