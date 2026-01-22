@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
-    baseURL: "adamthegolem.github.io",
+    baseURL: "/",
     buildAssetsDir: 'assets', // Avoid underscores (e.g., '_nuxt') as GitHub Pages may ignore them
   },
   nitro: {
