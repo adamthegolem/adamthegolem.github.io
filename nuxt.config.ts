@@ -1,8 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  // app: {
-  //   baseURL: "adamthegolem.github.io",
-  // },
+  app: {
+    baseURL: "adamthegolem.github.io",
+  },
   modules: [
     '@nuxt/eslint',
     '@nuxt/ui',
