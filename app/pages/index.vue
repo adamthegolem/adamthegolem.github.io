@@ -33,9 +33,9 @@ const softwareAndSystems = info.softwareAndSystems;
       }"
     >
       <template #headline>
-        <!-- <UAvatar src="/img/profile.JPG" size="3xl" height="200"></UAvatar> -->
-        <img src="/img/profile.JPG" class=" rounded-full size-30 mx-auto ring-2">
-        <!-- <NuxtImg src="/img/profile.JPG" sizes=" "></NuxtImg> -->
+        <!-- <UAvatar src="/img/profile.jpg" size="3xl" height="200"></UAvatar> -->
+        <img src="/img/profile.jpg" class=" rounded-full size-30 mx-auto ring-2">
+        <!-- <NuxtImg src="/img/profile.jpg" sizes=" "></NuxtImg> -->
       </template>
       <template #description>
         <p>{{ t(info.profile) }}</p>
