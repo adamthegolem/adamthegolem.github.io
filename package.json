@@ -4,6 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "nuxt build",
+    "github_build": "nuxt build --preset github_pages",
     "dev": "nuxt dev",
     "host": "nuxt dev --host",
     "preview": "nuxt preview",
