@@ -2,6 +2,10 @@
 export default defineNuxtConfig({
   app: {
     baseURL: "adamthegolem.github.io",
+    buildAssetsDir: 'assets', // Avoid underscores (e.g., '_nuxt') as GitHub Pages may ignore them
+  },
+  nitro: {
+    preset: 'github-pages'
   },
   modules: [
     '@nuxt/eslint',
