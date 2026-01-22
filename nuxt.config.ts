@@ -7,6 +7,10 @@ export default defineNuxtConfig({
   nitro: {
     preset: 'github-pages'
   },
+  image: {
+    // This prevents the /_ipx/ prefix and uses original paths
+    provider: 'none' 
+  },
   ssr: false,
   modules: [
     '@nuxt/eslint',
