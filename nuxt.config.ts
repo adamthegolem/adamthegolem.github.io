@@ -43,7 +43,7 @@ export default defineNuxtConfig({
     build: {
       rollupOptions: {
         // Prevents Vite from trying to process these as JS modules
-        external: [/^\/img\//] 
+        // external: [/^\/img\//] 
       }
     }
   }
