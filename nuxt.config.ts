@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   app: {
     baseURL: "/",
     buildAssetsDir: 'assets', // Avoid underscores (e.g., '_nuxt') as GitHub Pages may ignore them
+    // pageTransition: { name: 'page', mode: 'out-in' },
   },
   nitro: {
     preset: 'github-pages'
@@ -19,6 +20,12 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@pinia/nuxt',
   ],
+  icon: {
+    customCollections: [{
+      prefix: 'custom',
+      dir: './app/assets/icons'
+    }]
+  },
 
   devtools: {
     enabled: false

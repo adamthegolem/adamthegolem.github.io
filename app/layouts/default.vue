@@ -49,16 +49,15 @@ const navLinks = computed((): {
 <template>
   <UHeader title="Adam Golan" class="no-print">
     <template #left>
-      <!-- <NuxtLink to="/">
+      <NuxtLink to="/">
         <AppLogo class="w-auto h-6 shrink-0" />
       </NuxtLink>
-
-      <TemplateMenu /> -->
     </template>
     <template #default>
 
       <UNavigationMenu
         :items="navLinks"
+        variant="link"
       >
       </UNavigationMenu>
     </template>

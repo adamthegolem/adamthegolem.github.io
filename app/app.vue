@@ -1,14 +1,14 @@
 <script setup lang="ts">
-
+const lang = useLanguageStore()
 useHead({
   meta: [
     { name: 'viewport', content: 'width=device-width, initial-scale=1' }
   ],
   link: [
-    { rel: 'icon', href: '/favicon.ico' }
+    { rel: 'icon', href: '/Handman_circle_teal.ico' }
   ],
   htmlAttrs: {
-    lang: 'en'
+    lang: lang.language
   }
 })
 

@@ -39,7 +39,7 @@ const softwareAndSystems = info.softwareAndSystems;
       </template>
       <template #description>
         <p>{{ t(info.profile) }}</p>
-        <div class="flex justify-center gap-3">
+        <div class="flex justify-center gap-3 flex-wrap">
           <UTooltip text="Location">
             <UBadge :label="t('Odense, Denmark||Odense, Danmark')"
               icon="i-lucide-map-pin"

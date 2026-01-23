@@ -12,7 +12,8 @@ const {t, language} = useLanguageStore();
     :ui="{
       description: 'flex flex-col gap-3 text-justify md:text-start',
       container: 'pt-10 md:pt-24',
-      links: 'justify-center md:justify-start'
+      links: 'justify-center md:justify-start',
+      title: 'text-3xl md:text-7xl'
     }"
     :links="[
       {
@@ -63,9 +64,13 @@ const {t, language} = useLanguageStore();
       },
       {
         title: 'Dungeons & Dragons',
-        icon: 'i-simple-icons-dungeonsanddragons'
+        // icon: 'i-simple-icons-dungeonsanddragons',
+        icon: 'i-fa-solid-dice-d20'
       }
     ]"
+    :ui="{
+      description: 'hyphens-auto'
+    }"
   >
   </UPageSection>
   <UPageSection
@@ -153,4 +158,10 @@ const {t, language} = useLanguageStore();
     </UTabs>
     
   </UPageSection>
+  <!-- <svg id="Layer_2" data-name="Layer 2" xmlns="http://www.w3.org/2000/svg" viewBox="-50 -50 840 1605">
+      <g id="Layer_8_copy_2" data-name="Layer 8 copy 2" class=" stroke-white drop-shadow-2xl stroke-30 fill-transparent ">
+          <path d="M730,667.4v447.6c0,36.18-29.71,65.55-66.01,64.99-35.67-.54-63.99-30.31-63.99-65.98v-364.01c0-2.76-1.12-5.26-2.93-7.07-1.81-1.81-4.31-2.93-7.07-2.93-5.52,0-10,4.48-10,10v515c0,36.18-29.71,65.55-66.01,64.99-35.67-.54-63.99-30.31-63.99-65.98v-364.01c0-2.76-1.12-5.26-2.93-7.07-1.81-1.81-4.31-2.93-7.07-2.93-5.52,0-10,4.48-10,10v440c0,36.18-29.71,65.55-66.01,64.99-35.67-.54-63.99-30.31-63.99-65.98v-439.01c0-2.76-1.12-5.26-2.93-7.07-1.81-1.81-4.31-2.93-7.07-2.93-5.52,0-10,4.48-10,10v365c0,36.18-29.71,65.55-66.01,64.99-35.66-.54-63.99-30.31-63.99-65.98v-664.01c0-2.76-1.12-5.26-2.93-7.07-1.81-1.81-4.31-2.93-7.07-2.93-5.52,0-10,4.48-10,10v215c0,36.18-29.71,65.55-66.01,64.99-35.66-.54-63.99-30.31-63.99-65.98v-149.01c0-200.76,162.92-364.18,363.49-365h1.51c200.89.01,365,166.32,365,367.4Z"/>
+          <path d="M505,140c0,77.2-62.8,140-140,140s-140-62.8-140-140S287.8,0,365,0s140,62.8,140,140Z"/>
+      </g>
+  </svg> -->
 </template>
