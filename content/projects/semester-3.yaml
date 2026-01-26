@@ -4,3 +4,10 @@ start: 2023-09-01
 end: 2023-12-01
 icon: i-icon-park-outline-robot-two
 thumbnail: /img/projects/Inwatec_THOR.jpg
+company: inwatec
+skills:
+  - cad
+  - 3d-print
+  - rapid-prototyping
+  - graphic-design
+  - product-architecture

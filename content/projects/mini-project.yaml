@@ -1,0 +1,11 @@
+title: Technical Design of a Patient Hoist||Teknisk design af en personløfter
+headline: Mini Project||Miniprojekt
+description: A project to design a patient hoist based on user weight through calculations.||Et projekt til design af en personløfter baseret på brugerens vægt via udregninger.
+start: 2023-06-01
+end: 2023-06-01
+thumbnail: /img/projects/Miniproject.jpg
+icon: i-lucide-hospital
+skills:
+  - stat-mech-dyn
+  - mop
+  - graphic-design

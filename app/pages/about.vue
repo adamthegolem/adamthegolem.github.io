@@ -106,7 +106,7 @@ const {t, language} = useLanguageStore();
             :description="t(skill.description)"
             :icon="skill.icon"
           >
-
+            
           </UPageCard>
         </UPageGrid>
       </template>

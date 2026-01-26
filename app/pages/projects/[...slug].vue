@@ -5,10 +5,6 @@ const { t } = useLang
 const useDate = useDateStore()
 const useInfo = useInfoStore()
 const route = useRoute()
-watch(() => useLang.language, () => {
-  // location.reload()
-  
-})
 const langPath = computed(() => {
   return `${route.path}.${useLang.language}`
 })
@@ -19,6 +15,9 @@ const { data: project } = await useAsyncData(route.path, () => {
 const { data: projectContent } = await useAsyncData(computed(() => langPath.value), () => {
   return queryCollection('projectContent').path(langPath.value).first()
   // return queryCollection("projects").all()
+})
+useHead({
+  title: computed(() => `${t(project.value?.title)} - Adam Golan`)
 })
 // const projectContent = computed(async () => {
 //   return await queryCollection('projectContent').path(langPath.value).first()
@@ -32,7 +31,16 @@ const { data: projects } = await useAsyncData("slug-all", () => {
 // })
 console.log(project.value)
 const { data: surround } = await useAsyncData(`${route.path}-surround`, () => {
-  return queryCollectionItemSurroundings('projects', route.path, {}).order('start', "ASC")
+  return queryCollectionItemSurroundings('projects', route.path, {
+    fields: [
+      // "description",
+      "headline"
+    ]
+  }).order('start', "ASC")
+})
+const { data: company } = await useAsyncData(computed(() => `${route.path}-${project.value?.company}`), () => {
+  return queryCollection('companies').where('_id', '=', project.value?.company).first()
+  // return queryCollection('companies').path(`/companies/${project.value?.company}` || '').first()
 })
 console.log(surround.value)
 // const surround = computed(() => {
@@ -106,15 +114,25 @@ console.log(surround.value)
       >
         <template #description>
           <div class="flex flex-col gap-3 justify-start items-start">
-            <UBadge
-              :label="useDate.timeSpan(project.start, project.end)"
-              icon="i-lucide-calendar"
-              variant="soft"
-              color="neutral"
-            >
-            </UBadge>
+            <div class="flex gap-2">
+              <UBadge
+                :label="useDate.timeSpan(project.start, project.end)"
+                icon="i-lucide-calendar"
+                variant="soft"
+                color="neutral"
+              >
+              </UBadge>
+              <UBadge
+                :color="project.individual ? 'secondary' : 'primary'"
+                variant="soft"
+                :label="project.individual ? t('Individual Project||Selvstændigt projekt') : t('Team Project||Gruppeprojekt')"
+                :icon="project.individual ? 'i-lucide-user-star' : 'i-lucide-users'"
+              >
+
+              </UBadge>
+            </div>
             <p>
-              {{ project.description }}
+              {{t( project.description )}}
             </p>
             <!-- <div v-if="project.skills" class="flex gap-2 w-full flex-wrap">
               <UBadge
@@ -131,15 +149,105 @@ console.log(surround.value)
         </template>
       </UPageHeader>
       <UPageBody>
-    
+        <UAccordion
+          :items="[
+            {
+              label: t('Skills||Færdigheder'),
+              include: project.skills,
+              slot: 'skills'
+            },
+            {
+              label: t('Partner Company||Samarbejdsvirksomhed'),
+              include: company,
+              slot: 'company'
+            },
+          ].filter(({include}) => include)"
+          default-value="0"
+          :ui="{
+            content: 'p-0 pb-6'
+          }"
+        >
+          <template #skills>
+            <div class="flex items-start gap-2 flex-wrap">
+              <UPopover
+                v-for="skill in project.skills.map(id1 => useInfo.skills.find(({id}) => id1 == id))"
+                mode="click"
+                :content="{
+                  align: 'start'
+                }"
+                arrow
+              >
+                <UBadge
+                  :icon="skill?.icon"
+                  :label="t(skill?.name)"
+                  color="neutral"
+                  variant="outline"
+                  class=" cursor-help"
+                >
+                </UBadge>
+                <template #content>
+                  <div v-if="skill?.description" class="flex p-2 max-w-80 text-toned text-sm">
+                    <p>{{ t(skill?.description) }}</p>
+                  </div>
+                </template>
+              </UPopover>
+              <UButton :label="t('See more||Se mere')" size="xs" variant="link" to="/about#tools" trailing-icon="i-lucide-arrow-right">
+              </UButton>
+            </div>
+          </template>
+          <template #company>
+            <UBlogPost
+              :title="t(company?.name)"
+              :description="t(company?.description)"
+              :image="company?.logo"
+              orientation="horizontal"
+              :ui="{
+                image: 'object-center object-contain bg-elevated p-3',
+                // header: 'shadow-none rounded-b-none md:rounded-r-none',
+                header: 'shadow-none',
+                // root: 'bg-muted'
+              }"
+              variant="ghost"
+            >
+              <template #title>
+                <div class="flex items-center gap-2">
+                  <span>{{ company?.name }}</span>
+                  <span>•</span>
+                  <UBadge
+                    :label="t(company?.location)"
+                    variant="outline"
+                    icon="i-lucide-map-pin"
+                    color="neutral"
+                    size="sm"
+                  ></UBadge>
+                </div>
+              </template>
+              <template #description>
+                <div class="flex flex-col gap-2 items-start">
+                  <p>
+                    {{ t(company?.description) }}
+                  </p>
+                  <UButton
+                    :label="t('Website||Hjemmeside')"
+                    :to="t(company?.website)"
+                    target="_blank"
+                    variant="soft"
+                    icon="i-lucide-globe"
+                    trailing-icon="i-lucide-arrow-up-right"
+                  ></UButton>
+                </div>
+              </template>
+            </UBlogPost>
+          </template>
+        </UAccordion>
         <!-- {{ projects }} -->
         <!-- <img :src="project.thumbnail" class="rounded"> -->
-        <UCard v-if="project.skills" variant="outline" to="/about#tools" :ui="{
+        <!-- <UCard v-if="project.skills" variant="outline" to="/about#tools" :ui="{
           body: 'sm:p-3 relative'
         }">
-          <!-- <div class="absolute top-0 bottom-0 left-0 right-0 bg-elevated/50 backdrop-blur-sm z-50 hover:opacity-100 opacity-0 transition-opacity cursor-pointer flex items-center justify-center">
+          <div class="absolute top-0 bottom-0 left-0 right-0 bg-elevated/50 backdrop-blur-sm z-50 hover:opacity-100 opacity-0 transition-opacity cursor-pointer flex items-center justify-center">
             <span>{{ t('See more||Se mere') }}<UIcon name="i-lucide-arrow-right"></UIcon></span>
-          </div> -->
+          </div>
           <div class="flex items-start gap-2 flex-wrap">
             <UBadge
               v-for="skill in project.skills.map(id1 => useInfo.skills.find(({id}) => id1 == id))"
@@ -153,7 +261,7 @@ console.log(surround.value)
 
             </UButton>
           </div>
-        </UCard>
+        </UCard> -->
         <!-- <UAccordion
           v-if="project.skills"
           :ui="{
@@ -197,10 +305,20 @@ console.log(surround.value)
         <!-- <NuxtImg :src="project.thumbnail" class="rounded"/> -->
         <ContentRenderer :value="projectContent"/>
         <!-- <UContentSurround></UContentSurround> -->
-        <UContentSurround :surround="surround">
+        <UContentSurround :surround="surround"
+          :ui="{
+            linkDescription: 'line-clamp-none hyphens-auto'
+          }"
+        >
           <template #link-title="{link}">
-            <span>{{ t(link.title) }}</span>
+            <div class="flex flex-col">
+              <span class=" text-xs text-primary">{{ t(link.headline as string) }}</span>
+              <span>{{ t(link.title) }}</span>
+            </div>
           </template>
+          <!-- <template #link-description="{link}">
+            {{ t(link.description as string) }}
+          </template> -->
         </UContentSurround>
       </UPageBody>
       <template #right>

@@ -1,7 +1,15 @@
 title: Demo of Hand Tracking||Demo af håndtracking
 headline: Internship||Praktik
-description: 
+description: Development of a demo for hand tracking using the AMFITRACK system during an internship at Amfitech.||Udvikling af en demo for hånd-tracking ved brug af AMFITRACK-systemet under praktik ved Amfitech.
 start: 2025-02-01
 end: 2025-07-01
 icon: i-lucide-rotate-3d
 thumbnail: /img/projects/internship.png
+company: amfitech
+skills:
+  - 3d-tracking
+  - workshops
+  - 3d-print
+  - project-management
+  - oop
+  - interdisciplinary-teamwork

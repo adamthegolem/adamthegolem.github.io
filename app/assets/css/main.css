@@ -39,3 +39,6 @@ html {
       page-break-inside: avoid;
     }
 }
+.dark {
+  /* --ui-bg-elevated: var(--ui-color-neutral-700); */
+}

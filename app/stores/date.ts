@@ -22,6 +22,7 @@ export const useDateStore = defineStore("dateStore", () => {
     function timeSpan(start: string, end: string) {
         // const startDate = new Date(start)
         // const endDate = new Date(end)
+        if (monthAndYear(start) == monthAndYear(end)) return monthAndYear(start)
         return `${monthAndYear(start)} - ${monthAndYear(end)}`
     }
     return {monthAndYear, timeSpan}

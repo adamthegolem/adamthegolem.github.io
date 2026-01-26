@@ -4,7 +4,11 @@ import { useInfoStore } from '../stores/info';
 const info = useInfoStore();
 const langStore = useLanguageStore()
 const { t } = langStore
-const softwareAndSystems = info.softwareAndSystems;
+const { softwareAndSystems } = info;
+const route = useRoute()
+const { data: projects } = await useAsyncData(`${route.path} projects`, () => {
+  return queryCollection("projects").order("start", "DESC").all()
+})
 </script>
 <template>
   <div>
@@ -166,58 +170,93 @@ const softwareAndSystems = info.softwareAndSystems;
         </UTooltip>
       </UMarquee>
     </UPageSection>
-    <USeparator v-if="false"></USeparator>
-    <UPageSection v-if="false"
-      id="features"
-      title="Everything you need to build modern Nuxt apps"
-      description="Start with a solid foundation. This template includes all the essentials for building production-ready applications with Nuxt UI's powerful component system."
-      :features="[{
-        icon: 'i-lucide-rocket',
-        title: 'Production-ready from day one',
-        description: 'Pre-configured with TypeScript, ESLint, Tailwind CSS, and all the best practices. Focus on building features, not setting up tooling.'
-      }, {
-        icon: 'i-lucide-palette',
-        title: 'Beautiful by default',
-        description: 'Leveraging Nuxt UI\'s design system with automatic dark mode, consistent spacing, and polished components that look great out of the box.'
-      }, {
-        icon: 'i-lucide-zap',
-        title: 'Lightning fast',
-        description: 'Optimized for performance with SSR/SSG support, automatic code splitting, and edge-ready deployment. Your users will love the speed.'
-      }, {
-        icon: 'i-lucide-blocks',
-        title: '100+ components included',
-        description: 'Access Nuxt UI\'s comprehensive component library. From forms to navigation, everything is accessible, responsive, and customizable.'
-      }, {
-        icon: 'i-lucide-code-2',
-        title: 'Developer experience first',
-        description: 'Auto-imports, hot module replacement, and TypeScript support. Write less boilerplate and ship more features.'
-      }, {
-        icon: 'i-lucide-shield-check',
-        title: 'Built for scale',
-        description: 'Enterprise-ready architecture with proper error handling, SEO optimization, and security best practices built-in.'
-      }]"
-    />
+    <USeparator></USeparator>
+    <UPageSection
+      :title="t('Projects||Projekter')"
+      icon="i-lucide-folders"
+    >
+      <UAccordion
+        :items="[
+          {
+            label: t('Team Projects||Gruppeprojekter'),
+            icon: 'i-lucide-users',
+            projects: [
+              'semester-7',
+              'semester-4',
+              'technology-entrepreneurship'
+            ],
+          },
+          {
+            label: t('Individual Projects||Selvstændige projekter'),
+            icon: 'i-lucide-user-star',
+            projects: [
+              'midi-controller',
+              'tiamate',
+              'workshop-2'
+            ]
+          },
+        ]"
+        type="multiple"
+        :default-value="['0', '1']"
+      >
+        <template #body="{item}">
+          <div class="grid grid-cols-4 gap-6">
+            <!-- {{ projects }} -->
+            <UBlogPost
+              v-for="project in item.projects.map(id => projects?.find(project => `/projects/${id}` == project.path))"
+              :title="t(project?.title)"
+              :image="project?.thumbnail"
+              variant="soft"
+              :to="project?.path"
+            >
+              
+            </UBlogPost>
+            <UEmpty
+              variant="naked"
+              icon="i-lucide-folders"
+              :actions="[
+                {
+                  label: t('See more projects||Se flere projekter'),
+                  trailingIcon: 'i-lucide-arrow-right',
+                  variant: 'link',
+                  to: '/projects'
+                }
+              ]"
+            >
 
-    <UPageSection v-if="false">
-      <UPageCTA
-        title="Ready to build your next Nuxt app?"
-        description="Join thousands of developers building with Nuxt and Nuxt UI. Get this template and start shipping today."
-        variant="subtle"
-        :links="[{
-          label: 'Start building',
-          to: 'https://ui.nuxt.com/docs/getting-started/installation/nuxt',
-          target: '_blank',
-          trailingIcon: 'i-lucide-arrow-right',
-          color: 'neutral'
-        }, {
-          label: 'View on GitHub',
-          to: 'https://github.com/nuxt-ui-templates/starter',
-          target: '_blank',
-          icon: 'i-simple-icons-github',
-          color: 'neutral',
-          variant: 'outline'
-        }]"
-      />
+            </UEmpty>
+          </div>
+        </template>
+      </UAccordion>
+      <UCarousel
+        :items="projects"
+        v-slot="{item}"
+        arrows
+        loop
+        dots
+        
+        prev-icon="i-lucide-chevron-left"
+        next-icon="i-lucide-chevron-right"
+        :ui="{
+          item: 'md:basis-1/3 w-10',
+          viewport: 'p-3',
+          dots: 'hidden md:flex'
+        }"
+      >
+        <UBlogPost
+          :icon="item.icon"
+          :title="t(item.title)"
+          :to="item.path"
+          :description="t(item.description)"
+          :ui="{
+            // container: 'h-full'
+            image: 'object-center'
+          }"
+          :image="item.thumbnail"
+        >
+          
+        </UBlogPost>
+      </UCarousel>
     </UPageSection>
   </div>
 </template>

@@ -15,6 +15,8 @@ export default defineContentConfig({
         thumbnail: z.string(),
         headline: z.string(),
         skills: z.array(z.string()),
+        company: z.optional(z.string()),
+        individual: z.boolean(),
       })
     }),
     projectContent: defineCollection({
@@ -24,6 +26,18 @@ export default defineContentConfig({
     prints: defineCollection({
       type: 'page',
       source: 'prints/*.md',
+    }),
+    companies: defineCollection({
+      type: 'data',
+      source: 'companies/*.yaml',
+      schema: z.object({
+        name: z.string(),
+        _id: z.string(),
+        logo: z.string(),
+        description: z.string(),
+        website: z.string(),
+        location: z.string(),
+      })
     })
   }
 })

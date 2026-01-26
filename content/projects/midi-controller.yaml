@@ -5,6 +5,7 @@ end: 2024-12-01
 icon: i-lucide-keyboard-music
 thumbnail: /img/projects/20250121_154904.jpg
 headline: Independent Study Project||Selvstudie
+individual: true
 skills:
   - cad
   - 3d-print
