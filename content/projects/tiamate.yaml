@@ -1,0 +1,12 @@
+title: Tiamate - Team Creation Software||Tiamate - software til gruppedannelse
+icon: i-lucide-compass
+headline: Personal Project||Personligt projekt
+description: A personal programming project to develop software for enhanced and automatic team creation based on Belbin roles.||Et personligt programmeringsprojekt til udvikling af software med formålet at forbedre og automatisere gruppedannelse på baggrund af Belbin-roller.
+start: 2024-04-01
+end: 2024-08-01
+thumbnail: /img/projects/Tiamate.png
+individual: true
+skills:
+  - webdev
+  - oop
+  - graphic-design

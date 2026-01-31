@@ -9,11 +9,13 @@ const {t, language} = useLanguageStore();
     orientation="horizontal"
     :headline="t('About Me||Om mig')"
     description="I'm a product developer with a technical mind & a flair for design. I'm an experienced team worker but enjoy digging deep in technical tasks independently. I have a few rotating hobbies which reflect my affinity for balancing technical and design aspects."
+    class=" "
     :ui="{
-      description: 'flex flex-col gap-3 text-justify md:text-start',
+      description: 'flex flex-col gap-3 text-center md:text-start',
       container: 'pt-10 md:pt-24',
       links: 'justify-center md:justify-start',
-      title: 'text-3xl md:text-7xl'
+      title: 'text-3xl md:text-7xl text-center md:text-start',
+      headline: 'justify-center md:justify-start'
     }"
     :links="[
       {
@@ -41,31 +43,34 @@ const {t, language} = useLanguageStore();
 
     </template>
     <template #description>
-      <p>{{t("I'm a product developer with a technical mind & a flair for design. I'm an experienced team worker but enjoy digging deep in technical tasks independently. I have a few rotating hobbies which reflect my affinity for balancing technical and design aspects.")}}</p>
+      <p>{{t(info.extendedProfile)}}</p>
       <p></p>
     </template>
     <img src="/img/profile.jpg" class=" border-2 shadow-lg hidden md:block rounded-full aspect-square">
   </UPageHero>
   <UPageSection :title="t('Interests||Interesser')"
     icon="i-lucide-star"
-    :description="t('I have a few rotating hobbies which reflect my affinity for balancing technical and design aspects. I enjoy songwriting and music production, computer programming projects, and creative writing. And when I can find people to play with, I enjoy being a game master for games such as Dungeons & Dragons.||Jeg har en række roterende interesser, der reflekterer min tiltrækning til det tekniske og det designrelaterede. Jeg elsker sangskrivning og musikproduktion, programmeringsprojekter, og kreativ skrivning. Og når jeg kan finde folk at spille med, agerer jeg game master for spil som Dungeons & Dragons.')"
+    :description="t(info.freeTime)"
     :features="[
       {
-        title: t('Music||Musik'),
-        icon: 'i-lucide-music'
-      },
-      {
         title: t('Programming||Programmering'),
-        icon: 'i-lucide-code'
+        icon: 'i-lucide-code',
+        description: t(`I've programmed since middle school with a focus on web development, but touching on machine learning, game development, browser extensions, and microcontrollers as well.||Jeg har programmeret siden 7. klasse med fokus på webudvikling, men jeg er også kommet ind på machine learning, spiludvikling, browser-udvidelser, og mikrocontrollere.`)
       },
       {
-        title: t('Creative Writing||Kreativ skrivning'),
-        icon: 'i-lucide-pencil'
+        title: t('Music||Musik'),
+        icon: 'i-lucide-music',
+        description: t(`I've always had an interest in music and songwriting, and in 2018 I started producing and recording songs on my computer. I use Reason as my DAW, while keyboard and my own voice are my instruments of choice.||Jeg har altid været interesseret i musik og sangskrivning, og i 2018 begyndte jeg at producere og optage sange på min computer. Jeg bruger Reason som DAW, mens keyboard og min egen stemme er mit valg af instrumenter.`)
       },
+      // {
+      //   title: t('Creative Writing||Kreativ skrivning'),
+      //   icon: 'i-lucide-pencil'
+      // },
       {
         title: 'Dungeons & Dragons',
         // icon: 'i-simple-icons-dungeonsanddragons',
-        icon: 'i-fa-solid-dice-d20'
+        icon: 'i-fa-solid-dice-d20',
+        description: t(`Since 2021 I have had a big interest in TTRPGs (role-playing games) like D&D, both as entertainment and as an activity. As a Game Master I plan the game and improvise during it, and I get to use both creative and technical skills.||Siden 2021 jeg har haft stor interesse i TTRPG'er (rollespil) som D&D, både som underholdning og aktivitet. Som Game Master planlægger jeg spillet og improviserer undervejs, og jeg får brugt både mine kreative og tekniske egenskaber.`)
       }
     ]"
     :ui="{
@@ -106,19 +111,19 @@ const {t, language} = useLanguageStore();
             :description="t(skill.description)"
             :icon="skill.icon"
           >
-
+            
           </UPageCard>
         </UPageGrid>
       </template>
       <template #systems>
-        <div class="flex justify-center mb-2">
+        <!-- <div class="flex justify-center mb-2">
           <UInputMenu
             icon="i-lucide-list-filter"
             multiple
             :items="['Software', 'Programming Language'].sort()"
           >
           </UInputMenu>
-        </div>
+        </div> -->
         <UPageGrid>
           <UPageCard
             v-for="system in info.softwareAndSystems"

@@ -27,6 +27,7 @@
   "devDependencies": {
     "@iconify-json/ion": "^1.2.6",
     "@nuxt/eslint": "^1.12.1",
+    "@tailwindcss/typography": "^0.5.19",
     "eslint": "^9.39.2",
     "typescript": "^5.9.3",
     "vue-tsc": "^3.2.1"

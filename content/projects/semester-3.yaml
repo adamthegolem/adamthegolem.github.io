@@ -1,6 +1,17 @@
 title: Redesign of Gripper For Laundry Sorting||Redesign af gripper til vasketøjssortering
 headline: 3rd Semester Project||Tredje semesterprojekt
+description: Development project to redesign an end-effector for a laundry sorting machine from Inwatec, with a focus on optimization.||Udviklingsprojekt til at redesigne end-effectoren for en maskine til vasketøjssortering fra Inwatec med fokus på optimering.
 start: 2023-09-01
 end: 2023-12-01
 icon: i-icon-park-outline-robot-two
 thumbnail: /img/projects/Inwatec_THOR.jpg
+company: inwatec
+skills:
+  - cad
+  - 3d-print
+  - rapid-prototyping
+  - graphic-design
+  - product-architecture
+  - ideation
+  - mockup-modeling
+  - mechanical-components

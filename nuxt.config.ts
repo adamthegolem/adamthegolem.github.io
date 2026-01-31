@@ -48,7 +48,17 @@ export default defineNuxtConfig({
     }
   },
   ui: {
-    
+    theme: {
+      colors: [
+        'primary',
+        'secondary',
+        'tertiary',
+        'info',
+        'success',
+        'warning',
+        'error'
+      ]
+    }
   },
   vite: {
     build: {
@@ -56,6 +66,11 @@ export default defineNuxtConfig({
         // Prevents Vite from trying to process these as JS modules
         // external: [/^\/img\//] 
       }
+    }
+  },
+  content: {
+    renderer: {
+      anchorLinks: false,
     }
   }
 })

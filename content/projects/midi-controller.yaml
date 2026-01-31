@@ -1,10 +1,11 @@
-title: Design of a MIDI controller||Design af MIDI-controller
-description: Some text.
+title: Collaborative MIDI controller||Kollaborativ MIDI-controller
+description: Independent project to design a testable prototype of a MIDI controller for collaborative music production.||Selvstændigt projekt til at designe en testbar MIDI-controller til fælles musikproduktion.
 start: 2024-09-05
 end: 2024-12-01
 icon: i-lucide-keyboard-music
 thumbnail: /img/projects/20250121_154904.jpg
 headline: Independent Study Project||Selvstudie
+individual: true
 skills:
   - cad
   - 3d-print
@@ -13,3 +14,5 @@ skills:
   - graphic-design
   - oop
   - rapid-prototyping
+  - workshops
+  - circuit-theory

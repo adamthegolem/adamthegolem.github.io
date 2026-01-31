@@ -1,6 +1,23 @@
 title: Redesign of Spring Rider||Redesign af vippedyr
 headline: Final Project||Afgangsprojekt
+description: Pilot project to redesign parts of a spring rider from KOMPAN.||Pilotprojekt for redesign af dele af et vippedyr fra KOMPAN.
 start: 2025-09-01
 end: 2026-01-01
 icon: i-lucide-motorbike
 thumbnail: /img/projects/M130_productphotograph_3.webp
+company: kompan
+skills:
+  - rapid-prototyping
+  - 3d-print
+  - cad
+  - oop
+  - circuit-theory
+  - project-management
+  - graphic-design
+  - mockup-modeling
+  - video-editing
+  - code-visualization
+  - mop
+  - user-centered-design
+  - product-architecture
+  - product-rendering
