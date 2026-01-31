@@ -11,7 +11,7 @@ export const useInfoStore = defineStore("infoStore", () => {
     }
     const contactInfo = {
         address: {
-            label: 'Pjentedamsgade 30E, 5000 Odense',
+            label: '',
             icon: 'i-lucide-house',
         },
         phoneNumber: {
@@ -20,6 +20,8 @@ export const useInfoStore = defineStore("infoStore", () => {
         }
     }
     const profile = 'A product developer with a technical mind & a flair for design. Experienced team worker but enjoys digging deep in technical tasks independently.||Produktudvikler med teknisk hjerne & flair for design. Erfaren gruppearbejder men nyder at dykke ned i tekniske opgaver selvstændigt.'
+    const extendedProfile = "I'm a product developer with a technical mind & a flair for design. I'm experienced as a team worker but enjoy digging deep in technical tasks independently. I have a bachelor of engineering in integrated design, which is a generalist product development degree with a 50/50 split focus on technical engineering and product design.||Jeg er produktudvikler med teknisk hjerne & flair for design. Jeg er erfaren som gruppearbejder men nyder at dykke ned i tekniske opgaver selvstændigt. Jeg er uddannet som diplomingeniør i integreret design, der er en produktudviklingsuddannelse med ligeligt fordelt fokus på teknisk ingeniørarbejde og produktdesign."
+    const freeTime = 'I have a few rotating hobbies which reflect my affinity for balancing technical and design aspects. I enjoy songwriting and music production, computer programming projects, and creative writing. And when I can find people to play with, I enjoy being a game master for games such as Dungeons & Dragons.||Jeg har en række roterende interesser, der reflekterer min tiltrækning til det tekniske og det designrelaterede. Jeg elsker sangskrivning og musikproduktion, programmeringsprojekter, og kreativ skrivning. Og når jeg kan finde folk at spille med, agerer jeg game master for spil som Dungeons & Dragons.';
     const links = {
         linkedIn: {
             label: "LinkedIn",
@@ -502,5 +504,17 @@ export const useInfoStore = defineStore("infoStore", () => {
             competences: "public speaking||offentlig tale"
         },
     ]
-    return {links, softwareAndSystems, skills, SystemType, systemTypes, educationalItems, jobItems, contactInfo, profile}
+    return {
+        links,
+        softwareAndSystems,
+        skills,
+        SystemType,
+        systemTypes,
+        educationalItems,
+        jobItems,
+        contactInfo,
+        profile,
+        extendedProfile,
+        freeTime,
+    }
 })

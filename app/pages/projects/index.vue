@@ -6,7 +6,7 @@ const {t} = langStore
 const useDate = useDateStore()
 const info = useInfoStore()
 const { stringKeySorter } = useUtilStore()
-const filteredSkills = ref<{label: string, icon: string, id?: string}[]>([])
+const filteredSkills = ref<{label: string, icon: string, id: string}[]>([])
 watch(filteredSkills, () => {
   localStorage.setItem("filteredSkills", JSON.stringify(filteredSkills.value))
 })
@@ -20,29 +20,29 @@ const { data: projects } = await useAsyncData("index-all", () => {
   return queryCollection('projects').order("start", "DESC").all()
   // return queryCollection("projects").all()
 })
-const teamProject = {
-  label: t('Team Project||Gruppeprojekt'),
-  icon: 'i-lucide-users',
-}
-const individualProject = {
-  label: t('Individual Project||Selvstændigt projekt'),
-  icon: 'i-lucide-user-star'
-}
+// const teamProject = {
+//   label: t('Team Project||Gruppeprojekt'),
+//   icon: 'i-lucide-users',
+// }
+// const individualProject = {
+//   label: t('Individual Project||Selvstændigt projekt'),
+//   icon: 'i-lucide-user-star'
+// }
 const filteredProjects = computed(() => {
   let array = projects.value?.filter(project => {
     if (filteredSkills.value.length == 0) return true
     return filteredSkills.value.find(skill => skill.id ? project.skills?.includes(skill.id) : false)
     // return project.skills?.includes('mop')
   })
-  const includeIndividual = filteredSkills.value.includes(individualProject)
-  console.log(includeIndividual)
-  const includeTeam = filteredSkills.value.includes(teamProject)
-  console.log(includeTeam)
-  if (includeIndividual || includeTeam) array = array?.filter(project => {
-    if (includeIndividual && project.individual) return true
-    if (includeTeam && !project.individual) return true
-    return false
-  })
+  // const includeIndividual = filteredSkills.value.includes(individualProject)
+  // console.log(includeIndividual)
+  // const includeTeam = filteredSkills.value.includes(teamProject)
+  // console.log(includeTeam)
+  // if (includeIndividual || includeTeam) array = array?.filter(project => {
+  //   if (includeIndividual && project.individual) return true
+  //   if (includeTeam && !project.individual) return true
+  //   return false
+  // })
   if (projectOrderAscending.value) array = array?.reverse()
   return array
 })
@@ -53,28 +53,28 @@ const filteredProjects = computed(() => {
 //     title: ""
 //   }
 // ]
-const filterItems = computed(() => {
-  const items: InputMenuItem[] = [
-    {
-      type: 'label',
-      label: t('Types||Typer')
-    }
-  ]
-  items.push(teamProject, individualProject)
-  items.push({
-    type: 'separator',
-  }, {
-    type: 'label',
-    label: t('Skills||Færdigheder')
-  })
-  const skills = info.skills.map(x => ({
-    label: t(x.name),
-    icon: x.icon,
-    id: x.id
-  })).sort((a, b) => stringKeySorter(a.label, b.label))
-  items.push(...skills)
-  return items
-})
+// const filterItems = computed(() => {
+//   const items: InputMenuItem[] = [
+//     {
+//       type: 'label',
+//       label: t('Types||Typer')
+//     }
+//   ]
+//   items.push(teamProject, individualProject)
+//   items.push({
+//     type: 'separator',
+//   }, {
+//     type: 'label',
+//     label: t('Skills||Færdigheder')
+//   })
+//   const skills = info.skills.map(x => ({
+//     label: t(x.name),
+//     icon: x.icon,
+//     id: x.id
+//   })).sort((a, b) => stringKeySorter(a.label, b.label))
+//   items.push(...skills)
+//   return items
+// })
 </script>
 <template>
   <!-- <UTimeline :items="projects" size="lg">
@@ -162,9 +162,80 @@ const filterItems = computed(() => {
       }
     ]"
   >
-    <div class="flex flex-col gap-6 md:w-2/3 md:m-auto">
+    <!-- <UPage>
+      <template #left>
+        <UPageAside>
+          <UCheckboxGroup
+            indicator="hidden"
+            variant="table"
+            :legend="t('Types||Typer')"
+            :items="['System', 'Good']"
+          >
+            <template #label>
+              <UIcon name="i-lucide-x"></UIcon>
+            </template>
+          </UCheckboxGroup>
+        </UPageAside>
+      </template> -->
+      <div class="flex flex-col gap-6 md:w-2/3 md:m-auto">
       
-      <!-- <div class="flex flex-col md:flex-row w-full gap-2 md:items-start"> -->
+        <!-- <div class="flex flex-col md:flex-row w-full gap-2 md:items-start"> -->
+          <UFieldGroup class="overflow-clip">
+            <UInputMenu
+              class="grow text-ellipsis"
+              multiple
+              clear
+              v-model="filteredSkills"
+              :data-filled="filteredSkills.length > 0"
+              icon="i-lucide-filter"
+              :items="info.skills.map(x => ({
+                label: t(x.name),
+                icon: x.icon,
+                id: x.id
+              })).sort((a, b) => stringKeySorter(a.label, b.label))"
+              :placeholder="t('Add skill to filter...||Tilføj færdighed til filter...')"
+              :ui="{
+                base: 'rounded-r-none',
+                tagsItemText: 'max-w-40 md:max-w-full'
+              }"
+            >
+            </UInputMenu>
+            <UTooltip :text="t('Clear all||Ryd alle')">
+              <UButton
+                :disabled="filteredSkills.length == 0"
+                variant="outline"
+                color="neutral"
+                icon="i-lucide-list-x"
+                class=" text-muted"
+                @click="filteredSkills = []"
+              ></UButton>
+            </UTooltip>
+            <UTooltip class=" text-muted" :text="t(`Sort by date (${projectOrderAscending ? 'ascending' : 'descending'})||Sortér efter dato (${projectOrderAscending ? 'stigende' : 'faldende'})`)">
+              <UButton
+                :icon="`i-lucide-calendar-arrow-${!projectOrderAscending ? 'down' : 'up'}`"
+                variant="outline"
+                color="neutral"
+                @click="projectOrderAscending = !projectOrderAscending"
+              ></UButton>
+            </UTooltip>
+          </UFieldGroup>
+          <!-- <UTooltip class="hidden md:inline-flex" :text="t(`Sort by date (${projectOrderAscending ? 'ascending' : 'descending'})||Sortér efter dato (${projectOrderAscending ? 'stigende' : 'faldende'})`)">
+            <UButton
+              :icon="`i-lucide-calendar-arrow-${!projectOrderAscending ? 'down' : 'up'}`"
+              variant="outline"
+              color="neutral"
+              @click="projectOrderAscending = !projectOrderAscending"
+            ></UButton>
+          </UTooltip>
+          <UButton
+            class=" md:hidden"
+            :icon="`i-lucide-calendar-arrow-${!projectOrderAscending ? 'down' : 'up'}`"
+            variant="outline"
+            color="neutral"
+            @click="projectOrderAscending = !projectOrderAscending"
+            :label="t(`Sort by date (${projectOrderAscending ? 'ascending' : 'descending'})||Sortér efter dato (${projectOrderAscending ? 'stigende' : 'faldende'})`)"
+          ></UButton> -->
+        <!-- </div> -->
         <!-- <UFieldGroup class="overflow-clip">
           <UInputMenu
             class="grow text-ellipsis"
@@ -173,12 +244,8 @@ const filterItems = computed(() => {
             v-model="filteredSkills"
             :data-filled="filteredSkills.length > 0"
             icon="i-lucide-filter"
-            :items="info.skills.map(x => ({
-              label: t(x.name),
-              icon: x.icon,
-              id: x.id
-            })).sort((a, b) => stringKeySorter(a.label, b.label))"
-            :placeholder="t('Add skill to filter...||Tilføj færdighed til filter...')"
+            :items="filterItems"
+            :placeholder="t('Add to filter...||Tilføj til filter...')"
             :ui="{
               base: 'rounded-r-none',
               tagsItemText: 'max-w-40 md:max-w-full'
@@ -204,92 +271,42 @@ const filterItems = computed(() => {
             ></UButton>
           </UTooltip>
         </UFieldGroup> -->
-        <!-- <UTooltip class="hidden md:inline-flex" :text="t(`Sort by date (${projectOrderAscending ? 'ascending' : 'descending'})||Sortér efter dato (${projectOrderAscending ? 'stigende' : 'faldende'})`)">
-          <UButton
-            :icon="`i-lucide-calendar-arrow-${!projectOrderAscending ? 'down' : 'up'}`"
-            variant="outline"
-            color="neutral"
-            @click="projectOrderAscending = !projectOrderAscending"
-          ></UButton>
-        </UTooltip>
-        <UButton
-          class=" md:hidden"
-          :icon="`i-lucide-calendar-arrow-${!projectOrderAscending ? 'down' : 'up'}`"
-          variant="outline"
-          color="neutral"
-          @click="projectOrderAscending = !projectOrderAscending"
-          :label="t(`Sort by date (${projectOrderAscending ? 'ascending' : 'descending'})||Sortér efter dato (${projectOrderAscending ? 'stigende' : 'faldende'})`)"
-        ></UButton> -->
-      <!-- </div> -->
-      <UFieldGroup class="overflow-clip">
-        <UInputMenu
-          class="grow text-ellipsis"
-          multiple
-          clear
-          v-model="filteredSkills"
-          :data-filled="filteredSkills.length > 0"
-          icon="i-lucide-filter"
-          :items="filterItems"
-          :placeholder="t('Add to filter...||Tilføj til filter...')"
+        <UBlogPost v-for="project in filteredProjects"
+          :title="t(project.title)"
+          :date="useDate.timeSpan(project.start, project.end)"
+          :to="project.path"
+          :description="t(project.description)"
+          :image="project.thumbnail"
           :ui="{
-            base: 'rounded-r-none',
-            tagsItemText: 'max-w-40 md:max-w-full'
+            image: 'object-center object-cover',
+            title: 'hyphens-auto',
+            body: 'md:pr-8 lg:pr-8',
+            header: 'h-full',
           }"
+          orientation="horizontal"
         >
-        </UInputMenu>
-        <UTooltip :text="t('Clear all||Ryd alle')">
-          <UButton
-            :disabled="filteredSkills.length == 0"
-            variant="outline"
-            color="neutral"
-            icon="i-lucide-list-x"
-            class=" text-muted"
-            @click="filteredSkills = []"
-          ></UButton>
-        </UTooltip>
-        <UTooltip class=" text-muted" :text="t(`Sort by date (${projectOrderAscending ? 'ascending' : 'descending'})||Sortér efter dato (${projectOrderAscending ? 'stigende' : 'faldende'})`)">
-          <UButton
-            :icon="`i-lucide-calendar-arrow-${!projectOrderAscending ? 'down' : 'up'}`"
-            variant="outline"
-            color="neutral"
-            @click="projectOrderAscending = !projectOrderAscending"
-          ></UButton>
-        </UTooltip>
-      </UFieldGroup>
-      <UBlogPost v-for="project in filteredProjects"
-        :title="t(project.title)"
-        :date="useDate.timeSpan(project.start, project.end)"
-        :to="project.path"
-        :description="t(project.description)"
-        :image="project.thumbnail"
-        :ui="{
-          image: 'object-center',
-          title: 'hyphens-auto',
-          body: 'md:pr-8 lg:pr-8'
-        }"
-        orientation="horizontal"
-      >
-        <template #badge>
-          <!-- <UAvatar :icon="project.icon"></UAvatar> -->
-          <!-- <UBadge :icon="project.icon" class="rounded-full" variant="subtle"></UBadge> -->
-        </template>
-        <template #date>
-          <span class=" text-primary font-semibold">{{ t(project.headline) }}</span>
-        </template>
-        <template #description>
-          <div class="flex flex-col gap-3 items-start mt-1">
-            <UBadge
-              :label="useDate.timeSpan(project.start, project.end)"
-              variant="soft"
-              icon="i-lucide-calendar"
-              color="neutral"
-            >
-            </UBadge>
-            <p>{{ t(project.description) }}</p>
-          </div>
-        </template>
-      </UBlogPost>
-    </div>
+          <template #badge>
+            <!-- <UAvatar :icon="project.icon"></UAvatar> -->
+            <!-- <UBadge :icon="project.icon" class="rounded-full" variant="subtle"></UBadge> -->
+          </template>
+          <template #date>
+            <span class=" text-primary font-semibold">{{ t(project.headline) }}</span>
+          </template>
+          <template #description>
+            <div class="flex flex-col gap-3 items-start mt-1">
+              <UBadge
+                :label="useDate.timeSpan(project.start, project.end)"
+                variant="soft"
+                icon="i-lucide-calendar"
+                color="neutral"
+              >
+              </UBadge>
+              <p class=" line-clamp-3 hyphens-auto">{{ t(project.description) }}</p>
+            </div>
+          </template>
+        </UBlogPost>
+      </div>
+    <!-- </UPage> -->
     <!-- <UTable
       :columns="[
         {

@@ -26,6 +26,9 @@ export default defineContentConfig({
     prints: defineCollection({
       type: 'page',
       source: 'prints/*.md',
+      schema: z.object({
+        profile: z.string(),
+      })
     }),
     companies: defineCollection({
       type: 'data',

@@ -14,36 +14,41 @@ const iconLinks = [
   info.links.linkedIn,
   info.links.email,
 ]
+const homeLink = computed(() => ({
+  label: t('Home||Hjem'),
+  icon: 'i-lucide-home',
+  to: '/'
+}))
+const projectsLink = computed(() => ({
+  label: t('Projects||Projekter'),
+  icon: 'i-lucide-folders',
+  to: '/projects'
+}))
+const experienceLink = computed(() => ({
+  label: t('Experience||Erfaring'),
+  icon: 'i-lucide-briefcase',
+  to: '/experience'
+}))
+const musicLink = computed(() => ({
+  label: t('Music||Musik'),
+  icon: 'i-lucide-music',
+  to: '/music'
+}))
+const aboutLink = computed(() => ({
+  label: t('About||Om'),
+  icon: 'i-lucide-info',
+  to: '/about'
+}))
 const navLinks = computed((): {
   to: string,
   icon: string,
   label: string,
 }[] => [
-  {
-    label: t('Home||Hjem'),
-    icon: 'i-lucide-home',
-    to: '/'
-  },
-  {
-    label: t('Projects||Projekter'),
-    icon: 'i-lucide-folders',
-    to: '/projects'
-  },
-  {
-    label: t('Music||Musik'),
-    icon: 'i-lucide-music',
-    to: '/music'
-  },
-  {
-    label: t('Experience||Erfaring'),
-    icon: 'i-lucide-briefcase',
-    to: '/experience'
-  },
-  {
-    label: t('About||Om'),
-    icon: 'i-lucide-info',
-    to: '/about'
-  },
+  homeLink.value,
+  projectsLink.value,
+  experienceLink.value,
+  // musicLink
+  aboutLink.value,
 ])
 </script>
 <template>
@@ -122,7 +127,12 @@ const navLinks = computed((): {
           class="hidden md:block"
           v-model="langStore.language"
           leading-icon="i-lucide-earth"
-          :items="langStore.languages">
+          :items="langStore.languages"
+          :ui="{
+            base: 'bg-default/80'
+          }"
+        >
+          
         </USelect>
       </UTooltip>
     </template>
@@ -158,7 +168,7 @@ const navLinks = computed((): {
     >
     </UFooterColumns> -->
     </template>
-    <UNavigationMenu :items="[navLinks[1], navLinks[3], navLinks[4]].map(x => ({...x, target: '_blank', icon: undefined}))" variant="link">
+    <UNavigationMenu :items="[projectsLink, experienceLink, aboutLink].map(x => ({...x, target: '_blank', icon: undefined}))" variant="link">
 
     </UNavigationMenu>
     <template #right>

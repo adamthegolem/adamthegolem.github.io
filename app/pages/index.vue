@@ -228,7 +228,7 @@ const { data: projects } = await useAsyncData(`${route.path} projects`, () => {
           </div>
         </template>
       </UAccordion>
-      <UCarousel
+      <!-- <UCarousel
         :items="projects"
         v-slot="{item}"
         arrows
@@ -256,7 +256,7 @@ const { data: projects } = await useAsyncData(`${route.path} projects`, () => {
         >
           
         </UBlogPost>
-      </UCarousel>
+      </UCarousel> -->
     </UPageSection>
   </div>
 </template>

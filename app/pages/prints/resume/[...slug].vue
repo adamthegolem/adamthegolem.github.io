@@ -1,7 +1,11 @@
 <script setup lang="ts">
 const info = useInfoStore()
 const { t } = useLanguageStore()
+const route = useRoute()
 const date = useDateStore()
+const { data: page } = await useAsyncData(route.path, () => {
+  return queryCollection("prints").path(`/prints/${route.path.split('/')[3]}`).first()
+})
 </script>
 <template>
   
@@ -28,8 +32,11 @@ const date = useDateStore()
     </div>
     <div class="flex">
       <ul class=" grow">
+        <li>
+
+        </li>
         <li v-for="item in [
-          {...info.contactInfo.address, to: undefined},
+          {icon: 'lucide:map-pin', label: t('Odense, Denmark||Odense'), to: undefined},
           {...info.contactInfo.phoneNumber, to: undefined},
           {...info.links.email,
             label: 'adamdamgolan@gmail.com'
@@ -37,6 +44,11 @@ const date = useDateStore()
           {...info.links.linkedIn,
             label: info.links.linkedIn.to.split('www.')[1],
           },
+          {
+            label: `${t('Portfolio||Portefølje')}: adamthegolem.studio`,
+            icon: 'lucide:images',
+            to: 'https://adamthegolem.studio'
+          }
         ]">
           <UButton :label="item.label" :icon="item.icon" variant="link" :to="item.to" size="xl"></UButton>
         </li>
@@ -46,7 +58,7 @@ const date = useDateStore()
   </div>
   <UContainer>
     <UPage :ui="{
-      root: 'm-10'
+      root: 'my-10 mx-[5mm]'
     }">
       <UTimeline
         
@@ -60,7 +72,7 @@ const date = useDateStore()
           {
             title: 'Profile||Profil',
             icon: 'i-lucide-user',
-            description: info.profile
+            description: page?.profile || info.profile
           },
           {
             title: 'Educational Background||Uddannelse',
@@ -79,11 +91,13 @@ const date = useDateStore()
           },
           {
             title: 'Tools & Languages||Sprog & værktøj',
-            icon: 'i-lucide-pencil-ruler'
+            icon: 'lucide:pocket-knife',
+            list: ['High level English||Engelsk på højt niveau', 'High level Danish||Dansk på højt niveau', 'Hebrew (high level spoken, low level written)||Hebraisk (mundtligt på højt niveau, skriftligt på lavt niveau)', 'JavaScript, TypeScript, HTML, CSS, Tailwind, Vue, Electron, C#, C++, Nuxt, Node, Git', 'Autodesk Inventor', 'Adobe Photoshop, InDesign, Premiere Pro, Illustrator', 'Blender', 'PrusaSlicer']
           },
           {
             title: 'Free Time||Fritid',
-            icon: 'i-lucide-star'
+            icon: 'i-lucide-star',
+            description: t(info.freeTime)
           },
         ]"
       >
@@ -92,6 +106,9 @@ const date = useDateStore()
         </template>
         <template #description="{item}">
           <p v-if="item.description">{{ t(item.description) }}</p>
+          <ul v-if="item.list" class="list-disc columns-2 pl-8">
+            <li v-for="li in item.list">{{ t(li) }}</li>
+          </ul>
           <div v-if="item.children" class="flex flex-col gap-6">
             <div v-for="child in item.children" class="flex flex-col items-start gap-2">
               <span class="text-lg">
@@ -137,3 +154,48 @@ const date = useDateStore()
     </UPage>
   </UContainer>
 </template>
+<style scoped>
+@media print {
+  @page {
+    margin: 0.60in 0in 0.60in 0in;
+    size: A4;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    @top-left {
+      content: 'CV';
+      background-color: var(--color-primary-50);
+      height: var(--print-header-height);
+      margin-bottom: calc(100% - var(--print-header-height));
+      padding-left: var(--print-margin-x);
+      width: 50%;
+      font-weight: bold;
+    }
+    @top-center {
+      /* content: 'I am top center';
+      font-weight: bold;
+      color: blue; */
+    }
+    @top-right {
+      content: 'Adam M. Golan';
+      background-color: var(--color-primary-50);
+      width: 50%;
+      height: var(--print-header-height);
+      margin-bottom: calc(100% - var(--print-header-height));
+      padding-right: var(--print-margin-x);
+      /* content: 'top right ' counter(page); */
+    }
+    @bottom-right {
+      content: counter(page);
+      padding-right: var(--print-margin-x);
+      background-color: var(--color-primary-50);
+      color: var(--color-primary);
+      height: var(--print-header-height);
+      margin-top: calc(100% - var(--print-header-height));
+      font-weight: bold;
+    }
+  }
+  @page :first {
+    margin-top: 0in;
+  }
+}
+</style>
