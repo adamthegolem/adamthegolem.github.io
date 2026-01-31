@@ -174,6 +174,14 @@ const { data: projects } = await useAsyncData(`${route.path} projects`, () => {
     <UPageSection
       :title="t('Projects||Projekter')"
       icon="i-lucide-folders"
+      :description="t('From problem to solution, and idea to product.||Fra problem til løsning og idé til produkt.')"
+      :links="[
+        {
+          label: t('Read more||Læs mere'),
+          trailingIcon: 'lucide:arrow-right',
+          to: '/projects'
+        }
+      ]"
     >
       <UAccordion
         :items="[

@@ -1,12 +1,12 @@
 ---
-profile: Selvstændig produktudvikler med erfaring i Adobe, grafik og reklame.
+profile: Designer og produktudvikler med erfaring i Adobe, grafik og reklame. Kan udforme skildringer og illustrationer af produkter og tilrette til brugere og målgrupper. Erfaren med projektledelse og administrative værktøjer selvstændigt og i gruppeprojekter.
 ---
 # Produktudvikler med grafisk erfaring
 Som produktudvikler og nyuddannet ingeniør møder jeg enhver opgave med samme indstilling:
 
 <!-- :UBadge{size=xl variant=soft label="Hvad er brugerens behov, og hvordan kan denne løsning bedst opfylde de pågældende krav?"} -->
 
-<div class='rounded-md bg-primary/10 inline-block px-2.5 py-1 text-primary font-medium mb-4'>
+<div class='rounded-md bg-primary/10 inline-block px-2.5 py-1 text-primary font-medium mb-2 text-sm'>
 Hvad er brugerens <b>behov</b>, og hvordan kan denne løsning bedst opfylde de pågældende <b>krav</b>?
 </div>
 

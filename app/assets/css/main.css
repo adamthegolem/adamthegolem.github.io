@@ -28,7 +28,7 @@ html {
 @media print
 {   
     html {
-        zoom: 80%;
+        /* zoom: 80%; */
     }
     .no-print, .no-print *
     {

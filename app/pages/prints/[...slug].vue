@@ -13,10 +13,10 @@ useHead({
 </script>
 <template>
   <UContainer>
-    <UPage class=" px-[10mm] py-5">
+    <UPage class=" px-[5mm] py-3">
       <div class="">
         <ContentRenderer
-          class=" prose-h1:mb-4 prose-h2:mt-3 prose-h2:mb-0 prose-p:mt-1 prose-h1:text-primary prose-h2:text-primary prose-p:mb-4"
+          class=" prose-h1:mb-4 prose-h1:text-3xl prose-h2:mt-3 prose-h2:text-xl prose-h2:mb-0 prose-p:mt-1 prose-h1:text-primary prose-h2:text-primary prose-p:mb-2 prose-p:text-sm prose-p:leading-relaxed"
           v-if="page"
           :value="page"
         ></ContentRenderer>

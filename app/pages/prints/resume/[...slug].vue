@@ -22,19 +22,16 @@ const { data: page } = await useAsyncData(route.path, () => {
       hhh
     </template>
   </UHeader> -->
-  <div class='bg-primary-50 dark:bg-primary-900 p-10 flex flex-col gap-8 text-primary'>
+  <div class='bg-primary-50 dark:bg-primary-900 p-8 flex flex-col gap-8 text-primary'>
     <div class="flex flex-col">
-      <div class="flex text-3xl">
+      <div class="flex text-2xl">
         <span class=" grow font-bold">CV</span>
         <span class=" self-end place-self-end uppercase">Adam M. Golan</span>
       </div>
       <USeparator color="primary"></USeparator>
     </div>
-    <div class="flex">
+    <div class="flex relative">
       <ul class=" grow">
-        <li>
-
-        </li>
         <li v-for="item in [
           {icon: 'lucide:map-pin', label: t('Odense, Denmark||Odense'), to: undefined},
           {...info.contactInfo.phoneNumber, to: undefined},
@@ -46,26 +43,27 @@ const { data: page } = await useAsyncData(route.path, () => {
           },
           {
             label: `${t('Portfolio||Portefølje')}: adamthegolem.studio`,
-            icon: 'lucide:images',
+            icon: 'lucide:file-user',
             to: 'https://adamthegolem.studio'
           }
         ]">
-          <UButton :label="item.label" :icon="item.icon" variant="link" :to="item.to" size="xl"></UButton>
+          <UButton :label="item.label" :icon="item.icon" variant="link" :to="item.to" size="lg"></UButton>
         </li>
       </ul>
-      <NuxtImg src="/img/profile.jpg" class=" size-80 rounded-full border-8 border-white dark:border-neutral-900"></NuxtImg>
+      <NuxtImg src="/img/profile.jpg" class=" size-60 absolute right-0 rounded-full border-8 border-white dark:border-neutral-900 shadow-sm"></NuxtImg>
     </div>
   </div>
   <UContainer>
     <UPage :ui="{
-      root: 'my-10 mx-[5mm]'
+      root: 'my-8 mx-[5mm]'
     }">
       <UTimeline
         
-        size="3xl"
+        size="xl"
         :ui="{
           wrapper: 'mt-2',
           item: 'page-break-inside-avoid',
+          description: 'print:text-xs'
         }"
         :default-value="10"
         :items="[
@@ -102,7 +100,7 @@ const { data: page } = await useAsyncData(route.path, () => {
         ]"
       >
         <template #title="{item}">
-          <span class=" text-2xl font-bold text-primary uppercase">{{ t(item.title) }}</span>
+          <span class=" text-xl font-bold text-primary uppercase">{{ t(item.title) }}</span>
         </template>
         <template #description="{item}">
           <p v-if="item.description">{{ t(item.description) }}</p>
@@ -133,7 +131,8 @@ const { data: page } = await useAsyncData(route.path, () => {
                   variant="soft"
                   :ui="{
                     root: 'w-full bg-primary-50 dark:bg-primary-900',
-                    container: ' sm:p-4'
+                    container: ' sm:p-2 gap-y-2 text-primary',
+                    title: 'text-sm text-primary'
                   }"
                   :title="t(table.title)"
                 >
