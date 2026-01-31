@@ -208,7 +208,7 @@ const { data: projects } = await useAsyncData(`${route.path} projects`, () => {
         :default-value="['0', '1']"
       >
         <template #body="{item}">
-          <div class="grid grid-cols-4 gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
             <!-- {{ projects }} -->
             <UBlogPost
               v-for="project in item.projects.map(id => projects?.find(project => `/projects/${id}` == project.path))"

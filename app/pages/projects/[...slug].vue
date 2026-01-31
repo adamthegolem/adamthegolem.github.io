@@ -114,7 +114,7 @@ console.log(surround.value)
       >
         <template #description>
           <div class="flex flex-col gap-3 justify-start items-start">
-            <div class="flex gap-2">
+            <div class="flex gap-2 flex-wrap">
               <UBadge
                 :label="useDate.timeSpan(project.start, project.end)"
                 icon="i-lucide-calendar"
