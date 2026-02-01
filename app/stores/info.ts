@@ -190,67 +190,92 @@ export const useInfoStore = defineStore("infoStore", () => {
       name: "Tailwind CSS",
       type: SystemType.Language,
       proficiency: 3,
+      description: "Framework for CSS with utility classes.||Framework til CSS med utility classes."
     },
     {
       logo: logoPrefix + 'javascript-js-seeklogo.com.svg',
       name: "JavaScript",
       type: SystemType.Language,
       proficiency: 3,
+      description: "The default programming language of the web.||Standardprogrammeringssproget for internettet."
     },
     {
       logo: logoPrefix + 'Typescript_logo_2020.svg',
       name: "TypeScript",
       type: SystemType.Language,
       proficiency: 2.5,
+      description: "A statically-typed superset of JavaScript.||Et statisk typet superset af JavaScript."
     },
     {
       logo: logoPrefix + 'Vue.js_Logo_2.svg',
       name: "Vue",
       type: SystemType.Language,
-      proficiency: 2.5
+      proficiency: 2.5,
+      description: "My JavaScript framework of choice.||Mit valg af framework til JavaScript."
     },
     {
       logo: logoPrefix + 'nuxt-js-icon.svg',
       name: "Nuxt",
       type: SystemType.Language,
-      proficiency: 2.5
+      proficiency: 2.5,
+      description: "An extended framework of Vue with useful modules.||Et udvidet framework af Vue med brugbare moduler."
     },
     {
       logo: logoPrefix + 'visual-studio-code-seeklogo.com.svg',
       name: "Visual Studio Code",
       type: SystemType.Software,
       proficiency: 3,
+      description: "My IDE of choice.||Mit valg af IDE."
     },
     {
       logo: logoPrefix + 'Unity.svg',
       name: "Unity",
       type: SystemType.Software,
       proficiency: 1.5,
+      description: "A popular game engine.||Et populært game engine."
     },
     {
       logo: logoPrefix + "Arduino_Logo.svg",
       name: "Arduino",
       type: SystemType.Software,
       proficiency: 2.5,
+      description: "Open-source development boards with a designated IDE.||Open-source udviklingskort med skræddersyet IDE."
     },
     {
       logo: logoPrefix + "Logo_C_sharp.svg",
       name: "C#",
       type: SystemType.Language,
       proficiency: 2,
+      description: "A high-level programming language used in Unity and WPF.||Et high-level programmeringssprog brugt i Unity og WPF."
     },
     {
       logo: logoPrefix + "ISO_C++_Logo.svg",
       name: "C++",
       type: SystemType.Language,
       proficiency: 2,
+      description: "A high-level programming language used in development boards like Arduino.||Et high-level programmeringssprog brugt i udviklingskort som Arduino."
     },
     {
       logo: logoPrefix + "Electron_Software_Framework_Logo.svg",
       name: "Electron",
       type: SystemType.Language,
       proficiency: 2.5,
-    }
+      description: "Chromium based app development.||Chromium-baseret app-udvikling."
+    },
+    {
+      logo: logoPrefix + "git-icon-logo.svg",
+      name: "Git",
+      type: SystemType.Language,
+      proficiency: 2.5,
+      description: "Version control system compatible with repositories on GitHub.||Versionskontrolsystem kompatibelt med repositories på GitHub."
+    },
+    {
+      logo: logoPrefix + "nodejs-icon.svg",
+      name: "Node.js",
+      type: SystemType.Language,
+      proficiency: 2.5,
+      description: "JavaScript runtime environment with countless packages available through NPM.||JavaScript runtime-miljø med utallige pakker tilgængelige gennem NPM."
+    },
   ]
   const skills: {
     icon: string,
@@ -281,17 +306,19 @@ export const useInfoStore = defineStore("infoStore", () => {
       id: "mop",
       name: "Materials & Processes||Materialer & processer",
       icon: "i-lucide-factory",
-      description: "The properties and processing methods of materials such as steel, plastic, and aluminum.||Egenskaber samt fremstillings- og bearbejdningsmetoder for materialer som stål, plast og aluminium."
+      description: "The properties and processing methods of materials such as steel, plastic, and aluminum.||Egenskaber samt fremstillings- og bearbejdningsmetoder for materialer som stål, plast og aluminium.",
     },
     {
       id: "stat-mech-dyn",
       name: "Statics, Mechanics, & Dynamics||Statik, mekanik & dynamik",
-      icon: "i-lucide-orbit"
+      icon: "i-lucide-orbit",
+      description: 'Physical properties and calculations of forces and objects, either static or in motion.||Fysiske egenskaber og udregninger af kræfter og objekter, både statisk og i bevægelse.',
     },
     {
       id: "microcontrollers",
       name: "Microcontrollers & Components||Mikrocontrollere & komponenter",
-      icon: "i-lucide-microchip"
+      icon: "i-lucide-microchip",
+      description: "Programming and design of prototypes using electrical components and development boards such as Arduinos.||Programmering og design af prototyper ved brug af elkomponenter og udviklingskort som Arduinoer."
     },
     {
       id: "video-editing",
@@ -308,37 +335,44 @@ export const useInfoStore = defineStore("infoStore", () => {
     {
       id: "webdev",
       name: "Web Development||Webudvikling",
-      icon: "i-lucide-globe"
+      icon: "i-lucide-globe",
+      description: "Design and development of websites and apps, and their UI, using JS/TS, CSS, HTML, and frameworks as well as other additional tools like Vue, Git, and Node.||Design og udvikling af websider og -apps, og deres UI, ved brug af JS/TS, CSS, HTML og frameworks såvel som andre yderligere værktøjer som Vue, Git og Node."
     },
     {
       id: "oop",
       name: "Object-Oriented Programming||Objektorienteret programmering",
-      icon: "i-lucide-braces"
+      icon: "i-lucide-braces",
+      description: "Programming for various purposes structured around objects and classes, using languages such as JavaScript, TypeScript, C++, and C#.||Programmering med diverse formål struktureret omkring objekter og klasser ved brug af sprog som JavaScript, TypeScript, C++ og C#."
     },
     {
       id: "project-management",
       name: "Project Management||Projektledelse",
-      icon: "i-lucide-megaphone"
+      icon: "i-lucide-megaphone",
+      description: "Managing projects and their goals, members, and resources through various administrative tools, such as kanbans, flowcharts, Gantt charts, risk analyses, and viability calculations.||Ledelse af projekter og deres mål, medlemmer og resourcer gennem diverse administrative værktøjer såsom kanbans, flowdiagrammer, Gantt-diagrammer, risikoanalyser og udregninger af økonomiske nøgletal."
     },
     {
       id: "product-rendering",
       name: "Product Rendering||Produktrendering",
-      icon: "i-lucide-wallpaper"
+      icon: "i-lucide-wallpaper",
+      description: "3D rendering and animations of products or prototypes in context using software such as Blender.||3D-rendering og animation af produkter eller prototyper i kontekst ved brug af software som Blender."
     },
     {
       id: "rapid-prototyping",
       name: "Rapid Prototyping",
-      icon: "i-lucide-zap"
+      icon: "i-lucide-zap",
+      description: "Testing ideas and concepts by developing prototypes quickly and inexpensively using CAD, 3D printing, and development boards.||Test af idéer og koncepter ved udvikling af prototyper hurtigt og billigt gennem CAD, 3D-print og udviklingskort."
     },
     {
       id: "interdisciplinary-teamwork",
       name: "Interdisciplinary Teamwork||Tværfagligt gruppearbejde",
-      icon: "i-tabler-users-group"
+      icon: "i-tabler-users-group",
+      description: "Working in teams with engineers from other areas of expertise and with different tools, goals, and ways of communicating.||Arbejde i grupper med ingeniøre fra andre ekspertiseområder og med forskellige værktøjer, mål og kommunikationstyper."
     },
     {
       id: "ipr",
       name: "Intellectual Property Rights||Immaterielle rettigheder",
-      icon: "i-lucide-copyright"
+      icon: "i-lucide-copyright",
+      description: "International IP law, specifically as it pertains to patents, trademarks, design protections, and copyright.||International lov for immaterielle rettigheder, specifikt angående patenter, varemærker, designbeskyttelser og ophavsret."
     },
     {
       id: "ideation",
@@ -351,11 +385,13 @@ export const useInfoStore = defineStore("infoStore", () => {
       name: "3D Tracking||3D-tracking",
       icon: "i-lucide-rotate-3d",
       excludeFromAbout: true,
+      description: "Tracking of objects and their angles of rotation and relative coordinates.||Tracking af objekter og deres rotationsvinkler og relative koordinater."
     },
     {
       id: "workshops",
       name: "Workshops",
-      icon: "i-lucide-pencil-ruler"
+      icon: "i-lucide-pencil-ruler",
+      description: "Designing and conducting workshops to test or ideate on products using design games and other tools.||Design og udførelse af workshops til at teste eller idégenerere på produkter ved brug af designspil og andre værktøjer."
     },
     {
       id: "edm",
@@ -366,7 +402,8 @@ export const useInfoStore = defineStore("infoStore", () => {
     {
       id: "circuit-theory",
       name: "Circuit Theory||Kredsløbsteori",
-      icon: "i-tabler-circuit-cell-plus"
+      icon: "i-tabler-circuit-cell-plus",
+      description: "Designing and calculating circuits through diagrams.||Design og udregning af kredsløb gennem diagrammer."
     },
     {
       id: "mockup-modeling",
@@ -390,6 +427,7 @@ export const useInfoStore = defineStore("infoStore", () => {
       id: "mechanical-components",
       name: "Mechanical Components||Konstruktionskomponenter",
       icon: "i-lucide-cog",
+      description: "Understanding and designing machine elements for constructions, such as gears, springs, ball bearings, and belt and chain drives.||Forståelse for og design af maskineelementer til konstruktioner såsom tandhjul, fjedre, kuglelejer og rem- og kædetræk."
     }
   ]
   const subjects = [
