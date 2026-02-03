@@ -1,6 +1,9 @@
 <script setup lang="ts">
 const info = useInfoStore();
 const {t, language} = useLanguageStore();
+useSeoMeta({
+  title: `${t("About Me||Om mig")} - Adam Golan`
+})
 </script>
 <template>
   <!-- <UContainer><img src="/img/profile.jpg" class=" md:hidden border-2 shadow-lg rounded-xl md:rounded-full aspect-square"></UContainer> -->

@@ -13,6 +13,9 @@ const route = useRoute()
 const { data: projects } = await useAsyncData(`${route.path}-projects`, () => {
   return queryCollection("projects").all()
 })
+useSeoMeta({
+  title: `${t("Experience||Erfaring")} - Adam Golan`
+})
 </script>
 <template>
   <UPageHero

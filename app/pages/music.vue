@@ -114,6 +114,9 @@ interface Site {
   icon: string,
   href?: string
 }
+useSeoMeta({
+  title: `${t("Music||Musik")} - Adam Golan`
+})
 </script>
 <template>
   <UPageHero :title="t('Music||Musik')"

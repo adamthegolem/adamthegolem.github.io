@@ -3,6 +3,9 @@ import type { InputMenuItem } from '@nuxt/ui'
 
 const langStore = useLanguageStore()
 const {t} = langStore
+useSeoMeta({
+  title: `${t("Projects||Projekter")} - Adam Golan`
+})
 const useDate = useDateStore()
 const info = useInfoStore()
 const { stringKeySorter } = useUtilStore()
