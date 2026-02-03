@@ -64,18 +64,16 @@ const {t, language} = useLanguageStore();
             icon: 'i-lucide-code',
             description: t(`I've programmed since middle school with a focus on web development, but touching on machine learning, game development, browser extensions, and microcontrollers as well.||Jeg har programmeret siden 7. klasse med fokus på webudvikling, men jeg er også kommet ind på machine learning, spiludvikling, browser-udvidelser, og mikrocontrollere.`),
             to: '/projects?skills=oop',
-            toLabel: 'See projects||Se projekter',
-            to2: info.links.gitHub.to,
-            to2Icon: info.links.gitHub.icon
+            toLabel: 'See projects here||Se projekter her',
+            link: info.links.gitHub
           },
           {
             title: t('Music||Musik'),
             icon: 'i-lucide-music',
             description: t(`I've always had an interest in music and songwriting, and in 2018 I started producing and recording songs on my computer. I use Reason as my DAW, while keyboard and my own voice are my instruments of choice.||Jeg har altid været interesseret i musik og sangskrivning, og i 2018 begyndte jeg at producere og optage sange på min computer. Jeg bruger Reason som DAW, mens keyboard og min egen stemme er mit valg af instrumenter.`),
             to: '/music',
-            toLabel: 'Take a listen||Lyt en gang',
-            to2: info.links.bandcamp.to,
-            to2Icon: info.links.bandcamp.icon
+            toLabel: 'Take a listen here||Lyt her',
+            link: info.links.bandcamp
           },
           // {
           //   title: t('Creative Writing||Kreativ skrivning'),
@@ -94,7 +92,7 @@ const {t, language} = useLanguageStore();
         }"
       >
         <template #description>
-          <div class="flex flex-col gap-2 items-start">
+          <div class="flex flex-col gap-2 items-start flex-wrap">
             <p>{{ feature.description }}</p>
             <div class="flex gap-2">
               <UButton
@@ -107,12 +105,13 @@ const {t, language} = useLanguageStore();
               >
               </UButton>
               <UButton
-                v-if="feature.to2"
-                :icon="feature.to2Icon"
+                v-if="feature.link"
+                :icon="feature.link.icon"
+                :label="`${t('Or on||Eller på')} ${feature.link.label}`"
                 color="neutral"
                 size="sm"
-                variant="ghost"
-                :to="feature.to2"
+                variant="link"
+                :to="feature.link.to"
                 target="_blank"
               >
 
