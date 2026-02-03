@@ -6,19 +6,39 @@ const {t} = langStore
 const useDate = useDateStore()
 const info = useInfoStore()
 const { stringKeySorter } = useUtilStore()
-const filteredSkills = ref<{label: string, icon: string, id: string}[]>([])
-watch(filteredSkills, () => {
-  localStorage.setItem("filteredSkills", JSON.stringify(filteredSkills.value))
+const filteredSkillsItems = ref<{label: string, icon: string, id: string}[]>([])
+const filteredSkillsIds = computed({
+  get: () => {
+    
+    return filteredSkillsItems.value.map(({id}) => id)
+  },
+  set: (value: string[]) => {
+    filteredSkillsItems.value = value.reduce((acc, id) => {
+      const skill = info.skills.find(skill => skill.id == id)
+      if (skill) {
+        acc.push({
+          ...skill,
+          label: skill?.name
+        })
+      }
+      
+        
+      return acc
+    }, [] as {label: string, icon: string, id: string}[])
+  }
+})
+watch(filteredSkillsIds, () => {
+  localStorage.setItem("filteredSkills", JSON.stringify(filteredSkillsIds.value))
 })
 onMounted(() => {
   const localFilteredSkills = localStorage.getItem("filteredSkills")
   const searchParams = new URL(location.href).searchParams
   const skillsSearchParam = searchParams.get("skills")
   if (localFilteredSkills) {
-    filteredSkills.value = JSON.parse(localFilteredSkills)
-    if (skillsSearchParam) {
-      
-    }
+    filteredSkillsIds.value = JSON.parse(localFilteredSkills)
+  }
+  if (skillsSearchParam) {
+    filteredSkillsIds.value = skillsSearchParam.split('&')
   }
 })
 const projectOrderAscending = ref(false)
@@ -36,8 +56,8 @@ const { data: projects } = await useAsyncData("index-all", () => {
 // }
 const filteredProjects = computed(() => {
   let array = projects.value?.filter(project => {
-    if (filteredSkills.value.length == 0) return true
-    return filteredSkills.value.find(skill => skill.id ? project.skills?.includes(skill.id) : false)
+    if (filteredSkillsIds.value.length == 0) return true
+    return filteredSkillsIds.value.find(skill => skill ? project.skills?.includes(skill) : false)
     // return project.skills?.includes('mop')
   })
   // const includeIndividual = filteredSkills.value.includes(individualProject)
@@ -191,12 +211,12 @@ const filteredProjects = computed(() => {
               class="grow text-ellipsis"
               multiple
               clear
-              v-model="filteredSkills"
-              :data-filled="filteredSkills.length > 0"
+              v-model="filteredSkillsItems"
+              :data-filled="filteredSkillsIds.length > 0"
               icon="i-lucide-filter"
               :items="info.skills.map(x => ({
-                label: t(x.name),
                 icon: x.icon,
+                label: x.name,
                 id: x.id
               })).sort((a, b) => stringKeySorter(a.label, b.label))"
               :placeholder="t('Add skill to filter...||Tilføj færdighed til filter...')"
@@ -205,15 +225,21 @@ const filteredProjects = computed(() => {
                 tagsItemText: 'max-w-40 md:max-w-full'
               }"
             >
+              <template #tags-item-text="{item}">
+                {{ t(item.label) }}
+              </template>
+              <template #item-label="{item}">
+                {{ t(item.label) }}
+              </template>
             </UInputMenu>
             <UTooltip :text="t('Clear all||Ryd alle')">
               <UButton
-                :disabled="filteredSkills.length == 0"
+                :disabled="filteredSkillsIds.length == 0"
                 variant="outline"
                 color="neutral"
                 icon="i-lucide-list-x"
                 class=" text-muted"
-                @click="filteredSkills = []"
+                @click="filteredSkillsIds = []"
               ></UButton>
             </UTooltip>
             <UTooltip class=" text-muted" :text="t(`Sort by date (${projectOrderAscending ? 'ascending' : 'descending'})||Sortér efter dato (${projectOrderAscending ? 'stigende' : 'faldende'})`)">
