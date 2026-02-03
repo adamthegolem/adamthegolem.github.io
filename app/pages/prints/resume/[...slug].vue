@@ -6,6 +6,10 @@ const date = useDateStore()
 const { data: page } = await useAsyncData(route.path, () => {
   return queryCollection("prints").path(`/prints/${route.path.split('/')[3]}`).first()
 })
+const { data: projects } = await useAsyncData(`${route.path}-projects`, () => {
+  return queryCollection("projects").all()
+})
+console.log(page.value?.highlightedSkills)
 </script>
 <template>
   
@@ -119,11 +123,17 @@ const { data: page } = await useAsyncData(route.path, () => {
               <p>{{ t(child.description) }}</p>
               <template v-for="table in [
                 {
-                  list: child.subjects,
+                  list: (child.subjects) ? info.idsToSkills(child.subjects).map(skill => ({
+                    label: skill.name,
+                    highlight: page?.highlightedSkills?.includes(skill.id || '')
+                  })) : undefined,
                   title: 'Subjects||Emner',
                 },
                 {
-                  list: child.projects,
+                  list: (child.projects && projects) ? info.idsToProjects(child.projects, projects).map(project => ({
+                    label: project.title,
+                    highlight: false,
+                  })) : undefined,
                   title: 'Projects||Projekter',
                 }
               ]">
@@ -136,9 +146,9 @@ const { data: page } = await useAsyncData(route.path, () => {
                   }"
                   :title="t(table.title)"
                 >
-                  <ul class=" list-disc columns-2 pl-8">
+                  <ul class=" list-disc columns-2 pl-8 gap-2">
                     <li v-for="tableItem in table.list">
-                      {{ t(tableItem) }}
+                      <span :data-highlight="tableItem.highlight" class=" data-[highlight=true]:font-semibold data-[highlight=true]:underline">{{ t(tableItem.label) }}</span>
                     </li>
                   </ul>
                 </UPageCard>

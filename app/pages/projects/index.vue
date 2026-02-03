@@ -12,8 +12,14 @@ watch(filteredSkills, () => {
 })
 onMounted(() => {
   const localFilteredSkills = localStorage.getItem("filteredSkills")
-  if (localFilteredSkills)
-  filteredSkills.value = JSON.parse(localFilteredSkills)
+  const searchParams = new URL(location.href).searchParams
+  const skillsSearchParam = searchParams.get("skills")
+  if (localFilteredSkills) {
+    filteredSkills.value = JSON.parse(localFilteredSkills)
+    if (skillsSearchParam) {
+      
+    }
+  }
 })
 const projectOrderAscending = ref(false)
 const { data: projects } = await useAsyncData("index-all", () => {

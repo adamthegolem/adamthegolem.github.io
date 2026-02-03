@@ -1,3 +1,5 @@
+import type { ProjectsCollectionItem } from "@nuxt/content"
+
 export const useInfoStore = defineStore("infoStore", () => {
   enum Languages {
     English,
@@ -277,13 +279,14 @@ export const useInfoStore = defineStore("infoStore", () => {
       description: "JavaScript runtime environment with countless packages available through NPM.||JavaScript runtime-miljø med utallige pakker tilgængelige gennem NPM."
     },
   ]
-  const skills: {
+  interface Skill {
     icon: string,
     name: string,
     id: string,
     description?: string,
     excludeFromAbout?: boolean,
-  }[] = [
+  }
+  const skills: Skill[] = [
     {
       id: "cad",
       name: "CAD",
@@ -430,6 +433,22 @@ export const useInfoStore = defineStore("infoStore", () => {
       description: "Understanding and designing machine elements for constructions, such as gears, springs, ball bearings, and belt and chain drives.||Forståelse for og design af maskineelementer til konstruktioner såsom tandhjul, fjedre, kuglelejer og rem- og kædetræk."
     }
   ]
+  function idsToProjects(ids: string[], projects: ProjectsCollectionItem[] | undefined) {
+    if (projects == undefined) return ids.map(id => ({
+      title: id
+    }))
+    return ids.map(id => projects.find(({path}) => `/projects/${id}` == path) || {
+      title: id
+    })
+  }
+  function idsToSkills(ids: string[]) {
+    return ids.map(id1 => skills.find(({id}) => id1 == id) || {
+      name: id1,
+      icon: undefined,
+      id: undefined,
+      description: undefined
+    })
+  }
   const subjects = [
     
   ]
@@ -460,19 +479,33 @@ export const useInfoStore = defineStore("infoStore", () => {
       image: "",
       readMore: "#integrated-design",
       subjects: [
-        "Rapid prototyping",
-        "User-centered design||Brugercentreret design",
-        "Materials & processes||Materialer & processer",
-        "Statics, mechanics, & dynamics||Statik, mekanik & dynamik",
-        "Micro-controllers & components||Mikrocontrollere & komponenter",
-        "CAD",
+        // "Rapid prototyping",
+        // "User-centered design||Brugercentreret design",
+        // "Materials & processes||Materialer & processer",
+        // "Statics, mechanics, & dynamics||Statik, mekanik & dynamik",
+        // "Micro-controllers & components||Mikrocontrollere & komponenter",
+        // "CAD",
+        "rapid-prototyping",
+        "user-centered-design",
+        "mop",
+        "stat-mech-dyn",
+        "microcontrollers",
+        "cad",
+        "project-management",
+        "graphic-design",
       ],
       projects: [
-        "Design of playground equipment||Design af udstyr til legepladser",
-        "Redesign of a kitchen appliance||Redesign af et køkkenredskab",
-        "Redesign of an end-effector for laundry sorting||Redesign af en end-effector til vasketøjssortering",
-        '“Right to Repair”-oriented redesign of an electric kettle||“Right to Repair”-orienteret redesign af en elkedel',
-        "Design of a MIDI controller prototype||Design af en MIDI-kontroller prototype",
+        // "Design of playground equipment||Design af udstyr til legepladser",
+        // "Redesign of a kitchen appliance||Redesign af et køkkenredskab",
+        // "Redesign of an end-effector for laundry sorting||Redesign af en end-effector til vasketøjssortering",
+        // '“Right to Repair”-oriented redesign of an electric kettle||“Right to Repair”-orienteret redesign af en elkedel',
+        // "Design of a MIDI controller prototype||Design af en MIDI-kontroller prototype",
+        "semester-1",
+        "semester-2",
+        "semester-3",
+        "semester-4",
+        "midi-controller",
+        "semester-7",
       ]
     },
     {
@@ -486,12 +519,15 @@ export const useInfoStore = defineStore("infoStore", () => {
       image: "",
       readMore: "#htx",
       subjects: [
-        "Marketing & graphic design||Marketing & grafisk design",
-        "Video & editing||Video & redigering",
-        "Web development||Webudvikling",
-        "Object-oriented programming||Objektorienteret programmering",
-        "Game theory||Spilteori",
-        "Game design in Unity||Spildesign i Unity",
+        "Marketing & Graphic Design||Marketing & grafisk design",
+        // "Video & editing||Video & redigering",
+        "video-editing",
+        // "Web development||Webudvikling",
+        "webdev",
+        // "Object-oriented programming||Objektorienteret programmering",
+        "oop",
+        "Game Theory||Spilteori",
+        "Game Design in Unity||Spildesign i Unity",
       ]
     }
   ]
@@ -546,6 +582,8 @@ export const useInfoStore = defineStore("infoStore", () => {
     links,
     softwareAndSystems,
     skills,
+    idsToSkills,
+    idsToProjects,
     SystemType,
     systemTypes,
     educationalItems,

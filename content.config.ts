@@ -28,7 +28,8 @@ export default defineContentConfig({
       source: 'prints/*.md',
       schema: z.object({
         profile: z.string(),
-      })
+        highlightedSkills: z.array(z.string()),
+      }),
     }),
     companies: defineCollection({
       type: 'data',

@@ -51,32 +51,77 @@ const {t, language} = useLanguageStore();
   <UPageSection :title="t('Interests||Interesser')"
     icon="i-lucide-star"
     :description="t(info.freeTime)"
-    :features="[
-      {
-        title: t('Programming||Programmering'),
-        icon: 'i-lucide-code',
-        description: t(`I've programmed since middle school with a focus on web development, but touching on machine learning, game development, browser extensions, and microcontrollers as well.||Jeg har programmeret siden 7. klasse med fokus på webudvikling, men jeg er også kommet ind på machine learning, spiludvikling, browser-udvidelser, og mikrocontrollere.`)
-      },
-      {
-        title: t('Music||Musik'),
-        icon: 'i-lucide-music',
-        description: t(`I've always had an interest in music and songwriting, and in 2018 I started producing and recording songs on my computer. I use Reason as my DAW, while keyboard and my own voice are my instruments of choice.||Jeg har altid været interesseret i musik og sangskrivning, og i 2018 begyndte jeg at producere og optage sange på min computer. Jeg bruger Reason som DAW, mens keyboard og min egen stemme er mit valg af instrumenter.`)
-      },
-      // {
-      //   title: t('Creative Writing||Kreativ skrivning'),
-      //   icon: 'i-lucide-pencil'
-      // },
-      {
-        title: 'Dungeons & Dragons',
-        // icon: 'i-simple-icons-dungeonsanddragons',
-        icon: 'i-fa-solid-dice-d20',
-        description: t(`Since 2021 I have had a big interest in TTRPGs (role-playing games) like D&D, both as entertainment and as an activity. As a Game Master I plan the game and improvise during it, and I get to use both creative and technical skills.||Siden 2021 jeg har haft stor interesse i TTRPG'er (rollespil) som D&D, både som underholdning og aktivitet. Som Game Master planlægger jeg spillet og improviserer undervejs, og jeg får brugt både mine kreative og tekniske egenskaber.`)
-      }
-    ]"
     :ui="{
-      description: 'hyphens-auto'
+      description: 'hyphens-auto',
+      
     }"
   >
+    <UPageGrid>
+      <UPageFeature
+        v-for="feature in [
+          {
+            title: t('Programming||Programmering'),
+            icon: 'i-lucide-code',
+            description: t(`I've programmed since middle school with a focus on web development, but touching on machine learning, game development, browser extensions, and microcontrollers as well.||Jeg har programmeret siden 7. klasse med fokus på webudvikling, men jeg er også kommet ind på machine learning, spiludvikling, browser-udvidelser, og mikrocontrollere.`),
+            to: '/projects?skills=oop',
+            toLabel: 'See projects||Se projekter',
+            to2: info.links.gitHub.to,
+            to2Icon: info.links.gitHub.icon
+          },
+          {
+            title: t('Music||Musik'),
+            icon: 'i-lucide-music',
+            description: t(`I've always had an interest in music and songwriting, and in 2018 I started producing and recording songs on my computer. I use Reason as my DAW, while keyboard and my own voice are my instruments of choice.||Jeg har altid været interesseret i musik og sangskrivning, og i 2018 begyndte jeg at producere og optage sange på min computer. Jeg bruger Reason som DAW, mens keyboard og min egen stemme er mit valg af instrumenter.`),
+            to: '/music',
+            toLabel: 'Take a listen||Lyt en gang',
+            to2: info.links.bandcamp.to,
+            to2Icon: info.links.bandcamp.icon
+          },
+          // {
+          //   title: t('Creative Writing||Kreativ skrivning'),
+          //   icon: 'i-lucide-pencil'
+          // },
+          {
+            title: 'Dungeons & Dragons',
+            // icon: 'i-simple-icons-dungeonsanddragons',
+            icon: 'i-fa-solid-dice-d20',
+            description: t(`Since 2021 I have had a big interest in TTRPGs (role-playing games) like D&D, both as entertainment and as an activity. As a Game Master I plan the game and improvise during it, and I get to use both creative and technical skills.||Siden 2021 jeg har haft stor interesse i TTRPG'er (rollespil) som D&D, både som underholdning og aktivitet. Som Game Master planlægger jeg spillet og improviserer undervejs, og jeg får brugt både mine kreative og tekniske egenskaber.`)
+          }
+        ]"
+        v-bind="{...feature, to: undefined}"
+        :ui="{
+          // root: 'hover:bg-elevated p-3'
+        }"
+      >
+        <template #description>
+          <div class="flex flex-col gap-2 items-start">
+            <p>{{ feature.description }}</p>
+            <div class="flex gap-2">
+              <UButton
+                v-if="feature.to"
+                :to="feature.to"
+                :label="t(feature.toLabel)"
+                variant="soft"
+                trailing-icon="lucide:arrow-right"
+                size="sm"
+              >
+              </UButton>
+              <UButton
+                v-if="feature.to2"
+                :icon="feature.to2Icon"
+                color="neutral"
+                size="sm"
+                variant="ghost"
+                :to="feature.to2"
+                target="_blank"
+              >
+
+              </UButton>
+            </div>
+          </div>
+        </template>
+      </UPageFeature>
+    </UPageGrid>
   </UPageSection>
   <UPageSection
     id="tools"

@@ -170,7 +170,7 @@ console.log(surround.value)
           <template #skills>
             <div class="flex items-start gap-2 flex-wrap">
               <UPopover
-                v-for="skill in project.skills.map(id1 => useInfo.skills.find(({id}) => id1 == id))"
+                v-for="skill in useInfo.idsToSkills(project.skills)"
                 mode="click"
                 :content="{
                   align: 'start'

@@ -9,6 +9,10 @@ const {t} = langStore
 const info = useInfoStore()
 const { jobItems, educationalItems } = info
 const date = useDateStore()
+const route = useRoute()
+const { data: projects } = await useAsyncData(`${route.path}-projects`, () => {
+  return queryCollection("projects").all()
+})
 </script>
 <template>
   <UPageHero
@@ -123,7 +127,7 @@ const date = useDateStore()
             >
               <template #description>
                 <ul class=" list-disc ml-6">
-                  <li v-for="subject in item.subjects">{{ t(subject) }}</li>
+                  <li v-for="subject in info.idsToSkills(item.subjects)">{{ t(subject?.name) }}</li>
                 </ul>
               </template>
             </UPageCard>
@@ -135,7 +139,7 @@ const date = useDateStore()
             >
               <template #description>
                 <ul class=" list-disc ml-6">
-                  <li v-for="project in item.projects">{{ t(project) }}</li>
+                  <li v-for="project in info.idsToProjects(item.projects, projects)">{{ t(project.title) }}</li>
                 </ul>
               </template>
             </UPageCard>
