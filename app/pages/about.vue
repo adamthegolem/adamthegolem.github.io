@@ -2,7 +2,7 @@
 const info = useInfoStore();
 const {t, language} = useLanguageStore();
 useSeoMeta({
-  title: `${t("About Me||Om mig")} - Adam Golan`
+  title: computed(() => `${t("About Me||Om mig")} - Adam Golan`)
 })
 </script>
 <template>

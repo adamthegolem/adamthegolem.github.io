@@ -115,7 +115,7 @@ interface Site {
   href?: string
 }
 useSeoMeta({
-  title: `${t("Music||Musik")} - Adam Golan`
+  title: computed(() => `${t("Music||Musik")} - Adam Golan`)
 })
 </script>
 <template>
