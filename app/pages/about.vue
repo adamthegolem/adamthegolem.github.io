@@ -68,7 +68,9 @@ useSeoMeta({
             description: t(`I've programmed since middle school with a focus on web development, but touching on machine learning, game development, browser extensions, and microcontrollers as well.||Jeg har programmeret siden 7. klasse med fokus på webudvikling, men jeg er også kommet ind på machine learning, spiludvikling, browser-udvidelser, og mikrocontrollere.`),
             to: '/projects?skills=oop',
             toLabel: 'See projects here||Se projekter her',
-            link: info.links.gitHub
+            link: info.links.gitHub,
+            color: 'primary' as const,
+            textColor: 'text-primary'
           },
           {
             title: t('Music||Musik'),
@@ -76,7 +78,9 @@ useSeoMeta({
             description: t(`I've always had an interest in music and songwriting, and in 2018 I started producing and recording songs on my computer. I use Reason as my DAW, while keyboard and my own voice are my instruments of choice.||Jeg har altid været interesseret i musik og sangskrivning, og i 2018 begyndte jeg at producere og optage sange på min computer. Jeg bruger Reason som DAW, mens keyboard og min egen stemme er mit valg af instrumenter.`),
             to: '/music',
             toLabel: 'Take a listen here||Lyt her',
-            link: info.links.bandcamp
+            link: info.links.bandcamp,
+            color: 'secondary' as const,
+            textColor: 'text-secondary'
           },
           // {
           //   title: t('Creative Writing||Kreativ skrivning'),
@@ -86,12 +90,14 @@ useSeoMeta({
             title: 'Dungeons & Dragons',
             // icon: 'i-simple-icons-dungeonsanddragons',
             icon: 'i-fa-solid-dice-d20',
-            description: t(`Since 2021 I have had a big interest in TTRPGs (role-playing games) like D&D, both as entertainment and as an activity. As a Game Master I plan the game and improvise during it, and I get to use both creative and technical skills.||Siden 2021 jeg har haft stor interesse i TTRPG'er (rollespil) som D&D, både som underholdning og aktivitet. Som Game Master planlægger jeg spillet og improviserer undervejs, og jeg får brugt både mine kreative og tekniske egenskaber.`)
+            description: t(`Since 2021 I have had a big interest in TTRPGs (role-playing games) like D&D, both as entertainment and as an activity. As a Game Master I plan the game and improvise during it, and I get to use both creative and technical skills.||Siden 2021 jeg har haft stor interesse i TTRPG'er (rollespil) som D&D, både som underholdning og aktivitet. Som Game Master planlægger jeg spillet og improviserer undervejs, og jeg får brugt både mine kreative og tekniske egenskaber.`),
+            color: 'tertiary',
+            textColor: 'text-tertiary'
           }
         ]"
         v-bind="{...feature, to: undefined}"
         :ui="{
-          // root: 'hover:bg-elevated p-3'
+          leadingIcon: feature.textColor
         }"
       >
         <template #description>
@@ -105,6 +111,7 @@ useSeoMeta({
                 variant="soft"
                 trailing-icon="lucide:arrow-right"
                 size="sm"
+                :color="feature.color"
               >
               </UButton>
               <UButton

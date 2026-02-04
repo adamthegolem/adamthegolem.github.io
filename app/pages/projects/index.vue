@@ -162,7 +162,7 @@ const filteredProjects = computed(() => {
       {
         title: t('Product Development||Produktudvikling'),
         icon: 'i-lucide-package-open',
-        description: t('These projects all to some extent center around developing products, whether through redesign or innovation from scratch.||Disse projekter er alle til en vis grad centreret om udvikling af produkter ved redesign eller innovation fra bunden.')
+        description: t('These projects all to some extent center around developing products, whether through redesign or innovation from scratch.||Disse projekter er alle til en vis grad centreret om udvikling af produkter ved redesign eller innovation fra bunden.'),
       },
       {
         title: t('Rapid Prototyping'),
@@ -191,6 +191,54 @@ const filteredProjects = computed(() => {
       }
     ]"
   >
+    <template #features>
+      <UPageFeature
+        v-for="feature in [
+          {
+            title: t('Product Development||Produktudvikling'),
+            icon: 'i-lucide-package-open',
+            description: t('These projects all to some extent center around developing products, whether through redesign or innovation from scratch.||Disse projekter er alle til en vis grad centreret om udvikling af produkter ved redesign eller innovation fra bunden.'),
+            color: 'text-primary'
+          },
+          {
+            title: t('Rapid Prototyping'),
+            icon: 'i-lucide-zap',
+            description: t('In many of the projects, rapid prototyping plays a large role in the form of CAD, 3D printing, and microcontrollers.||I mange af projekterne spiller rapid protoryping en stor rolle i form af CAD, 3D-print og mikrocontrollere.'),
+            color: 'text-secondary'
+          },
+          {
+            title: t('Teamwork||Gruppearbejde'),
+            icon: 'i-tabler-users-group',
+            description: t('Most projects are done collaboratively, increasingly across disciplines and specialties.||De fleste projekter udføres i fællesskab og i stigende grad på tværs af discipliner.'),
+            color: 'text-tertiary'
+          },
+          {
+            title: t('Graphic Design||Grafisk design'),
+            icon: 'i-lucide-spline-pointer',
+            description: t('Every project has an element of graphic design, through reports, posters, or videos.||Hvert projekt har et element af grafisk design via rapporter, plakater eller videoer.'),
+            color: 'text-primary'
+          },
+          {
+            title: t('Programming||Programmering'),
+            icon: 'i-lucide-code',
+            description: t('Programming plays an increasingly important role in projects through different forms of prototyping.||Programmering spiller i stigende grad en vigtig rolle gennem forskellige former for prototyping.'),
+            color: 'text-secondary'
+          },
+          {
+            title: t('Project Management||Projektledelse'),
+            icon: 'i-lucide-megaphone',
+            description: t('In many projects I have taken on a partial management role, with a focus on administrative tasks.||I mange projekter har jeg påtaget mig en delvis projektledelsesrolle med fokus på administrative opgaver.'),
+            color: 'text-tertiary'
+          },
+        ]"
+        v-bind="feature"
+        :ui="{
+          // leadingIcon: `${feature.color}`
+        }"
+      >
+
+      </UPageFeature>
+    </template>
     <!-- <UPage>
       <template #left>
         <UPageAside>

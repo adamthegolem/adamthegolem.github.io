@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { PageFeatureProps } from '@nuxt/ui';
 import { useInfoStore } from '../stores/info';
 
 const info = useInfoStore();
@@ -8,6 +9,72 @@ const { softwareAndSystems } = info;
 const route = useRoute()
 const { data: projects } = await useAsyncData(`${route.path} projects`, () => {
   return queryCollection("projects").order("start", "DESC").all()
+})
+// const traits = ref<PageFeatureProps[]>([
+//   {
+//     title: t("Generalist||Generalist"),
+//     icon: "lucide:shapes"
+//   },
+//   {
+//     title: t("Specialist||Specialist"),
+//     icon: "lucide-lab:crosshair-2"
+//   },
+//   {
+//     title: t("Ideator||Idémand"),
+//     icon: "lucide:lightbulb",
+//   },
+//   {
+//     title: t("Detail-Oriented||Detaljeorienteret"),
+//     icon: "lucide:microscope"
+//   }
+// ])
+const traits = computed(() => {
+  return [
+    {
+      title: t('Generalist||Generalist'),
+      icon: 'lucide:shapes',
+      description: t('Jack of all trades with an understanding of a wide variety of engineering and design concepts.||Tusindkunstner med forståelse for en bred vifte af ingeniør- og designkundskaber.'),
+      pair: 0
+    },
+    {
+      title: t('Specialist||Specialist'),
+      icon: 'lucide:target',
+      description: t('Focused and digs deep when a project requires that a heavy, technical task be done.||Fokuseret og går i dybden, når et projekt kræver, at en tung teknisk opgave udføres.'),
+      pair: 0,
+    },,
+    {
+      title: t('Ideas||Idéer'),
+      icon: 'lucide:lightbulb',
+      description: t('Out-of-the-box thinker with a systematic approach to creative ideation.||Tænker ud af boksen og går systematisk til værks med kreativ idégenerering.'),
+      pair: 1,
+    },
+    {
+      title: t('Details||Detaljer'),
+      icon: 'lucide:cone',
+      description: t('Thorough and analytical with a focus on the particulars and finalizing projects.||Grundig og analytisk med fokus på nuancer og at tilendebringe projekter.'),
+      pair: 1,
+    },,
+    {
+      title: t('Design||Design'),
+      icon: 'lucide:brush',
+      description: t('An eye for the visual, and a flair for form that informs function with the user in mind.||Et øje for det visuelle og flair for form, der præger funktion med brugeren i centrum.'),
+      pair: 2,
+    },
+    {
+      title: t('Tech||Teknik'),
+      icon: 'lucide:wrench',
+      description: t('Proficient with technical tools to develop, calculate, and test real solutions.||Erfaren med tekniske værktøjer til at udvikle, udregne og teste reelle løsninger.'),
+      pair: 2
+    },
+    
+  ]
+})
+const traitPairs = computed(() => {
+  const colors = ['primary' as const, 'secondary' as const, 'tertiary' as const]
+  return colors.map((color, i) => ({
+    color,
+    traits: traits.value.filter(trait => trait?.pair == i)
+  }))
 })
 </script>
 <template>
@@ -45,7 +112,7 @@ const { data: projects } = await useAsyncData(`${route.path} projects`, () => {
         <p>{{ t(info.profile) }}</p>
         <div class="flex justify-center gap-3 flex-wrap">
           <UTooltip text="Location">
-            <UBadge :label="t('Odense, Denmark||Odense, Danmark')"
+            <UBadge :label="t('Odense, Denmark||Odense')"
               icon="i-lucide-map-pin"
               variant="subtle"
             >
@@ -120,6 +187,84 @@ const { data: projects } = await useAsyncData(`${route.path} projects`, () => {
         </UFieldGroup> -->
       </template>
     </UPageHero>
+    <!-- <UContainer class=" pb-20">
+      <UPageGrid>
+        <UPageFeature
+          v-for="trait in traits"
+          v-bind="trait"
+        >
+        </UPageFeature>
+      </UPageGrid>
+    </UContainer> -->
+    <!-- <UContainer class=" pb-20">
+      <UPageGrid>
+        <div v-for="pair in [[0, 1], [2, 3], [4, 5]]" class="flex">
+          <UPageFeature
+            v-for="trait in pair.map(i => traits[i])"
+            v-bind="trait"
+          >
+          </UPageFeature>
+        </div>
+      </UPageGrid>
+    </UContainer> -->
+    <UContainer>
+      <!-- <div class="grid grid-cols-3 gap-6 mb-20"> -->
+      <UPageGrid class="mb-20">
+        <!-- <UCard class=" md:mx-30"
+          variant="soft"
+          v-for="traitPair in traits"
+          :ui="{
+            body: 'flex md:flex-row flex-col gap-3'
+          }"
+        >
+          <UPageFeature
+            v-bind="traitPair[0]"
+            class=" flex-3"
+          >
+          </UPageFeature>
+          <USeparator orientation="vertical" class="h-auto md:flex hidden"></USeparator>
+          <USeparator class="md:hidden"></USeparator>
+          <UPageFeature
+            v-bind="traitPair[1]"
+            class=" flex-3"
+          >
+
+          </UPageFeature>
+        </UCard> -->
+        <UPageCard class="group"
+          v-for="traitPair in traitPairs"
+          spotlight
+          :spotlight-color="traitPair.color"
+          :ui="{
+            // spotlight: 'group-hover:animate-pulse'
+            spotlight: 'bg-default md:bg-default/90'
+          }"
+        >
+          <div class="flex flex-col gap-4">
+            <UPageFeature
+              v-for="trait in traitPair.traits"
+              class=" flex-1"
+              v-bind="trait"
+              :ui="{
+                leadingIcon: 'text-default',
+                description: 'hyphen-auto'
+              }"
+            >
+              <template #leading>
+                <UIcon :name="trait?.icon" :data-color="traitPair.color" class=" size-5 data-[color=primary]:text-primary data-[color=secondary]:text-secondary data-[color=tertiary]:text-tertiary"></UIcon>
+              </template>
+            </UPageFeature>
+          </div>
+          <!-- <UPageFeature
+            v-bind="traitPair.pair[1]"
+            class=" flex-3"
+          > -->
+
+          <!-- </UPageFeature> -->
+        </UPageCard>
+      </UPageGrid>
+      <USeparator orientation="vertical"></USeparator>
+    </UContainer>
     <USeparator></USeparator>
     <UPageSection
       :title="t('Skills & Tools||Færdigheder & værktøjer')"
@@ -149,7 +294,7 @@ const { data: projects } = await useAsyncData(`${route.path} projects`, () => {
           ></UIcon>
         </UTooltip> -->
         <UBadge
-          v-for="skill in list"
+          v-for="(skill, index) in list"
           :icon="skill.icon"
           size="xl"
           variant="soft"

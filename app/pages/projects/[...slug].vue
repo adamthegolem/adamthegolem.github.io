@@ -123,7 +123,7 @@ console.log(surround.value)
               >
               </UBadge>
               <UBadge
-                :color="project.individual ? 'secondary' : 'primary'"
+                :color="project.individual ? 'tertiary' : 'secondary'"
                 variant="soft"
                 :label="project.individual ? t('Individual Project||Selvstændigt projekt') : t('Team Project||Gruppeprojekt')"
                 :icon="project.individual ? 'i-lucide-user-star' : 'i-lucide-users'"
