@@ -90,7 +90,7 @@ useSeoMeta({
             title: 'Dungeons & Dragons',
             // icon: 'i-simple-icons-dungeonsanddragons',
             icon: 'i-fa-solid-dice-d20',
-            description: t(`Since 2021 I have had a big interest in TTRPGs (role-playing games) like D&D, both as entertainment and as an activity. As a Game Master I plan the game and improvise during it, and I get to use both creative and technical skills.||Siden 2021 jeg har haft stor interesse i TTRPG'er (rollespil) som D&D, både som underholdning og aktivitet. Som Game Master planlægger jeg spillet og improviserer undervejs, og jeg får brugt både mine kreative og tekniske egenskaber.`),
+            description: t(`Since 2021 I have had a big interest in TTRPGs (role-playing games) like D&D, both as entertainment and as an activity. As a Game Master I plan the game and improvise during it, and I get to use both creative and technical skills.||Siden 2021 har jeg haft stor interesse i TTRPG'er (rollespil) som D&D, både som underholdning og aktivitet. Som Game Master planlægger jeg spillet og improviserer undervejs, og jeg får brugt både mine kreative og tekniske egenskaber.`),
             color: 'tertiary',
             textColor: 'text-tertiary'
           }
