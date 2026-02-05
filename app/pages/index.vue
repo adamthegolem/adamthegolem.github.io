@@ -5,7 +5,7 @@ import { useInfoStore } from '../stores/info';
 const info = useInfoStore();
 const langStore = useLanguageStore()
 const { t } = langStore
-const { softwareAndSystems } = info;
+const { tools: softwareAndSystems } = info;
 const route = useRoute()
 const { data: projects } = await useAsyncData(`${route.path} projects`, () => {
   return queryCollection("projects").order("start", "DESC").all()
@@ -307,8 +307,14 @@ const traitPairs = computed(() => {
           v-for="logo in softwareAndSystems"
           :text="logo.name"
         >
+          <UIcon
+            v-if="logo.logo"
+            :name="logo.logo"
+            class="size-10 md:size-20"
+          ></UIcon>
           <img
-            :src="logo.logo"
+            v-else-if="logo.logoImg"
+            :src="logo.logoImg"
             class="h-10 md:h-20"
             :aria-label="logo.name"
           >

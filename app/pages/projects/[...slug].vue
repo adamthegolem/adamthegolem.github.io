@@ -186,9 +186,10 @@ console.log(surround.value)
                 >
                 </UBadge>
                 <template #content>
-                  <div v-if="skill?.description" class="flex p-2 max-w-80 text-toned text-sm">
+                  <!-- <div v-if="skill?.description" class="flex p-2 max-w-80 text-toned text-sm">
                     <p>{{ t(skill?.description) }}</p>
-                  </div>
+                  </div> -->
+                  <PopoverContainer :text="skill.description"></PopoverContainer>
                 </template>
               </UPopover>
               <UButton :label="t('See more||Se mere')" size="xs" variant="link" to="/about#tools" trailing-icon="i-lucide-arrow-right">

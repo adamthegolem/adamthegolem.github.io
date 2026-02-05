@@ -70,15 +70,21 @@ export const useInfoStore = defineStore("infoStore", () => {
       icon: "i-lucide-laptop-minimal"
     }
   ]
-  const softwareAndSystems: {
-    logo: string,
+  const tools: {
+    id?: string,
+    logo?: string,
+    logoImg?: string,
+    icon?: string,
     name: string,
     type: SystemType,
     description?: string,
     proficiency?: number,
   }[] = [
     {
-      logo: logoPrefix + 'Adobe_InDesign_CC_icon.svg',
+      id: "indesign",
+      logoImg: logoPrefix + 'Adobe_InDesign_CC_icon.svg',
+      logo: "logos:adobe-indesign",
+      icon: "streamline-logos:adobe-indesign-logo-solid",
       name: "Adobe InDesign",
       type: SystemType.Software,
       // description: t(
@@ -89,7 +95,10 @@ export const useInfoStore = defineStore("infoStore", () => {
       proficiency: 3
     },
     {
-      logo: logoPrefix + 'adobe-illustrator-seeklogo.com.svg',
+      id: "illustrator",
+      logoImg: logoPrefix + 'adobe-illustrator-seeklogo.com.svg',
+      logo: "logos:adobe-illustrator",
+      icon: "streamline-logos:adobe-illustrator-logo-solid",
       name: "Adobe Illustrator",
       type: SystemType.Software,
       // description: t(
@@ -100,7 +109,10 @@ export const useInfoStore = defineStore("infoStore", () => {
       proficiency: 2.5
     },
     {
-      logo: logoPrefix + 'Adobe_Premiere_Pro_CC_icon.svg',
+      id: "premiere-pro",
+      logoImg: logoPrefix + 'Adobe_Premiere_Pro_CC_icon.svg',
+      logo: "logos:adobe-premiere",
+      icon: "streamline-logos:adobe-premiere-pro-logo-solid",
       name: "Adobe Premiere Pro",
       type: SystemType.Software,
       // description: t(
@@ -111,7 +123,10 @@ export const useInfoStore = defineStore("infoStore", () => {
       proficiency: 2.5,
     },
     {
-      logo: logoPrefix + 'adobe-photoshop-seeklogo.com.svg',
+      id: "photoshop",
+      logoImg: logoPrefix + 'adobe-photoshop-seeklogo.com.svg',
+      logo: "logos:adobe-photoshop",
+      icon: "streamline-logos:adobe-photoshop-logo-solid",
       name: "Adobe Photoshop",
       type: SystemType.Software,
       // description: t(
@@ -122,7 +137,9 @@ export const useInfoStore = defineStore("infoStore", () => {
       proficiency: 2.5,
     },
     {
-      logo: logoPrefix + 'Affinity_(App)_Logo.svg',
+      id: "affinity",
+      logoImg: logoPrefix + 'Affinity_(App)_Logo.svg',
+      logo: "vscode-icons:file-type-affinity",
       name: "Affinity",
       type: SystemType.Software,
       // description: t(
@@ -133,7 +150,10 @@ export const useInfoStore = defineStore("infoStore", () => {
       proficiency: 2,
     },
     {
-      logo: logoPrefix + 'autodesk-inventor-seeklogo.svg',
+      id: "inventor",
+      logoImg: logoPrefix + 'autodesk-inventor-seeklogo.svg',
+      logo: "custom:inventor",
+      icon: "simple-icons:autodesk",
       name: "Autodesk Inventor",
       type: SystemType.Software,
       // description: t(
@@ -144,7 +164,10 @@ export const useInfoStore = defineStore("infoStore", () => {
       proficiency: 2.5
     },
     {
-      logo: logoPrefix + 'blender_logo.svg',
+      id: "blender",
+      logoImg: logoPrefix + 'blender_logo.svg',
+      logo: "logos:blender",
+      icon: "file-icons:blender",
       name: "Blender",
       type: SystemType.Software,
       // description: t(
@@ -155,7 +178,10 @@ export const useInfoStore = defineStore("infoStore", () => {
       proficiency: 2.5
     },
     {
-      logo: logoPrefix + 'DaVinci_Resolve_Studio.png',
+      id: "davinci",
+      logoImg: logoPrefix + 'DaVinci_Resolve_Studio.png',
+      logo: "custom:davinci",
+      icon: "simple-icons:davinciresolve",
       name: "DaVinci Resolve",
       type: SystemType.Software,
       // description: t(
@@ -166,7 +192,10 @@ export const useInfoStore = defineStore("infoStore", () => {
       proficiency: 2
     },
     {
-      logo: logoPrefix + 'html5-without-wordmark-color.svg',
+      id: "html",
+      logoImg: logoPrefix + 'html5-without-wordmark-color.svg',
+      logo: "devicon:html5",
+      icon: "devicon-plain:html5",
       name: "HTML",
       type: SystemType.Language,
       // description: t(
@@ -177,7 +206,10 @@ export const useInfoStore = defineStore("infoStore", () => {
       proficiency: 3,
     },
     {
-      logo: logoPrefix + 'Official_CSS_Logo.svg',
+      id: "css",
+      logoImg: logoPrefix + 'Official_CSS_Logo.svg',
+      logo: "devicon:css",
+      icon: "devicon-plain:css",
       name: "CSS",
       type: SystemType.Language,
       // description: t(
@@ -188,97 +220,159 @@ export const useInfoStore = defineStore("infoStore", () => {
       proficiency: 3,
     },
     {
-      logo: logoPrefix + 'Tailwind_CSS_Logo.svg',
+      id: "tailwind",
+      logoImg: logoPrefix + 'Tailwind_CSS_Logo.svg',
+      logo: "devicon:tailwindcss",
+      icon: "simple-icons:tailwindcss",
       name: "Tailwind CSS",
       type: SystemType.Language,
       proficiency: 3,
       description: "Framework for CSS with utility classes.||Framework til CSS med utility classes."
     },
     {
-      logo: logoPrefix + 'javascript-js-seeklogo.com.svg',
+      id: "js",
+      logoImg: logoPrefix + 'javascript-js-seeklogo.com.svg',
+      logo: "logos:javascript",
+      icon: "simple-icons:javascript",
       name: "JavaScript",
       type: SystemType.Language,
       proficiency: 3,
       description: "The default programming language of the web.||Standardprogrammeringssproget for internettet."
     },
     {
-      logo: logoPrefix + 'Typescript_logo_2020.svg',
+      id: "ts",
+      logoImg: logoPrefix + 'Typescript_logo_2020.svg',
+      logo: "devicon:typescript",
+      icon: "devicon-plain:typescript",
       name: "TypeScript",
       type: SystemType.Language,
       proficiency: 2.5,
       description: "A statically-typed superset of JavaScript.||Et statisk typet superset af JavaScript."
     },
     {
-      logo: logoPrefix + 'Vue.js_Logo_2.svg',
+      id: "vue",
+      logoImg: logoPrefix + 'Vue.js_Logo_2.svg',
+      logo: "logos:vue",
+      icon: "ion:logo-vue",
       name: "Vue",
       type: SystemType.Language,
       proficiency: 2.5,
       description: "My JavaScript framework of choice.||Mit valg af framework til JavaScript."
     },
     {
-      logo: logoPrefix + 'nuxt-js-icon.svg',
+      id: "nuxt",
+      logoImg: logoPrefix + 'nuxt-js-icon.svg',
+      logo: "devicon:nuxt",
+      icon: "simple-icons:nuxt",
       name: "Nuxt",
       type: SystemType.Language,
       proficiency: 2.5,
       description: "An extended framework of Vue with useful modules.||Et udvidet framework af Vue med brugbare moduler."
     },
     {
-      logo: logoPrefix + 'visual-studio-code-seeklogo.com.svg',
+      id: "vs-code",
+      logoImg: logoPrefix + 'visual-studio-code-seeklogo.com.svg',
+      logo: "devicon:vscode",
       name: "Visual Studio Code",
+      icon: "devicon-plain:vscode",
       type: SystemType.Software,
       proficiency: 3,
       description: "My IDE of choice.||Mit valg af IDE."
     },
     {
-      logo: logoPrefix + 'Unity.svg',
+      id: "unity",
+      logoImg: logoPrefix + 'Unity.svg',
+      logo: "devicon:unity",
+      icon: "devicon-plain:unity",
       name: "Unity",
       type: SystemType.Software,
       proficiency: 1.5,
       description: "A popular game engine.||Et populært game engine."
     },
     {
-      logo: logoPrefix + "Arduino_Logo.svg",
+      id: "arduino",
+      logoImg: logoPrefix + "Arduino_Logo.svg",
+      logo: "skill-icons:arduino",
+      icon: "simple-icons:arduino",
       name: "Arduino",
       type: SystemType.Software,
       proficiency: 2.5,
       description: "Open-source development boards with a designated IDE.||Open-source udviklingskort med skræddersyet IDE."
     },
     {
-      logo: logoPrefix + "Logo_C_sharp.svg",
+      id: "cs",
+      logoImg: logoPrefix + "Logo_C_sharp.svg",
+      logo: "devicon:csharp",
+      icon: "devicon-plain:csharp",
       name: "C#",
       type: SystemType.Language,
       proficiency: 2,
       description: "A high-level programming language used in Unity and WPF.||Et high-level programmeringssprog brugt i Unity og WPF."
     },
     {
-      logo: logoPrefix + "ISO_C++_Logo.svg",
+      id: "cpp",
+      logoImg: logoPrefix + "ISO_C++_Logo.svg",
+      logo: "devicon:cplusplus",
+      icon: "devicon-plain:cplusplus",
       name: "C++",
       type: SystemType.Language,
       proficiency: 2,
       description: "A high-level programming language used in development boards like Arduino.||Et high-level programmeringssprog brugt i udviklingskort som Arduino."
     },
     {
-      logo: logoPrefix + "Electron_Software_Framework_Logo.svg",
+      id: "electron",
+      logoImg: logoPrefix + "Electron_Software_Framework_Logo.svg",
+      logo: "skill-icons:electron",
+      icon: "file-icons:electron",
       name: "Electron",
       type: SystemType.Language,
       proficiency: 2.5,
       description: "Chromium based app development.||Chromium-baseret app-udvikling."
     },
     {
-      logo: logoPrefix + "git-icon-logo.svg",
+      id: "git",
+      logoImg: logoPrefix + "git-icon-logo.svg",
+      logo: "devicon:git",
+      icon: "devicon-plain:git",
       name: "Git",
       type: SystemType.Language,
       proficiency: 2.5,
       description: "Version control system compatible with repositories on GitHub.||Versionskontrolsystem kompatibelt med repositories på GitHub."
     },
     {
-      logo: logoPrefix + "nodejs-icon.svg",
+      id: "node",
+      logoImg: logoPrefix + "nodejs-icon.svg",
+      logo: "devicon:nodejs",
+      icon: "akar-icons:node-fill",
       name: "Node.js",
       type: SystemType.Language,
       proficiency: 2.5,
       description: "JavaScript runtime environment with countless packages available through NPM.||JavaScript runtime-miljø med utallige pakker tilgængelige gennem NPM."
     },
+    {
+      id: "reason",
+      // logoImg: logoPrefix + "nodejs-icon.svg",
+      logo: "custom:reason",
+      icon: "simple-icons:reasonstudios",
+      name: "Reason",
+      type: SystemType.Software,
+      proficiency: 3,
+      description: "Digital Audio Workstation with skeumorphic UI and plenty of synths.||Digital Audo Workstation med skeumorfisk brugerflade og rigeligt med synths."
+    },
+    {
+      id: "obsidian",
+      // logoImg: logoPrefix + "nodejs-icon.svg",
+      logo: "logos:obsidian-icon",
+      icon: "simple-icons:obsidian",
+      name: "Obsidian",
+      type: SystemType.Software,
+      proficiency: 3,
+      description: "Advanced note-taking written in local markdown with plugins for customization.||Forhøjet notetagning skrevet i lokal markdown med udvidelser til tilpasning."
+    },
   ]
+  function toolFromId(id: string) {
+    return tools.find(tool => tool.id == id)
+  }
   interface Skill {
     icon: string,
     name: string,
@@ -580,7 +674,8 @@ export const useInfoStore = defineStore("infoStore", () => {
   ]
   return {
     links,
-    softwareAndSystems,
+    tools,
+    toolFromId,
     skills,
     idsToSkills,
     idsToProjects,

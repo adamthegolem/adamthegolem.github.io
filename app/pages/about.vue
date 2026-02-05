@@ -61,10 +61,13 @@ useSeoMeta({
   >
     <UPageGrid>
       <UPageFeature
+        class="group"
         v-for="feature in [
           {
             title: t('Programming||Programmering'),
+            tool: info.toolFromId('vs-code'),
             icon: 'i-lucide-code',
+            // toolIcon: 'logos:visual-studio-code',
             description: t(`I've programmed since middle school with a focus on web development, but touching on machine learning, game development, browser extensions, and microcontrollers as well.||Jeg har programmeret siden 7. klasse med fokus på webudvikling, men jeg er også kommet ind på machine learning, spiludvikling, browser-udvidelser, og mikrocontrollere.`),
             to: '/projects?skills=oop',
             toLabel: 'See projects here||Se projekter her',
@@ -75,6 +78,7 @@ useSeoMeta({
           {
             title: t('Music||Musik'),
             icon: 'i-lucide-music',
+            tool: info.toolFromId('reason'),
             description: t(`I've always had an interest in music and songwriting, and in 2018 I started producing and recording songs on my computer. I use Reason as my DAW, while keyboard and my own voice are my instruments of choice.||Jeg har altid været interesseret i musik og sangskrivning, og i 2018 begyndte jeg at producere og optage sange på min computer. Jeg bruger Reason som DAW, mens keyboard og min egen stemme er mit valg af instrumenter.`),
             to: '/music',
             toLabel: 'Take a listen here||Lyt her',
@@ -90,18 +94,78 @@ useSeoMeta({
             title: 'Dungeons & Dragons',
             // icon: 'i-simple-icons-dungeonsanddragons',
             icon: 'i-fa-solid-dice-d20',
+            tool: info.toolFromId('obsidian'),
             description: t(`Since 2021 I have had a big interest in TTRPGs (role-playing games) like D&D, both as entertainment and as an activity. As a Game Master I plan the game and improvise during it, and I get to use both creative and technical skills.||Siden 2021 har jeg haft stor interesse i TTRPG'er (rollespil) som D&D, både som underholdning og aktivitet. Som Game Master planlægger jeg spillet og improviserer undervejs, og jeg får brugt både mine kreative og tekniske egenskaber.`),
-            color: 'tertiary',
+            color: 'tertiary' as const,
             textColor: 'text-tertiary'
           }
         ]"
-        v-bind="{...feature, to: undefined}"
+        v-bind="{...feature, to: undefined, icon: feature.tool?.icon}"
         :ui="{
           leadingIcon: feature.textColor
         }"
       >
+        <template #leading>
+          <UIcon
+            :name="feature.icon"
+            :class="`${feature.textColor} size-5`">
+          </UIcon>
+          <!-- <UTooltip text="Hey" class="hidden group-hover:inline-block">
+            <div class="relative size-5 flex">
+              <UIcon
+                :name="feature.icon2"
+                :class="`${feature.textColor} size-5 inline-flex`"
+              >
+              </UIcon>
+              <UIcon
+                name="lucide:circle"
+                :class="`${feature.textColor} size-5 animate-ping absolute inline-flex`"
+              ></UIcon>
+            </div>
+          </UTooltip> -->
+        </template>
+        <template #title>
+          
+        </template>
         <template #description>
           <div class="flex flex-col gap-2 items-start flex-wrap">
+            <!-- <UFieldGroup>
+              <UBadge
+                :label="t('Using||Ved brug af')"
+                color="neutral"
+                variant="soft"
+              >
+              </UBadge>
+              <UBadge
+                :color="feature.color"
+                variant="outline"
+                :icon="feature.tool?.icon"
+                class=""
+                :label="t(feature.tool?.name)"
+              ></UBadge>
+            </UFieldGroup> -->
+            <UPopover arrow>
+              <UBadge
+                :color="feature.color"
+                variant="outline"
+                :icon="feature.tool?.icon"
+                class=" cursor-help"
+                :label="t(feature.tool?.name)"
+                size="md"
+                :ui="{
+                  base: 'ring-muted'
+                }"
+              >
+                <template #leading>
+                  <span class="text-dimmed font-medium mr-1 text-[10px]/3">{{ t('With||Med') }}</span>
+                  <UIcon :name="feature.tool?.icon"></UIcon>
+                </template>
+              </UBadge>
+              <template #content>
+                <!-- <div class="flex max-w-100 p-3">{{ t(feature.tool?.description) }}</div> -->
+                <PopoverContainer :text="feature.tool?.description"></PopoverContainer>
+              </template>
+            </UPopover>
             <p>{{ feature.description }}</p>
             <div class="flex gap-2">
               <UButton
@@ -146,7 +210,7 @@ useSeoMeta({
           slot: 'skills'
         },
         {
-          label: t('Systems & Software||Systemer & software'),
+          label: t('Tools||Værktøj'),
           icon: 'i-lucide-monitor',
           slot: 'systems'
         },
@@ -180,34 +244,35 @@ useSeoMeta({
         </div> -->
         <UPageGrid>
           <UPageCard
-            v-for="system in info.softwareAndSystems"
-            :title="system.name"
-            :description="t(system.description)"
+            v-for="tool in info.tools"
+            :title="tool.name"
+            :description="t(tool.description)"
             :ui="{
               footer: 'w-full flex justify-end'
             }"
           >
             <template #header>
               <div class="flex gap-3">
-                <div class=" h-6 aspect-square flex">
+                <UIcon v-if="tool.logo" :name="tool.logo" class="size-6"></UIcon>
+                <div v-else-if="tool.logoImg" class=" h-6 aspect-square flex">
                   <img
-                    :src="system.logo"
+                    :src="tool.logoImg"
                     class=" m-auto"
                   >
                 </div>
                 <UBadge
                   variant="soft"
                   color="neutral"
-                  :label="t(info.systemTypes[system.type]?.label)"
-                  :icon="info.systemTypes[system.type]?.icon"
+                  :label="t(info.systemTypes[tool.type]?.label)"
+                  :icon="info.systemTypes[tool.type]?.icon"
                 />
               </div>
             </template>
             <template #footer>
-              <UFieldGroup v-if="system.proficiency != undefined">
+              <UFieldGroup v-if="tool.proficiency != undefined">
                 <UBadge label="Proficiency" variant="outline"></UBadge>
                 <UBadge variant="outline">
-                  <Rating :value="system.proficiency" :max="3"></Rating>
+                  <Rating :value="tool.proficiency" :max="3"></Rating>
                 </UBadge>
               </UFieldGroup>
             </template>
