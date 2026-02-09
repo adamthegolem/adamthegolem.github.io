@@ -1,5 +1,9 @@
 ---
 profile: Designer og produktudvikler med erfaring i Adobe, grafik og reklame. Kan udforme skildringer og illustrationer af produkter og tilrette til brugere og målgrupper. Erfaren med projektledelse og administrative værktøjer selvstændigt og i gruppeprojekter.
+date: 2026-01-31
+company: Fahlén Skilte
+url: https://fahlenskilte.dk/kontakt/
+status: pending
 ---
 # Produktudvikler med grafisk erfaring
 Som produktudvikler og nyuddannet ingeniør møder jeg enhver opgave med samme indstilling:

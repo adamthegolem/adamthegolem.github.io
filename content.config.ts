@@ -1,6 +1,11 @@
 import { defineCollection, defineContentConfig } from '@nuxt/content'
 import { z } from 'zod'
-
+export enum ApplicationStatus {
+  Edit = "edit",
+  Pending = "pending",
+  Rejected = "rejected",
+  Accepted = "accepted",
+}
 export default defineContentConfig({
   collections: {
     projects: defineCollection({
@@ -29,6 +34,10 @@ export default defineContentConfig({
       schema: z.object({
         profile: z.string(),
         highlightedSkills: z.array(z.string()),
+        url: z.string(),
+        company: z.string(),
+        date: z.string(),
+        status: z.enum(Object.values(ApplicationStatus)).default(ApplicationStatus.Edit)
       }),
     }),
     companies: defineCollection({

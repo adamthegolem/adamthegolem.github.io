@@ -62,16 +62,55 @@ export const useInfoStore = defineStore("infoStore", () => {
   }[] = [
     {
       // label: t("Programming", "Programmering"),
-      label: "Programming||Programmering",
-      icon: "i-lucide-code"
+      label: "Language/System||Sprog/System",
+      icon: "lucide:file-braces-corner"
     },
     {
       label: "Software",
       icon: "i-lucide-laptop-minimal"
     }
   ]
+  
+  enum ToolCategory {
+    Graphics = "graphics",
+    Video = "video",
+    ThreeD = "3d",
+    Programming = "programming",
+    Misc = "misc"
+  }
+  const toolCategories: {
+    id: string,
+    name: string,
+    icon: string,
+  }[] = [
+    {
+      id: ToolCategory.Graphics,
+      name: "Graphics||Grafik",
+      icon: "lucide:spline-pointer",
+    },
+    {
+      id: ToolCategory.Video,
+      name: "Video",
+      icon: "lucide:video",
+    },
+    {
+      id: ToolCategory.ThreeD,
+      name: "3D",
+      icon: "lucide:move-3d",
+    },
+    {
+      id: ToolCategory.Programming,
+      name: "Programming||Programmering",
+      icon: "lucide:code",
+    },
+    {
+      id: ToolCategory.Misc,
+      name: "Misc.||Diverse",
+      icon: "lucide:circle-ellipsis"
+    }
+  ]
   const tools: {
-    id?: string,
+    id: string,
     logo?: string,
     logoImg?: string,
     icon?: string,
@@ -79,6 +118,7 @@ export const useInfoStore = defineStore("infoStore", () => {
     type: SystemType,
     description?: string,
     proficiency?: number,
+    category?: ToolCategory
   }[] = [
     {
       id: "indesign",
@@ -92,7 +132,8 @@ export const useInfoStore = defineStore("infoStore", () => {
       //     "Layout og grafisk design. Plakater og en masse rapporter."
       // ),
       description: "Layout and graphic design. Posters and plenty of reports.||Layout og grafisk design. Plakater og en masse rapporter.",
-      proficiency: 3
+      proficiency: 3,
+      category: ToolCategory.Graphics,
     },
     {
       id: "illustrator",
@@ -106,7 +147,8 @@ export const useInfoStore = defineStore("infoStore", () => {
       //     "Vektorgrafik. Logoer, ikoner, grafer og illustrationer."
       // ),
       description: "Vector graphics. Logos, icons, graphs, and illustrations.||Vektorgrafik. Logoer, ikoner, grafer og illustrationer.",
-      proficiency: 2.5
+      proficiency: 2.5,
+      category: ToolCategory.Graphics,
     },
     {
       id: "premiere-pro",
@@ -121,6 +163,7 @@ export const useInfoStore = defineStore("infoStore", () => {
       // ),
       description: "Video editing. Commercials, demos, and product presentations.||Videoredigering. Reklamer, demoer og produktpræsentationer.",
       proficiency: 2.5,
+      category: ToolCategory.Video,
     },
     {
       id: "photoshop",
@@ -135,6 +178,7 @@ export const useInfoStore = defineStore("infoStore", () => {
       // ),
       description: "Photo editing and compositing. Artwork and product renders.||Fotoredigering og compositing. Kunstværk og produktrenderinger.",
       proficiency: 2.5,
+      category: ToolCategory.Graphics,
     },
     {
       id: "affinity",
@@ -148,6 +192,7 @@ export const useInfoStore = defineStore("infoStore", () => {
       // ),
       description: "Graphic design across the board. Reports, graphics, etc.||Grafisk design over hele linjen. Rapporter, grafik, osv.",
       proficiency: 2,
+      category: ToolCategory.Graphics,
     },
     {
       id: "inventor",
@@ -161,7 +206,8 @@ export const useInfoStore = defineStore("infoStore", () => {
       //     "Computer-aided design. Parter og samlinger til tegninger, renderinger og 3D-print."
       // ),
       description: "Computer-aided design. Parts and assemblies for drawings, renders, and 3D printing.||Computer-aided design. Parter og samlinger til tegninger, renderinger og 3D-print.",
-      proficiency: 2.5
+      proficiency: 2.5,
+      category: ToolCategory.ThreeD,
     },
     {
       id: "blender",
@@ -175,7 +221,8 @@ export const useInfoStore = defineStore("infoStore", () => {
       //     "Modeller, rendering og animation. Produktrenderinger, illustrationer og videoer."
       // ),
       description: "Modeling, rendering, and animation. Product renders, illustrations, and videos.||Modeller, rendering og animation. Produktrenderinger, illustrationer og videoer.",
-      proficiency: 2.5
+      proficiency: 2.5,
+      category: ToolCategory.ThreeD,
     },
     {
       id: "davinci",
@@ -189,7 +236,8 @@ export const useInfoStore = defineStore("infoStore", () => {
       //     "Videoredigering og VFX. Reklamer, demoer og produktpræsentationer."
       // ),
       description: "Video editing and VFX. Commercials, demos, and product presentations.||Videoredigering og VFX. Reklamer, demoer og produktpræsentationer.",
-      proficiency: 2
+      proficiency: 2,
+      category: ToolCategory.Video,
     },
     {
       id: "html",
@@ -204,6 +252,7 @@ export const useInfoStore = defineStore("infoStore", () => {
       // ),
       description: "Basic building blocks of the internet.||Internettets basale byggeklodser.",
       proficiency: 3,
+      category: ToolCategory.Programming,
     },
     {
       id: "css",
@@ -218,6 +267,7 @@ export const useInfoStore = defineStore("infoStore", () => {
       // ),
       description: "Standard styling language of the web.||Internettets standard for styling.",
       proficiency: 3,
+      category: ToolCategory.Programming,
     },
     {
       id: "tailwind",
@@ -227,7 +277,8 @@ export const useInfoStore = defineStore("infoStore", () => {
       name: "Tailwind CSS",
       type: SystemType.Language,
       proficiency: 3,
-      description: "Framework for CSS with utility classes.||Framework til CSS med utility classes."
+      description: "Framework for CSS with utility classes.||Framework til CSS med utility classes.",
+      category: ToolCategory.Programming,
     },
     {
       id: "js",
@@ -237,7 +288,8 @@ export const useInfoStore = defineStore("infoStore", () => {
       name: "JavaScript",
       type: SystemType.Language,
       proficiency: 3,
-      description: "The default programming language of the web.||Standardprogrammeringssproget for internettet."
+      description: "The default programming language of the web.||Standardprogrammeringssproget for internettet.",
+      category: ToolCategory.Programming,
     },
     {
       id: "ts",
@@ -247,7 +299,8 @@ export const useInfoStore = defineStore("infoStore", () => {
       name: "TypeScript",
       type: SystemType.Language,
       proficiency: 2.5,
-      description: "A statically-typed superset of JavaScript.||Et statisk typet superset af JavaScript."
+      description: "A statically-typed superset of JavaScript.||Et statisk typet superset af JavaScript.",
+      category: ToolCategory.Programming,
     },
     {
       id: "vue",
@@ -257,7 +310,8 @@ export const useInfoStore = defineStore("infoStore", () => {
       name: "Vue",
       type: SystemType.Language,
       proficiency: 2.5,
-      description: "My JavaScript framework of choice.||Mit valg af framework til JavaScript."
+      description: "My JavaScript framework of choice.||Mit valg af framework til JavaScript.",
+      category: ToolCategory.Programming,
     },
     {
       id: "nuxt",
@@ -267,7 +321,8 @@ export const useInfoStore = defineStore("infoStore", () => {
       name: "Nuxt",
       type: SystemType.Language,
       proficiency: 2.5,
-      description: "An extended framework of Vue with useful modules.||Et udvidet framework af Vue med brugbare moduler."
+      description: "An extended framework of Vue with useful modules.||Et udvidet framework af Vue med brugbare moduler.",
+      category: ToolCategory.Programming,
     },
     {
       id: "vs-code",
@@ -277,7 +332,8 @@ export const useInfoStore = defineStore("infoStore", () => {
       icon: "devicon-plain:vscode",
       type: SystemType.Software,
       proficiency: 3,
-      description: "My IDE of choice.||Mit valg af IDE."
+      description: "My IDE of choice.||Mit valg af IDE.",
+      category: ToolCategory.Programming,
     },
     {
       id: "unity",
@@ -287,7 +343,8 @@ export const useInfoStore = defineStore("infoStore", () => {
       name: "Unity",
       type: SystemType.Software,
       proficiency: 1.5,
-      description: "A popular game engine.||Et populært game engine."
+      description: "A popular game engine that uses C#.||Et populært game engine, der bruger C#.",
+      category: ToolCategory.ThreeD,
     },
     {
       id: "arduino",
@@ -297,7 +354,8 @@ export const useInfoStore = defineStore("infoStore", () => {
       name: "Arduino",
       type: SystemType.Software,
       proficiency: 2.5,
-      description: "Open-source development boards with a designated IDE.||Open-source udviklingskort med skræddersyet IDE."
+      description: "Open-source development boards with a designated IDE.||Open-source udviklingskort med skræddersyet IDE.",
+      category: ToolCategory.Programming,
     },
     {
       id: "cs",
@@ -307,7 +365,8 @@ export const useInfoStore = defineStore("infoStore", () => {
       name: "C#",
       type: SystemType.Language,
       proficiency: 2,
-      description: "A high-level programming language used in Unity and WPF.||Et high-level programmeringssprog brugt i Unity og WPF."
+      description: "A high-level programming language used in Unity and WPF.||Et high-level programmeringssprog brugt i Unity og WPF.",
+      category: ToolCategory.Programming,
     },
     {
       id: "cpp",
@@ -317,7 +376,8 @@ export const useInfoStore = defineStore("infoStore", () => {
       name: "C++",
       type: SystemType.Language,
       proficiency: 2,
-      description: "A high-level programming language used in development boards like Arduino.||Et high-level programmeringssprog brugt i udviklingskort som Arduino."
+      description: "A high-level programming language used in development boards like Arduino.||Et high-level programmeringssprog brugt i udviklingskort som Arduino.",
+      category: ToolCategory.Programming,
     },
     {
       id: "electron",
@@ -327,7 +387,8 @@ export const useInfoStore = defineStore("infoStore", () => {
       name: "Electron",
       type: SystemType.Language,
       proficiency: 2.5,
-      description: "Chromium based app development.||Chromium-baseret app-udvikling."
+      description: "Chromium based app development.||Chromium-baseret app-udvikling.",
+      category: ToolCategory.Programming,
     },
     {
       id: "git",
@@ -337,7 +398,8 @@ export const useInfoStore = defineStore("infoStore", () => {
       name: "Git",
       type: SystemType.Language,
       proficiency: 2.5,
-      description: "Version control system compatible with repositories on GitHub.||Versionskontrolsystem kompatibelt med repositories på GitHub."
+      description: "Version control system compatible with repositories on GitHub.||Versionskontrolsystem kompatibelt med repositories på GitHub.",
+      category: ToolCategory.Programming,
     },
     {
       id: "node",
@@ -347,7 +409,8 @@ export const useInfoStore = defineStore("infoStore", () => {
       name: "Node.js",
       type: SystemType.Language,
       proficiency: 2.5,
-      description: "JavaScript runtime environment with countless packages available through NPM.||JavaScript runtime-miljø med utallige pakker tilgængelige gennem NPM."
+      description: "JavaScript runtime environment with countless packages available through NPM.||JavaScript runtime-miljø med utallige pakker tilgængelige gennem NPM.",
+      category: ToolCategory.Programming,
     },
     {
       id: "reason",
@@ -357,7 +420,8 @@ export const useInfoStore = defineStore("infoStore", () => {
       name: "Reason",
       type: SystemType.Software,
       proficiency: 3,
-      description: "Digital Audio Workstation with skeumorphic UI and plenty of synths.||Digital Audo Workstation med skeumorfisk brugerflade og rigeligt med synths."
+      description: "Digital Audio Workstation with skeumorphic UI and plenty of synths.||Digital Audo Workstation med skeumorfisk brugerflade og rigeligt med synths.",
+      category: ToolCategory.Misc,
     },
     {
       id: "obsidian",
@@ -367,7 +431,8 @@ export const useInfoStore = defineStore("infoStore", () => {
       name: "Obsidian",
       type: SystemType.Software,
       proficiency: 3,
-      description: "Advanced note-taking written in local markdown with plugins for customization.||Forhøjet notetagning skrevet i lokal markdown med udvidelser til tilpasning."
+      description: "Advanced note-taking written in local markdown with plugins for customization.||Forhøjet notetagning skrevet i lokal markdown med udvidelser til tilpasning.",
+      category: ToolCategory.Misc,
     },
   ]
   function toolFromId(id: string) {
@@ -675,6 +740,7 @@ export const useInfoStore = defineStore("infoStore", () => {
   return {
     links,
     tools,
+    toolCategories,
     toolFromId,
     skills,
     idsToSkills,

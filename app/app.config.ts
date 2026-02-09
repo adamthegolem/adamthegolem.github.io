@@ -37,6 +37,13 @@ export default defineAppConfig({
       //     base: 'text-primary'
       //   }
       // },
-    }
+    },
+    // badge: {
+    //   variants: {
+    //     variant: {
+    //       subtle: "bg-{color}-50 dark:bg-{color}-950 text-{color}-600 dark:text-{color}-400 ring-1 ring-inset ring-{color}-500/25"
+    //     }
+    //   }
+    // }
   }
 })

@@ -144,7 +144,7 @@ useSeoMeta({
                 :label="t(feature.tool?.name)"
               ></UBadge>
             </UFieldGroup> -->
-            <UPopover arrow>
+            <UPopover arrow :content="{align: 'start'}">
               <UBadge
                 :color="feature.color"
                 variant="outline"
@@ -212,7 +212,7 @@ useSeoMeta({
         {
           label: t('Tools||Værktøj'),
           icon: 'i-lucide-monitor',
-          slot: 'systems'
+          slot: 'tools' as const
         },
       ]"
       variant="link"
@@ -233,7 +233,7 @@ useSeoMeta({
           </UPageCard>
         </UPageGrid>
       </template>
-      <template #systems>
+      <template #tools>
         <!-- <div class="flex justify-center mb-2">
           <UInputMenu
             icon="i-lucide-list-filter"
@@ -242,42 +242,54 @@ useSeoMeta({
           >
           </UInputMenu>
         </div> -->
-        <UPageGrid>
-          <UPageCard
-            v-for="tool in info.tools"
-            :title="tool.name"
-            :description="t(tool.description)"
-            :ui="{
-              footer: 'w-full flex justify-end'
-            }"
-          >
-            <template #header>
-              <div class="flex gap-3">
-                <UIcon v-if="tool.logo" :name="tool.logo" class="size-6"></UIcon>
-                <div v-else-if="tool.logoImg" class=" h-6 aspect-square flex">
-                  <img
-                    :src="tool.logoImg"
-                    class=" m-auto"
-                  >
-                </div>
-                <UBadge
-                  variant="soft"
-                  color="neutral"
-                  :label="t(info.systemTypes[tool.type]?.label)"
-                  :icon="info.systemTypes[tool.type]?.icon"
-                />
-              </div>
-            </template>
-            <template #footer>
-              <UFieldGroup v-if="tool.proficiency != undefined">
-                <UBadge label="Proficiency" variant="outline"></UBadge>
-                <UBadge variant="outline">
-                  <Rating :value="tool.proficiency" :max="3"></Rating>
-                </UBadge>
-              </UFieldGroup>
-            </template>
-          </UPageCard>
-        </UPageGrid>
+        <UAccordion
+          :items="info.toolCategories.map(category => ({
+            ...category,
+            label: t(category.name)
+          }))"
+          type="multiple"
+          :default-value="info.toolCategories.map((category, index) => `${index}`)"
+        >
+          <template #body="{item}">
+            <UPageGrid>
+              <UPageCard
+                v-for="tool in info.tools.filter(tool => tool.category == item.id)"
+                :title="tool.name"
+                :description="t(tool.description)"
+                :ui="{
+                  footer: 'w-full flex justify-end',
+                  root: 'ring-inset'
+                }"
+              >
+                <template #header>
+                  <div class="flex gap-3">
+                    <UIcon v-if="tool.logo" :name="tool.logo" class="size-6"></UIcon>
+                    <div v-else-if="tool.logoImg" class=" h-6 aspect-square flex">
+                      <img
+                        :src="tool.logoImg"
+                        class=" m-auto"
+                      >
+                    </div>
+                    <UBadge
+                      variant="soft"
+                      color="neutral"
+                      :label="t(info.systemTypes[tool.type]?.label)"
+                      :icon="info.systemTypes[tool.type]?.icon"
+                    />
+                  </div>
+                </template>
+                <template #footer>
+                  <UFieldGroup v-if="tool.proficiency != undefined">
+                    <UBadge :label="t('Proficiency||Kyndighed')" variant="outline"></UBadge>
+                    <UBadge variant="outline">
+                      <Rating :value="tool.proficiency" :max="3"></Rating>
+                    </UBadge>
+                  </UFieldGroup>
+                </template>
+              </UPageCard>
+            </UPageGrid>
+          </template>
+        </UAccordion>
       </template>
     </UTabs>
     

@@ -83,12 +83,12 @@ const traitPairs = computed(() => {
       title="Adam Golan"
       :description="t('A product developer with a technical mind & a flair for design. Experienced team worker but enjoys digging deep in technical tasks independently.||Produktudvikler med teknisk hjerne & flair for design. Erfaren gruppearbejder men nyder at dykke ned i tekniske opgaver selvstændigt.')"
       :links="[
-        {
-          label: 'Read more about me',
-          to: '/about',
-          trailingIcon: 'i-lucide-arrow-right',
-          size: 'xl'
-        },
+        // {
+        //   label: 'Read more about me',
+        //   to: '/about',
+        //   trailingIcon: 'i-lucide-arrow-right',
+        //   size: 'xl'
+        // },
         // {
         //   label: 'Reach out',
         //   to: 'https://github.com/nuxt-ui-templates/starter',
@@ -111,30 +111,54 @@ const traitPairs = computed(() => {
       <template #description>
         <p>{{ t(info.profile) }}</p>
         <div class="flex justify-center gap-3 flex-wrap">
-          <UTooltip text="Location">
-            <UBadge :label="t('Odense, Denmark||Odense')"
+          <UFieldGroup>
+            <UBadge :label="t('Location||Lokation')"
               icon="i-lucide-map-pin"
-              variant="subtle"
+              variant="outline"
+              color="neutral"
             >
             </UBadge>
-          </UTooltip>
-          <UTooltip text="Languages">
-            <UFieldGroup>
-              <UBadge :label="t('English||Dansk')"
-                icon="i-lucide-languages"
-                variant="subtle"
-              >
-              </UBadge>
-              <UBadge :label="t('Danish||Engelsk')"
-                variant="subtle"
-              >
-              </UBadge>
-              <UBadge :label="t('Hebrew||Hebraisk')"
-                variant="subtle"
-              >
-              </UBadge>
-            </UFieldGroup>
-          </UTooltip>
+            <UBadge :label="t('Odense, Denmark||Odense')"
+              variant="outline"
+              color="neutral"
+              :ui="{
+                label: 'text-primary'
+              }"
+            >
+            </UBadge>
+          </UFieldGroup>
+          <UFieldGroup>
+            <UBadge :label="t('Languages||Sprog')"
+              icon="i-lucide-languages"
+              variant="outline"
+              color="neutral"
+            >
+            </UBadge>
+            <UBadge :label="t('English||Dansk')"
+              variant="outline"
+              color="neutral"
+              :ui="{
+                label: 'text-primary'
+              }"
+            >
+            </UBadge>
+            <UBadge :label="t('Danish||Engelsk')"
+              variant="outline"
+              color="neutral"
+              :ui="{
+                label: 'text-primary'
+              }"
+            >
+            </UBadge>
+            <UBadge :label="t('Hebrew||Hebraisk')"
+              variant="outline"
+              color="neutral"
+              :ui="{
+                label: 'text-primary'
+              }"
+            >
+            </UBadge>
+          </UFieldGroup>
         </div>
       </template>
       <template #links>
@@ -144,7 +168,14 @@ const traitPairs = computed(() => {
           trailing-icon="i-lucide-arrow-right"
         >
         </UButton>
-        <MultiIconButton :label="t('Get in touch||Tag kontakt')"
+        <UButton
+          :label="t('See projects||Se projekter')"
+          trailing-icon="lucide:arrow-right"
+          size="xl"
+          variant="subtle"
+          to="/projects"
+        ></UButton>
+        <MultiIconButton :label="t('Or get in touch||Eller tag kontakt')"
           :icons="[
             {
               icon: info.links.linkedIn.icon,
@@ -207,9 +238,9 @@ const traitPairs = computed(() => {
         </div>
       </UPageGrid>
     </UContainer> -->
-    <UContainer>
+    <UPageSection :title="t('Key Traits||Nøgletræk')" icon="lucide:key-round">
       <!-- <div class="grid grid-cols-3 gap-6 mb-20"> -->
-      <UPageGrid class="mb-20">
+      <UPageGrid>
         <!-- <UCard class=" md:mx-30"
           variant="soft"
           v-for="traitPair in traits"
@@ -264,7 +295,7 @@ const traitPairs = computed(() => {
         </UPageCard>
       </UPageGrid>
       <USeparator orientation="vertical"></USeparator>
-    </UContainer>
+    </UPageSection>
     <USeparator></USeparator>
     <UPageSection
       :title="t('Skills & Tools||Færdigheder & værktøjer')"
