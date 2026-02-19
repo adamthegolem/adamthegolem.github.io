@@ -3,7 +3,7 @@ import type { DropdownMenuItem } from '@nuxt/ui';
 import { Gender, genders, Student } from '../classes/tiamate/student';
 import type { Team } from '../classes/tiamate/team';
 import type { IBelbinRole } from '../stores/tiamate';
-import { VNetworkGraph } from 'v-network-graph';
+import { VNetworkGraph, VEdgeLabel } from 'v-network-graph';
 import * as vNG from "v-network-graph"
 import {
   ForceLayout,
@@ -13,6 +13,7 @@ import {
 
 const { t } = useLanguageStore()
 const tiamate = useTiamateStore()
+const util = useUtilStore()
 const { students, teams } = tiamate
 const globalActiveTeamTab = defineModel<string>("activeTab", {
   required: true,
@@ -37,18 +38,6 @@ const activeTeamTab = ref(globalActiveTeamTab)
 //   get: () => globalActiveTeamTab,
 //   set: (value) => globalActiveTeamTab = value
 // })
-const roleBalanceWeight = defineModel<number>("roleBalanceWeight", {
-  required: true,
-  default: 1,
-})
-const genderBalanceWeight = defineModel<number>("genderBalanceWeight", {
-  required: true,
-  default: 1,
-})
-const pastComembersWeight = defineModel<number>("pastComembersWeight", {
-  required: true,
-  default: 1,
-})
 const studentDropdownAppendItems = (student: Student): DropdownMenuItem[] => [
   {
     type: 'separator'
@@ -92,7 +81,7 @@ const configs = computed(() => {
         positionFixedByClickWithAltKey: true,
         createSimulation: (d3, nodes, edges) => {
           // d3-force parameters
-          const forceLink = d3.forceLink<ForceNodeDatum, ForceEdgeDatum>(edges).id(d => d.id)
+          const forceLink = d3.forceLink<ForceNodeDatum, ForceEdgeDatum>(edges).id((d: {id: any}) => d.id)
           return d3
             .forceSimulation(nodes)
             .force("edge", forceLink.distance(100).strength(0.1))
@@ -133,6 +122,14 @@ const configs = computed(() => {
       hover: {
         color: getNuxtVariable('--ui-bg-inverted')
       },
+      label: {
+        color: getNuxtVariable('--ui-bg-inverted')
+      },
+      selectable: true,
+      selected: {
+        color: getNuxtVariable('--ui-bg-inverted'),
+        dasharray: 0
+      }
     }
   })
 })
@@ -149,10 +146,11 @@ const nodeEdges = computed(() => {
     for (let i = 0; i < members.length; i++) {
       members.slice(i + 1, members.length).forEach(member => {
         edges.push([
-          `edge${index}`,
+          `${team}-${index}`,
           {
             source: members[i]?.name || '',
             target: member.name,
+            label: team
           }
         ])
         index++
@@ -169,6 +167,41 @@ const nodes = computed(() => {
       
     }
   ]))
+})
+const selectedEdges = ref<string[]>([])
+const roleScore = computed(() => 1)
+const genderScore = computed(() => {
+  return util.numberComparison(
+    util.genderRatio(students),
+    util.genderRatio(props.team.members)
+  )
+})
+const previousTeamMembersScore = computed(() => 1)
+const roleScoreWeight = defineModel<number>("roleScoreWeight", {
+  required: true,
+  default: 1,
+})
+const genderScoreWeight = defineModel<number>("genderScoreWeight", {
+  required: true,
+  default: 1,
+})
+const previousTeamMembersScoreWeight = defineModel<number>("previousTeamMembersScoreWeight", {
+  required: true,
+  default: 1,
+})
+function multiplyToArray<T>(item: T, multiplier: number) {
+  return Array.from({length: multiplier}, () => item)
+}
+const scoreAverage = computed(() => {
+  // const scores = [...Array.from({length: genderBalanceWeight.value * 10}, () => genderScore.value)]
+  const wrapper = (score: number, weight: number) => !Number.isNaN(score) ? multiplyToArray(score, weight * 10) : []
+  const scores = [
+    ...wrapper(roleScore.value, roleScoreWeight.value),
+    ...wrapper(genderScore.value, genderScoreWeight.value),
+    ...wrapper(previousTeamMembersScore.value, previousTeamMembersScoreWeight.value),
+  ]
+  console.log(scores)
+  return scores.reduce((prev, curr) => prev + curr, 0) / scores.length
 })
 </script>
 <template>
@@ -273,12 +306,17 @@ const nodes = computed(() => {
                 {{(item as {label: string}).label}}
               </span>
             </template>
-            <UButton
-              icon="lucide:circle-user"
-              variant="subtle"
-              :color="genders.get(member.gender)?.baseColor||'neutral'"
-              class="rounded-full aspect-square justify-center"
-            ></UButton>
+            <UTooltip
+              :text="member.name"
+              arrow
+            >
+              <UButton
+                icon="lucide:circle-user"
+                variant="subtle"
+                :color="genders.get(member.gender)?.baseColor||'neutral'"
+                class="rounded-full aspect-square justify-center"
+              ></UButton>
+            </UTooltip>
           </TiamateStudentDropdown>
           <TiamateSeatDropdown
             v-for="seat in emptySeats"
@@ -290,12 +328,17 @@ const nodes = computed(() => {
               viewport: 'max-h-80'
             }"
           >
-            <UButton
-              icon="lucide:armchair"
-              class="rounded-full aspect-square justify-center"
-              color="neutral"
-              variant="outline"
-            ></UButton>
+            <UTooltip
+              :text="t('Empty seat||Ledig plads')"
+              arrow
+            >
+              <UButton
+                icon="lucide:armchair"
+                class="rounded-full aspect-square justify-center"
+                color="neutral"
+                variant="outline"
+              ></UButton>
+            </UTooltip>
             <template #student-trailing="{item}">
               <UTooltip
                 v-for="belbinRole in Array.from((item as {student: Student}).student.belbinRoles).slice(0, 1).map(role => [belbinRoles.find(({id}) => id == role[0]), role[1]] as [IBelbinRole, number])"
@@ -366,75 +409,140 @@ const nodes = computed(() => {
         </div>
       </template>
       <template #nodes>
-        <VNetworkGraph
-          :nodes="nodes"
-          :configs="configs"
-          :edges="nodeEdges"
-        >
-          <template #override-node="{ nodeId, scale, config, ...slotProps }">
-            <!-- <circle :r="config.radius * scale" :fill="config.color" v-bind="slotProps" /> -->
-            <foreignObject
-              :x="-19" 
-              :y="-19"
-              width="38"
-              height="38"
-              class="rounded-full bg-default"
+        <div class="relative flex h-full"
+            v-if="team.members.length > 0">
+          <div class="flex absolute right-0 p-2 z-20">
+            <UTooltip
+              :text="t('Previous team||Tidligere gruppe')"
+              arrow
             >
-              <!-- Standard HTML/Nuxt UI context starts here -->
-              <TiamateStudentDropdown
-                :student="(students.find(student => student.name == nodeId) as Student)"
-                :append-items="studentDropdownAppendItems((students.find(student => student.name == nodeId) as Student))"
-                right-click
-                :comember-pool="team.members"
-                previous-members
+              <UBadge
+                :label="selectedEdges[0]?.split('-')[0]"
+                variant="outline"
+                class="transition-all"
+                color="neutral"
+                icon="lucide:clock"
+              ></UBadge>
+            </UTooltip>
+          </div>
+          <VNetworkGraph
+            :nodes="nodes"
+            :configs="configs"
+            :edges="nodeEdges"
+            v-model:selected-edges="selectedEdges"
+          >
+            <template #override-node="{ nodeId, scale, config, ...slotProps }">
+              <!-- <circle :r="config.radius * scale" :fill="config.color" v-bind="slotProps" /> -->
+              <foreignObject
+                :x="-19"
+                :y="-19"
+                width="38"
+                height="38"
+                class="rounded-full bg-default"
               >
-                <template #default="{student}">
-                  <UTooltip
-                    :text="student.name"
-                    arrow
-                  >
-                    <div class="flex justify-center items-center w-full h-full">
-                      <UButton
-                        variant="subtle"
-                        :color="genders.get(student.gender)?.baseColor"
-                        icon="lucide:circle-user"
-                        class="rounded-full cursor-grab"
-                      >
-                      </UButton>
-                    </div>
+                <!-- Standard HTML/Nuxt UI context starts here -->
+                <TiamateStudentDropdown
+                  :student="(students.find(student => student.name == nodeId) as Student)"
+                  :append-items="studentDropdownAppendItems((students.find(student => student.name == nodeId) as Student))"
+                  right-click
+                  :comember-pool="team.members"
+                  previous-members
+                >
+                  <template #default="{student, mouseDown, mouseUp}">
+                    <UTooltip
+                      :text="student.name"
+                      arrow
+                    >
+                      <div class="flex justify-center items-center w-full h-full">
+                        <UButton
+                          variant="subtle"
+                          :color="genders.get(student.gender)?.baseColor"
+                          icon="lucide:circle-user"
+                          class="rounded-full cursor-grab"
+                          @mousedown="mouseDown"
+                          @mouseup="mouseUp"
+                          @click.prevent.stop
+                        >
+                        </UButton>
+                      </div>
+                    </UTooltip>
+                  </template>
+                </TiamateStudentDropdown>
+              </foreignObject>
+            </template>
+            <!-- <template #edge-label="{ edgeId, area, ...slotProps }">
+              <foreignObject
+                :x="area.source.above.x"
+                :y="area.source.above.y"
+                :width="Math.hypot(area.target.above.x - area.source.above.x, area.target.above.y - area.source.above.y)"
+                height="20"
+                rotate="30deg"
+                class="overflow-visible"
+                :style="{
+                  transform: `rotate(${Math.atan2(
+                    area.target.above.y - area.source.above.y, area.target.above.x - area.source.above.x
+                  ) * (180 / Math.PI)}deg)`,
+                  transformOrigin: `${area.source.above.x}px ${area.source.above.y}px`
+                }"
+              >
+                  <UTooltip :text="`${edgeId}`">
+                  <div class="flex justify-center items-center h-full w-full bg-accented">
+                  </div>
                   </UTooltip>
-                </template>
-              </TiamateStudentDropdown>
-            </foreignObject>
-          </template>
-        </VNetworkGraph>
+              </foreignObject>
+            </template> -->
+            <!-- <template #edge-label="{ edge, ...slotProps }">
+              <v-edge-label :text="edge.label" align="center" vertical-align="above" v-bind="slotProps" />
+            </template> -->
+          </VNetworkGraph>
+        </div>
+          <UEmpty
+            v-else
+            :ui="{
+              root: 'h-full ring-0'
+            }"
+            icon="lucide:waypoints"
+            :title="t('No members yet||Ingen medlemmer endnu')"
+            :description="t('Add members to see their previous team connections.||Tilføj medlemmer for at se forbindelser fra tidligere grupper.')"
+            size="sm"
+          >
+          </UEmpty>
       </template>
     </UTabs>
     <!-- Footer -->
     <template #footer>
       <div class="flex gap-1">
         <TiamateScoreBadge
-          v-model:weight="roleBalanceWeight"
+          :value="roleScore"
+          v-model:weight="roleScoreWeight"
           icon="lucide:scale"
           label="Belbin role balance||Belbin-rollefordeling"
         ></TiamateScoreBadge>
         <TiamateScoreBadge
-          v-model:weight="genderBalanceWeight"
+          :value="genderScore"
+          :change-values="[0.5, 0.7]"
+          v-model:weight="genderScoreWeight"
           icon="lucide:venus-and-mars"
           label="Gender balance||Kønsfordeling"
         ></TiamateScoreBadge>
         <TiamateScoreBadge
-          v-model:weight="pastComembersWeight"
+          :value="previousTeamMembersScore"
+          v-model:weight="previousTeamMembersScoreWeight"
           icon="lucide:clock"
           label="Past co-members||Tidligere medlemmer"
         ></TiamateScoreBadge>
-        <UBadge
+        <TiamateScoreBadge
+          :value="scoreAverage"
           icon="lucide:equal"
-          label="100%"
+          :label="t('Average score||Gennemsnitlig score')"
+        ></TiamateScoreBadge>
+        <!-- <UBadge
+          icon="lucide:equal"
+          :label="`${scoreAverage}%`"
           variant="outline"
           color="success"
           class="justify-center grow font-mono"
-        ></UBadge>
+        ></UBadge> -->
       </div>
     </template>
   </UCard>

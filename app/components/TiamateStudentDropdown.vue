@@ -9,7 +9,6 @@ const props = defineProps<{
   addToTeams?: boolean,
   comemberPool?: Student[],
   previousMembers?: boolean,
-  rightClick?: boolean,
 }>()
 const { teams } = useTiamateStore()
 const { t } = useLanguageStore()
@@ -77,10 +76,25 @@ const items = computed((): DropdownMenuItem[] => {
     ...(props.appendItems || []),
   ]
 })
+const isOpen = ref(false)
+let startTime = 0
+let button: number;
+const handleMouseDown = (event: MouseEvent) => {
+  startTime = Date.now()
+  button = event.button
+}
+
+const handleMouseUp = (event: MouseEvent) => {
+  const duration = Date.now() - startTime
+  // Only toggle if the click was shorter than 200ms
+  if (duration < 200 && button == 0) {
+    isOpen.value = !isOpen.value
+  }
+}
 </script>
 <template>
   <UContextMenu
-    v-if="rightClick"
+    v-if="false"
     :items="items"
     :ui="{
       item: 'items-center',
@@ -100,14 +114,13 @@ const items = computed((): DropdownMenuItem[] => {
     <slot :student="student"></slot>
   </UContextMenu>
   <UDropdownMenu
-    v-else
     :items="items"
     :ui="{
       item: 'items-center',
     }"
     arrow
     :modal="false"
-    
+    v-model:open="isOpen"
   >
     <template #label2-label="{item}">
       <span class=" font-normal">
@@ -117,6 +130,6 @@ const items = computed((): DropdownMenuItem[] => {
     <template #team-trailing="{item}">
       <TiamateSeatBadge :team="(item as {team: Team}).team"></TiamateSeatBadge>
     </template>
-    <slot :student="student"></slot>
+    <slot :student="student" :mouse-up="handleMouseUp" :mouse-down="handleMouseDown"></slot>
   </UDropdownMenu>
 </template>

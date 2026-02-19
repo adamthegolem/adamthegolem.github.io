@@ -2,20 +2,30 @@
 const props = defineProps<{
   icon: string,
   label: string,
-
+  value: number,
+  changeValues?: [number, number],
 }>()
+const { changeValues = [0.5, 0.7] } = props
 const { t } = useLanguageStore()
-const weight = defineModel<number>("weight", {required: true})
+const weight = defineModel<number>("weight", {required: false})
+const color = computed(() => {
+  if (weight.value == 0 || Number.isNaN(props.value)) return 'neutral' as const
+  if (props.value >= changeValues[1]) return 'success' as const
+  if (props.value >= changeValues[0]) return 'warning' as const
+  return 'error' as const
+})
+const label = computed(() => !Number.isNaN(props.value) ? `${Math.max(Math.round(props.value * 100), 0)}%` : undefined)
 </script>
 <template>
   <UPopover
+    v-if="weight != undefined"
     arrow
   >
     <UButton
-      :label="weight > 0 ? '10%' : undefined"
+      :label="weight > 0 ? label : undefined"
       variant="subtle"
       :icon="icon"
-      :color="weight > 0 ? 'success' : 'neutral'"
+      :color="color"
       class="justify-center data-[relevant=true]:grow transition-all font-mono"
       size="sm"
       :data-relevant="weight > 0"
@@ -24,7 +34,7 @@ const weight = defineModel<number>("weight", {required: true})
       <PopoverContainer>
         <div class="flex flex-col gap-2 select-none">
           <span class="font-bold">
-            {{ t(label) }}
+            {{ t(props.label) }}
           </span>
           <UFormField
             :label="t('Weight||Vægt')"
@@ -50,4 +60,17 @@ const weight = defineModel<number>("weight", {required: true})
       </PopoverContainer>
     </template>
   </UPopover>
+  <UTooltip
+    :text="props.label"
+    v-else
+    arrow
+  >
+    <UBadge
+      :label="label"
+      variant="outline"
+      :icon="icon"
+      :color="color"
+      class="justify-center grow transition-all font-mono"
+    ></UBadge>
+  </UTooltip>
 </template>

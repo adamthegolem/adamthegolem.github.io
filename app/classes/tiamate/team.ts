@@ -1,4 +1,4 @@
-import { Student } from "./student";
+import { Gender, Student } from "./student";
 
 export class Team {
   public members: Student[] = []
@@ -8,4 +8,5 @@ export class Team {
   }) {
     this.seats = params?.seats || 5
   }
+  
 }

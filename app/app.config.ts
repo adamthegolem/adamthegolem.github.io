@@ -32,6 +32,12 @@ export default defineAppConfig({
         viewport: 'max-h-90'
       }
     },
+    contextMenu: {
+      slots: {
+        // content: 'bg-default/80 backdrop-blur-md'
+        viewport: 'max-h-90'
+      }
+    },
     prose: {
       // h1: {
       //   slots: {
