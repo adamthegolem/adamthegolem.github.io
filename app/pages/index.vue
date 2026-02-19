@@ -109,8 +109,47 @@ const traitPairs = computed(() => {
         <!-- <NuxtImg src="/img/profile.jpg" sizes=" "></NuxtImg> -->
       </template>
       <template #description>
+        <!-- <UButton
+          variant="ghost"
+          :label="t('Looking for work||Søger arbejde')"
+        >
+          <template #leading>
+            <UChip></UChip>
+          </template>
+        </UButton> -->
         <p>{{ t(info.profile) }}</p>
         <div class="flex justify-center gap-3 flex-wrap">
+          
+          <!-- <div class=" text-sm text-success font-medium flex gap-3">
+            <div class="relative inline-block align-top">
+              <UChip color="success" class=" animate-ping"></UChip>
+              <UChip color="success" class=""></UChip>
+            </div>
+            {{ t("Looking for work||Søger arbejde") }}
+          </div> -->
+          <UFieldGroup>
+            <UBadge :label="t('Status')"
+              :icon="'lucide:circle-check'"
+              variant="outline"
+              color="neutral"
+            >
+            </UBadge>
+            <UBadge :label="t(info.available ? 'Looking for work||Søger arbejde' : 'Employed||Ansat')"
+              variant="outline"
+              color="neutral"
+              :ui="{
+                label: info.available ? 'text-success' : 'text-primary'
+              }"
+            >
+              <template #leading>
+                <div class="flex px-1" v-if="info.available">
+                  <UChip color="success" class=" animate-ping" size="sm"></UChip>
+                  <UChip color="success" class="" size="sm"></UChip>
+                </div>
+                
+              </template>
+            </UBadge>
+          </UFieldGroup>
           <UFieldGroup>
             <UBadge :label="t('Location||Lokation')"
               icon="i-lucide-map-pin"

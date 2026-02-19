@@ -22,6 +22,7 @@ export default defineContentConfig({
         skills: z.array(z.string()),
         company: z.optional(z.string()),
         individual: z.boolean(),
+        tools: z.array(z.string()),
       })
     }),
     projectContent: defineCollection({
@@ -37,7 +38,7 @@ export default defineContentConfig({
         url: z.string(),
         company: z.string(),
         date: z.string(),
-        status: z.enum(Object.values(ApplicationStatus)).default(ApplicationStatus.Edit)
+        status: z.enum(["edit", "pending", "rejected", "accepted"]).default("edit")
       }),
     }),
     companies: defineCollection({

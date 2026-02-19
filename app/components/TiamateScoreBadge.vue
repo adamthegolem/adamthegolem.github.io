@@ -1,0 +1,53 @@
+<script setup lang="ts">
+const props = defineProps<{
+  icon: string,
+  label: string,
+
+}>()
+const { t } = useLanguageStore()
+const weight = defineModel<number>("weight", {required: true})
+</script>
+<template>
+  <UPopover
+    arrow
+  >
+    <UButton
+      :label="weight > 0 ? '10%' : undefined"
+      variant="subtle"
+      :icon="icon"
+      :color="weight > 0 ? 'success' : 'neutral'"
+      class="justify-center data-[relevant=true]:grow transition-all font-mono"
+      size="sm"
+      :data-relevant="weight > 0"
+    ></UButton>
+    <template #content>
+      <PopoverContainer>
+        <div class="flex flex-col gap-2 select-none">
+          <span class="font-bold">
+            {{ t(label) }}
+          </span>
+          <UFormField
+            :label="t('Weight||Vægt')"
+            orientation="vertical"
+          >
+            <USlider
+              orientation="horizontal"
+              color="neutral"
+              :step="0.1"
+              :min="0"
+              :max="1"
+              v-model="weight"
+              :tooltip="{
+                text: `${weight * 100}%`
+              }"
+              class="py-1 w-50"
+              :ui="{
+                thumb: 'rounded-sm',
+              }"
+            ></USlider>
+          </UFormField>
+        </div>
+      </PopoverContainer>
+    </template>
+  </UPopover>
+</template>

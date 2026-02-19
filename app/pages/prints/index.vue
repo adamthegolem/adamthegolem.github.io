@@ -56,6 +56,7 @@ const statusBadges = computed(() => {
     ]
   ])
 })
+const accordionValue = ref("1")
 </script>
 <template>
   <UPageSection
@@ -92,7 +93,19 @@ const statusBadges = computed(() => {
       <template #description>
         <div class="flex flex-col gap-2 h-full">
           <p class=" line-clamp-2">{{ print.description||print.profile }}</p>
-          <SkillBadges :skills="print.highlightedSkills||[]"></SkillBadges>
+          <UAccordion
+            :items="[
+              {
+                slot: 'skills',
+                label: t('Skills||Færdigheder')
+              }
+            ]"
+            v-if="print.highlightedSkills?.length > 0"
+          >
+            <template #skills>
+              <SkillBadges :skills="print.highlightedSkills||[]" :exclude-see-more="true"></SkillBadges>
+            </template>
+          </UAccordion>
           <div class="flex gap-2 grow items-end">
             <UButton
               :label="t('Application||Ansøgning')"

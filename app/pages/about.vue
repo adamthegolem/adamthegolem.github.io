@@ -220,6 +220,7 @@ useSeoMeta({
         list: 'justify-center',
         content: 'pt-6'
       }"
+      :unmount-on-hide="false"
     >
       <template #skills>
         <UPageGrid>

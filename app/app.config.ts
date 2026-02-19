@@ -26,6 +26,12 @@ export default defineAppConfig({
         content: 'bg-default/90 backdrop-blur-xl'
       }
     },
+    dropdownMenu: {
+      slots: {
+        // content: 'bg-default/80 backdrop-blur-md'
+        viewport: 'max-h-90'
+      }
+    },
     prose: {
       // h1: {
       //   slots: {

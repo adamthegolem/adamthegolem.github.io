@@ -31,7 +31,10 @@ export default defineNuxtConfig({
     enabled: false
   },
 
-  css: ['~/assets/css/main.css'],
+  css: [
+    '~/assets/css/main.css',
+    "v-network-graph/lib/style.css",
+  ],
 
   routeRules: {
     '/': { prerender: true },

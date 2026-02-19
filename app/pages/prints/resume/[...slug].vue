@@ -10,6 +10,11 @@ const { data: projects } = await useAsyncData(`${route.path}-projects`, () => {
   return queryCollection("projects").all()
 })
 console.log(page.value?.highlightedSkills)
+useHead(computed(() => {
+  return {
+    title: `adam-golan.${page.value?.path.split("/")[2]}.cv`
+  }
+}))
 </script>
 <template>
   
@@ -65,7 +70,7 @@ console.log(page.value?.highlightedSkills)
         
         size="xl"
         :ui="{
-          wrapper: 'mt-2',
+          wrapper: 'mt-2 pb-3.5',
           item: 'page-break-inside-avoid',
           description: 'print:text-xs'
         }"
@@ -113,11 +118,13 @@ console.log(page.value?.highlightedSkills)
           </ul>
           <div v-if="item.children" class="flex flex-col gap-6">
             <div v-for="child in item.children" class="flex flex-col items-start gap-2">
-              <span class="text-lg">
+              <p class="text-lg pl-2 -indent-2">
                 <b>{{ t(child.title) }}</b>
-                •
-                {{ t(child.location) }}
-              </span>
+                <span class=" text-nowrap">
+                  <span class=""> • </span>
+                  {{ t(child.location) }}
+                </span>
+              </p>
               <UBadge variant="outline" icon="i-lucide-calendar" color="neutral" :label="date.timeSpan(child.start, child.end)">
               </UBadge>
               <p>{{ t(child.description) }}</p>
@@ -147,7 +154,7 @@ console.log(page.value?.highlightedSkills)
                   :title="t(table.title)"
                 >
                   <ul class=" list-disc columns-2 pl-8 gap-2">
-                    <li v-for="tableItem in table.list">
+                    <li v-for="tableItem in table.list.toSorted((a, b) => Number(b.highlight) - Number(a.highlight))">
                       <span :data-highlight="tableItem.highlight" class=" data-[highlight=true]:font-semibold data-[highlight=true]:underline">{{ t(tableItem.label) }}</span>
                     </li>
                   </ul>
