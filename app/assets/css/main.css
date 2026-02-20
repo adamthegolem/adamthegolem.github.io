@@ -18,6 +18,11 @@
   --color-green-900: #0A5331;
   --color-green-950: #052E16;
 
+  --ui-bg: white;
+  --ui-fill-muted: var(--ui-color-neutral-50);
+  --ui-fill-elevated: var(--ui-color-neutral-100);
+  --ui-fill-accented: var(--ui-color-neutral-200);
+  --ui-fill-inverted: var(--ui-color-neutral-900);
   /* Print variables */
   --print-margin-x: 0.30in;
   --print-header-height: 70%;

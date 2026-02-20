@@ -29,7 +29,8 @@ const currStep = ref(0)
 <template>
   <UMain>
     <UPageSection
-      :title="t('Tiamate')"
+      :title="t('Tiamate Online')"
+      :description="t('Quick team generation for Integrated Design at SDU.||Hurtig gruppedannelse for Integreret Design på SDU.')"
       icon="lucide:egg"
     >
       <UStepper

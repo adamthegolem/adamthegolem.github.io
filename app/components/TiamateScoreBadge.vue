@@ -29,7 +29,8 @@ const label = computed(() => !Number.isNaN(props.value) ? `${Math.max(Math.round
       class="justify-center data-[relevant=true]:grow transition-all font-mono"
       size="sm"
       :data-relevant="weight > 0"
-    ></UButton>
+    >
+    </UButton>
     <template #content>
       <PopoverContainer>
         <div class="flex flex-col gap-2 select-none">

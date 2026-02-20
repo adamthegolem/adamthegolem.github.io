@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { InputMenuItem } from '@nuxt/ui';
-import { genders } from '../classes/tiamate/student';
+import { genders, belbinRoles } from '../classes/tiamate/student';
 import { Team } from '../classes/tiamate/team';
 import type { BelbinRole } from '../stores/tiamate';
 
 const { t } = useLanguageStore()
 const tiamate = useTiamateStore()
-const { students, teams } = tiamate
+const { students, teams, availableStudents: _availableStudents } = tiamate
 const availableStudents = computed(() => {
   return students.filter(student => {
     return teams.every(team => !team.members.includes(student))

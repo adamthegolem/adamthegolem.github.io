@@ -1,8 +1,7 @@
 <script setup lang="ts">
 import type { DropdownMenuItem } from '@nuxt/ui';
-import { Gender, genders, Student } from '../classes/tiamate/student';
+import { Gender, genders, Student, belbinRoles, type IBelbinRole } from '../classes/tiamate/student';
 import type { Team } from '../classes/tiamate/team';
-import type { IBelbinRole } from '../stores/tiamate';
 import { VNetworkGraph, VEdgeLabel } from 'v-network-graph';
 import * as vNG from "v-network-graph"
 import {
@@ -171,12 +170,30 @@ const nodes = computed(() => {
 const selectedEdges = ref<string[]>([])
 const roleScore = computed(() => 1)
 const genderScore = computed(() => {
-  return util.numberComparison(
-    util.genderRatio(students),
-    util.genderRatio(props.team.members)
-  )
+  // return util.numberComparison(
+  //   util.genderRatio(students),
+  //   util.genderRatio(props.team.members)
+  // )
+  // return util.threeNumberComparison(util.genderRatio(props.team.members))
+  // return util.fourNumberComparison(
+  //   util.genderRatio(props.team.members),
+  //   0.5,
+  //   0,
+  //   1,
+  // )
+  const comparisons = Array.from(genders.keys()).map(gender => {
+    const members = props.team.members.length
+    const membersOfGender = props.team.members.filter(member => member.gender == gender).length
+    const studentsOfGender = students.filter(student => student.gender == gender).length
+    return util.fourNumberComparison(membersOfGender / members, studentsOfGender / students.length, 0, 1)
+  }).filter(x => !Number.isNaN(x))
+  return comparisons.reduce((prev, curr) => prev + curr, 0) / comparisons.length
+  // return util.genderRatio(props.team.members)
 })
-const previousTeamMembersScore = computed(() => 1)
+const previousTeamMembersScore = computed(() => {
+  if (tiamate.currentSemester == 1) return NaN
+  return util.threeNumberComparison(nodeCount.value, highestNodeCount.value * (tiamate.currentSemester - 1), 0)
+})
 const roleScoreWeight = defineModel<number>("roleScoreWeight", {
   required: true,
   default: 1,
@@ -196,12 +213,18 @@ const scoreAverage = computed(() => {
   // const scores = [...Array.from({length: genderBalanceWeight.value * 10}, () => genderScore.value)]
   const wrapper = (score: number, weight: number) => !Number.isNaN(score) ? multiplyToArray(score, weight * 10) : []
   const scores = [
-    ...wrapper(roleScore.value, roleScoreWeight.value),
+    // ...wrapper(roleScore.value, roleScoreWeight.value),
     ...wrapper(genderScore.value, genderScoreWeight.value),
     ...wrapper(previousTeamMembersScore.value, previousTeamMembersScoreWeight.value),
   ]
   console.log(scores)
   return scores.reduce((prev, curr) => prev + curr, 0) / scores.length
+})
+const nodeCount = computed(() => {
+ return Object.values(nodeEdges.value).length
+})
+const highestNodeCount = computed(() => {
+  return props.team.members.reduce((prev, curr, i) => prev + props.team.members.slice(i + 1, props.team.members.length).length, 0)
 })
 </script>
 <template>
@@ -274,6 +297,7 @@ const scoreAverage = computed(() => {
         },
         {
           icon: 'lucide:compass',
+          slot: 'compass' as const,
         },
         {
           icon: 'lucide:waypoints',
@@ -407,6 +431,13 @@ const scoreAverage = computed(() => {
             @click="team.seats++"
           ></UButton>
         </div>
+      </template>
+      <template #compass>
+        <TiamateCompass
+          :students="team.members"
+          :available-students="availableStudents"
+          :team="team"
+        ></TiamateCompass>
       </template>
       <template #nodes>
         <div class="relative flex h-full"
