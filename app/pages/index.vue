@@ -127,7 +127,7 @@ const traitPairs = computed(() => {
             </div>
             {{ t("Looking for work||Søger arbejde") }}
           </div> -->
-          <UFieldGroup>
+          <!-- <UFieldGroup>
             <UBadge :label="t('Status')"
               :icon="'lucide:circle-check'"
               variant="outline"
@@ -149,7 +149,7 @@ const traitPairs = computed(() => {
                 
               </template>
             </UBadge>
-          </UFieldGroup>
+          </UFieldGroup> -->
           <UFieldGroup>
             <UBadge :label="t('Location||Lokation')"
               icon="i-lucide-map-pin"

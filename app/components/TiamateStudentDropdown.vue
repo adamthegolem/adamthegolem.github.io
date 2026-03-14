@@ -2,22 +2,27 @@
 import type { DropdownMenuItem } from '@nuxt/ui';
 import { genders, type Student } from '../classes/tiamate/student';
 import type { Team } from '../classes/tiamate/team';
-
+type ItemId = "addToTeams" | "previousMembers" | "removeStudent" | "belbinRoles"
 const props = defineProps<{
   student: Student,
   appendItems?: DropdownMenuItem[],
   addToTeams?: boolean,
   comemberPool?: Student[],
   previousMembers?: boolean,
+  removeStudent?: boolean,
+  include: ItemId[],
 }>()
 const { teams } = useTiamateStore()
 const { t } = useLanguageStore()
+const tiamate = useTiamateStore()
 
 const separator: DropdownMenuItem = {
   type: 'separator',
 }
 
 const items = computed((): DropdownMenuItem[] => {
+  const include = props.include || []
+
   const nameItem: DropdownMenuItem = {
     label: props.student.name,
     type: 'label',
@@ -52,6 +57,7 @@ const items = computed((): DropdownMenuItem[] => {
       slot: 'team' as const,
       team: team,
       disabled: team.members.length >= team.seats,
+      scoreIncrease: Math.round((tiamate.calculateAverageScore([...team.members, props.student]) - teamAverageScore(team)) * 100),
     }))),
   ]
   const previousMembers: DropdownMenuItem[] = props.comemberPool?.filter(student => student.previousTeams.some(team => props.student.previousTeams.includes(team))).filter(student => student != props.student).map(member => ({
@@ -68,11 +74,38 @@ const items = computed((): DropdownMenuItem[] => {
     },
     ...previousMembers
   ]
+  const removeStudentItem: DropdownMenuItem[] = team.value ? [
+    {
+      type: 'separator'
+    },
+    {
+      label: t('Remove student||Fjern studerende'),
+      icon: 'lucide:x',
+      color: 'error',
+      onSelect: () => {
+        const index = (team.value as Team).members.indexOf(props.student)
+        if (index > -1) {
+          (team.value as Team).members.splice(index, 1)
+        }
+      }
+    }
+  ] : []
+  const includedItems: DropdownMenuItem[] = []
+  const map = new Map<ItemId, DropdownMenuItem[]>([
+    ["addToTeams", teamsItems],
+    ["previousMembers", previousTeamMembersItems],
+    ["removeStudent", removeStudentItem],
+    ["belbinRoles", belbinRolesItems],
+  ])
+  include.forEach(str => {
+    includedItems.push(...(map.get(str) || []))
+  })
   return [
     nameItem,
-    ...belbinRolesItems,
-    ...(props.addToTeams ? teamsItems : []),
-    ...((props.previousMembers) ? previousTeamMembersItems : []),
+    // ...belbinRolesItems,
+    // ...(props.addToTeams ? teamsItems : []),
+    // ...((props.previousMembers) ? previousTeamMembersItems : []),
+    ...includedItems,
     ...(props.appendItems || []),
   ]
 })
@@ -91,6 +124,15 @@ const handleMouseUp = (event: MouseEvent) => {
     isOpen.value = !isOpen.value
   }
 }
+const teamAverageScore = (team: Team) => {
+  const score = tiamate.calculateAverageScore(team.members)
+  if (Number.isNaN(score)) return 0
+  return score
+}
+const team = computed<Team | undefined>(() => {
+  return tiamate.teams.find(team => team.members.includes(props.student))
+
+})
 </script>
 <template>
   <UContextMenu
@@ -109,7 +151,19 @@ const handleMouseUp = (event: MouseEvent) => {
       </span>
     </template>
     <template #team-trailing="{item}">
-      <TiamateSeatBadge :team="(item as {team: Team}).team"></TiamateSeatBadge>
+      <div class="flex" v-for="scoreIncrease in [(item as {scoreIncrease: number}).scoreIncrease]">
+        <span v-if="scoreIncrease >= 0"
+          class="text-success"
+        >
+          +{{scoreIncrease}}%
+        </span>
+        <span v-else
+          class="text-error"
+        >
+          {{scoreIncrease}}%
+        </span>
+        <TiamateSeatBadge :team="(item as {team: Team}).team"></TiamateSeatBadge>
+      </div>
     </template>
     <slot :student="student"></slot>
   </UContextMenu>
@@ -128,7 +182,19 @@ const handleMouseUp = (event: MouseEvent) => {
       </span>
     </template>
     <template #team-trailing="{item}">
-      <TiamateSeatBadge :team="(item as {team: Team}).team"></TiamateSeatBadge>
+      <div class="flex items-center gap-1" v-for="scoreIncrease in [(item as {scoreIncrease: number}).scoreIncrease]">
+        <span v-if="scoreIncrease >= 0"
+          class="text-success"
+        >
+          +{{scoreIncrease}}%
+        </span>
+        <span v-else
+          class="text-error"
+        >
+          {{scoreIncrease}}%
+        </span>
+        <TiamateSeatBadge :team="(item as {team: Team}).team"></TiamateSeatBadge>
+      </div>
     </template>
     <slot :student="student" :mouse-up="handleMouseUp" :mouse-down="handleMouseDown"></slot>
   </UDropdownMenu>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import readXlsxFile, { type Schema } from 'read-excel-file';
-import { BelbinRole, useTiamateStore, type XlsxStudent } from '../stores/tiamate';
-import { Student, belbinRoles } from '../classes/tiamate/student';
+import { useTiamateStore, type XlsxStudent } from '../stores/tiamate';
+import { Student, belbinRoles, BelbinRole } from '../classes/tiamate/student';
 
 const language = useLanguageStore()
 const { t } = language
@@ -95,7 +95,9 @@ async function importExcelFile() {
 		tiamate.students = []
 	}
 }
-const currentSemester = ref(1)
+const currentSemester = computed(() => {
+  return (tiamate.students.map(student => student.previousTeams.length).sort((a, b) => a - b)[0] || 0) + 1
+})
 watch(currentSemester, () => {
   tiamate.currentSemester = currentSemester.value
 })
@@ -104,7 +106,7 @@ watch(currentSemester, () => {
 <template>
 	<div class="flex flex-col gap-4">
 		<div class="mx-auto flex flex-col gap-2">
-      <UFormField
+      <!-- <UFormField
         :label="t('Curren semester||Nuværende semester')"
         class="w-full"
       >
@@ -113,7 +115,7 @@ watch(currentSemester, () => {
           :min="1"
           class="w-full"
         ></UInputNumber>
-      </UFormField>
+      </UFormField> -->
 			<UFileUpload
 				:label="t('Import Excel file||Importer Excel-fil')"
 				:interactive="false"

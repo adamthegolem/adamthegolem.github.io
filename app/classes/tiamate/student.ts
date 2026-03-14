@@ -54,6 +54,7 @@ export interface IBelbinRole {
 export const genders = new Map<Gender|undefined, {
   baseColor: "info" | "error" | "tertiary" | "neutral" | "primary" | "secondary" | "success" | "warning",
   textColor: string,
+  fillColor: string,
   icon: string,
 }>([
   [
@@ -62,6 +63,7 @@ export const genders = new Map<Gender|undefined, {
       baseColor: "info",
       textColor: "text-info",
       icon: "lucide:mars",
+      fillColor: "fill-info",
     }
   ],
   [
@@ -70,6 +72,7 @@ export const genders = new Map<Gender|undefined, {
       baseColor: "tertiary",
       textColor: "text-tertiary",
       icon: "lucide:venus",
+      fillColor: "fill-tertiary",
     }
   ],
   [
@@ -78,6 +81,7 @@ export const genders = new Map<Gender|undefined, {
       baseColor: "secondary",
       textColor: "text-secondary",
       icon: "lucide:non-binary",
+      fillColor: "fill-secondary",
     }
   ],
   [
@@ -85,7 +89,8 @@ export const genders = new Map<Gender|undefined, {
     {
       baseColor: "primary",
       textColor: "text-primary",
-      icon: "lucide:circle-small"
+      icon: "lucide:circle-small",
+      fillColor: "fill-primary",
     }
   ]
 ])
@@ -169,6 +174,7 @@ export class Student {
       number: role[1],
       percentage: `${role[1] * 100}%`
     }))
+    console.log(input)
     this.previousTeams = input.initialPreviousTeams.split(', ')
   }
 }

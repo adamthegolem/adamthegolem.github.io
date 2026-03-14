@@ -132,7 +132,7 @@ useHead(computed(() => {
                 {
                   list: (child.subjects) ? info.idsToSkills(child.subjects).map(skill => ({
                     label: skill.name,
-                    highlight: page?.highlightedSkills?.includes(skill.id || '')
+                    highlight: page?.highlightedSkills?.includes(skill.id || skill.name)
                   })) : undefined,
                   title: 'Subjects||Emner',
                 },

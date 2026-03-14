@@ -78,7 +78,11 @@ const accordionValue = ref("1")
       </template> -->
       <template #title>
         <div class="flex gap-2 items-center">
-          {{ print.company }}
+          <span>
+            {{ print.company }}
+            <span class="text-muted">
+            • {{ t(print.jobTitle || 'Design Engineer||Designingeniør') }}</span>
+          </span>
           <UButton
             v-if="print.url"
             target="_blank"

@@ -4,6 +4,9 @@ import TiamateStudents from '../components/TiamateStudents.vue';
 import TiamateTeams from '../components/TiamateTeams.vue';
 import TiamatePackages from '../components/TiamatePackages.vue';
 const { t } = useLanguageStore()
+useHead({
+  title: 'Tiamate Online - Adam Golan'
+})
 const stepperItems = computed(() => [
   {
     title: t('Students||Studerende'),
@@ -33,26 +36,34 @@ const currStep = ref(0)
       :description="t('Quick team generation for Integrated Design at SDU.||Hurtig gruppedannelse for Integreret Design på SDU.')"
       icon="lucide:egg"
     >
-      <UStepper
-        :items="stepperItems"
-        size="sm"
-        :ui="{
-          header: 'w-250 mx-auto',
-          trigger: 'cursor-pointer group-data-[state=completed]:hover:bg-primary/50 hover:bg-accented group-data-[state=active]:hover:bg-primary group-data-[state=active]:cursor-default transition-color transition-opacity'
-        }"
-        v-model="currStep"
-      >
-        <!-- <template #content="{item}">
-          <UCard>
-            <component :is="item.contentElement"></component>
-          </UCard>
-        </template> -->
-      </UStepper>
-      <UCard>
-        <KeepAlive>
-          <component :is="stepperItems[currStep]?.contentElement" />
-        </KeepAlive>
-      </UCard>
+      <div class="hidden lg:flex flex-col gap-6">
+        <UStepper
+          :items="stepperItems"
+          size="sm"
+          :ui="{
+            header: 'w-250 mx-auto',
+            trigger: 'cursor-pointer group-data-[state=completed]:hover:bg-primary/50 hover:bg-accented group-data-[state=active]:hover:bg-primary group-data-[state=active]:cursor-default transition-color transition-opacity'
+          }"
+          v-model="currStep"
+        >
+          <!-- <template #content="{item}">
+            <UCard>
+              <component :is="item.contentElement"></component>
+            </UCard>
+          </template> -->
+        </UStepper>
+        <UCard>
+          <KeepAlive>
+            <component :is="stepperItems[currStep]?.contentElement" />
+          </KeepAlive>
+        </UCard>
+      </div>
+      <UEmpty
+        class="lg:hidden"
+        :title="t('Not available||Ikke tilgængelig')"
+        icon="lucide:monitor-smartphone"
+        :description="t('Switch to a larger screen size to access Tiamate.||Skift til en større skærm for at tilgå Tiamate.')"
+      ></UEmpty>
     </UPageSection>
   </UMain>
 </template>

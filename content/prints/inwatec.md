@@ -8,6 +8,7 @@ highlightedSkills:
   - graphic-design
 date: 2026-02-10
 status: pending
+jobTitle: Project Designer - Kreativ Problemknuser
 ---
 # Teknisk produktudvikler med erfaring i tværfaglig kommunikation
 Da jeg i 2023 var ude hos jer ved Inwatec i forbindelse med et semesterprojekt på SDU, var der tre ting, jeg særligt satte pris på: den gode arbejdskultur, jeres tekniske ekspertise og jeres åbenhed for idéer. Disse kvaliteter håber jeg på ikke kun at nyde af, men at bidrage til. Projektet handlede om optimering og havde kun lidt med brugeren og kunden at gøre. Jeg håber på at kunne bruge mine kompetencer i projekter hos jer, hvor de fylder mere.
