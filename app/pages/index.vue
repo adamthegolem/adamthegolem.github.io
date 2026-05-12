@@ -157,7 +157,7 @@ const traitPairs = computed(() => {
               color="neutral"
             >
             </UBadge>
-            <UBadge :label="t('Odense, Denmark||Odense')"
+            <UBadge :label="t('Holbæk, Denmark||Holbæk')"
               variant="outline"
               color="neutral"
               :ui="{
