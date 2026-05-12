@@ -7,7 +7,7 @@ highlightedSkills:
   - project-management
   - graphic-design
 date: 2026-02-10
-status: pending
+status: rejected
 jobTitle: Project Designer - Kreativ Problemknuser
 ---
 # Teknisk produktudvikler med erfaring i tværfaglig kommunikation

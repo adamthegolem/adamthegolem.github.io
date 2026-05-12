@@ -3,4 +3,5 @@ url: https://millerknoll.wd1.myworkdayjobs.com/da-dk/millerknoll?q=DK&skills=5e5
 company: MillerKnoll (HAY)
 status: pending
 date: 2026-02-23
+type: unsolicited
 ---

@@ -38,8 +38,14 @@ export default defineContentConfig({
         url: z.string(),
         company: z.string(),
         date: z.string(),
-        status: z.enum(["edit", "pending", "rejected", "accepted"]).default("edit"),
+        status: z.enum(["edit", "pending", "rejected", "accepted", "abandoned"]).default("edit"),
         jobTitle: z.string(),
+        unsolicited: z.boolean().default(false),
+        type: z.enum([
+          "unsolicited",
+          "listed",
+          "network",
+        ]).default("listed"),
       }),
     }),
     companies: defineCollection({

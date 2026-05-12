@@ -11,6 +11,8 @@ profile: Produktudvikler med teknisk hjerne & flair for design. Erfaren gruppear
 company: Digital Audio Denmark
 status: pending
 date: 2026-02-06
+type: unsolicited
+
 ---
 # Produktudvikler med interesse for musik
 Som integreret designingeniør er hele pointen at på generalistisk vide meget om en masse, specifikt når det kommer til projektorienteret produktudvikling. Derfor har jeg erfaring med både tekniske og designorienterede aspekter af udviklingsprocessen og kan tale og forstå på tværs af fagligheder.

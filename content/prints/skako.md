@@ -6,7 +6,7 @@ highlightedSkills:
   - mop
   - stat-mech-dyn
   - mechanical-components
-status: pending
+status: rejected
 url: https://www.linkedin.com/jobs/view/4173506978/
 date: 2026-03-08
 ---

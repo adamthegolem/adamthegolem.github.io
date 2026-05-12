@@ -42,7 +42,7 @@ useHead(computed(() => {
     <div class="flex relative">
       <ul class=" grow">
         <li v-for="item in [
-          {icon: 'lucide:map-pin', label: t('Odense, Denmark||Odense'), to: undefined},
+          {icon: 'lucide:map-pin', label: t('Holbæk, Denmark||Holbæk'), to: undefined},
           {...info.contactInfo.phoneNumber, to: undefined},
           {...info.links.email,
             label: 'adamdamgolan@gmail.com'

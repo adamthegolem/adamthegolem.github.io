@@ -26,7 +26,8 @@
     "pinia": "^3.0.4",
     "read-excel-file": "^6.0.3",
     "v-network-graph": "^0.9.22",
-    "yaml": "^2.8.2"
+    "yaml": "^2.8.2",
+    "ytdlp-nodejs": "^3.4.4"
   },
   "devDependencies": {
     "@iconify-json/ion": "^1.2.6",

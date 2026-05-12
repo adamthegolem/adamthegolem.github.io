@@ -1,5 +1,5 @@
 ---
-company: FAOD
+company: H.J. Hansen Recycling A/S
 url: https://faod.dk/jobs/vi-soeger-grafisk-designer/
 highlightedSkills:
   - graphic-design

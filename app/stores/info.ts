@@ -661,7 +661,8 @@ export const useInfoStore = defineStore("infoStore", () => {
         "cad",
         "project-management",
         "graphic-design",
-        "mechanical-components"
+        "mechanical-components",
+        "3d-print"
       ],
       projects: [
         // "Design of playground equipment||Design af udstyr til legepladser",
