@@ -10,6 +10,11 @@ const { data: projects } = await useAsyncData(`${route.path}-projects`, () => {
   return queryCollection("projects").all()
 })
 console.log(page.value?.highlightedSkills)
+useHead(computed(() => {
+  return {
+    title: `adam-golan.${page.value?.path.split("/")[2]}.cv`
+  }
+}))
 </script>
 <template>
   
@@ -37,7 +42,7 @@ console.log(page.value?.highlightedSkills)
     <div class="flex relative">
       <ul class=" grow">
         <li v-for="item in [
-          {icon: 'lucide:map-pin', label: t('Holbæk, Denmark (willing to move)||Holbæk (klar på at flytte)'), to: undefined},
+          {icon: 'lucide:map-pin', label: t('Holbæk, Denmark||Holbæk'), to: undefined},
           {...info.contactInfo.phoneNumber, to: undefined},
           {...info.links.email,
             label: 'adamdamgolan@gmail.com'
@@ -65,7 +70,7 @@ console.log(page.value?.highlightedSkills)
         
         size="xl"
         :ui="{
-          wrapper: 'mt-2',
+          wrapper: 'mt-2 pb-3.5',
           item: 'page-break-inside-avoid',
           description: 'print:text-xs'
         }"
@@ -94,7 +99,7 @@ console.log(page.value?.highlightedSkills)
           {
             title: 'Tools & Languages||Sprog & værktøj',
             icon: 'lucide:pocket-knife',
-            list: ['High level English||Engelsk på højt niveau', 'High level Danish||Dansk på højt niveau', 'Hebrew (high level spoken, low level written)||Hebraisk (mundtligt på højt niveau, skriftligt på lavt niveau)', 'Autodesk Inventor', 'Microsoft Excel, Word, PowerPoint', 'Adobe Photoshop, InDesign, Premiere Pro, Illustrator', 'JavaScript, TypeScript, HTML, CSS, Tailwind, Vue, Electron, C#, C++, Nuxt, Node, Git', 'Blender']
+            list: ['High level English||Engelsk på højt niveau', 'High level Danish||Dansk på højt niveau', 'Hebrew (high level spoken, low level written)||Hebraisk (mundtligt på højt niveau, skriftligt på lavt niveau)', 'JavaScript, TypeScript, HTML, CSS, Tailwind, Vue, Electron, C#, C++, Nuxt, Node, Git', 'Autodesk Inventor', 'Adobe Photoshop, InDesign, Premiere Pro, Illustrator', 'Blender', 'PrusaSlicer']
           },
           {
             title: 'Free Time||Fritid',
@@ -113,19 +118,21 @@ console.log(page.value?.highlightedSkills)
           </ul>
           <div v-if="item.children" class="flex flex-col gap-6">
             <div v-for="child in item.children" class="flex flex-col items-start gap-2">
-              <span class="text-lg">
+              <p class="text-lg pl-2 -indent-2">
                 <b>{{ t(child.title) }}</b>
-                •
-                {{ t(child.location) }}
-              </span>
+                <span class=" text-nowrap">
+                  <span class=""> • </span>
+                  {{ t(child.location) }}
+                </span>
+              </p>
               <UBadge variant="outline" icon="i-lucide-calendar" color="neutral" :label="date.timeSpan(child.start, child.end)">
               </UBadge>
               <p>{{ t(child.description) }}</p>
               <template v-for="table in [
                 {
-                  list: (child.subjects) ? info.idsToSkills(child.subjects.concat(child.additionalSubjects?.filter(subject => page?.highlightedSkills.includes(subject)) || [])).map(skill => ({
+                  list: (child.subjects) ? info.idsToSkills(child.subjects).map(skill => ({
                     label: skill.name,
-                    highlight: page?.highlightedSkills?.includes(skill.id || '')
+                    highlight: page?.highlightedSkills?.includes(skill.id || skill.name)
                   })) : undefined,
                   title: 'Subjects||Emner',
                 },
@@ -147,7 +154,7 @@ console.log(page.value?.highlightedSkills)
                   :title="t(table.title)"
                 >
                   <ul class=" list-disc columns-2 pl-8 gap-2">
-                    <li v-for="tableItem in table.list">
+                    <li v-for="tableItem in table.list.toSorted((a, b) => Number(b.highlight) - Number(a.highlight))">
                       <span :data-highlight="tableItem.highlight" class=" data-[highlight=true]:font-semibold data-[highlight=true]:underline">{{ t(tableItem.label) }}</span>
                     </li>
                   </ul>
