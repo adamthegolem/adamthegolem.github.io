@@ -32,6 +32,6 @@ I have a few rotating hobbies which reflect my affinity for balancing technical 
 
 I hope to hear from you soon.
 
-Bets regards,
+Best regards,
 
 <b class='text-primary'>Adam M. Golan</b>

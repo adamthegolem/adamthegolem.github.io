@@ -7,7 +7,7 @@ highlightedSkills:
 - rapid-prototyping
 profile: Produktudvikler med teknisk hjerne & flair for design. Erfaren gruppearbejder men nyder at dykke ned i tekniske opgaver selvstændigt. God teknisk formidler med bredt kendskab til designorienterede, tekniske, administrative og forretningsmæssige aspekter af innovation og produktudvikling.
 date: 2026-04-26
-status: pending
+status: rejected
 url: https://jobs.talentech.com/teknologiskinstitut/job/fa8fc37dcf034290928cf7e28c9a9f9c
 location: Taastrup
 ---
