@@ -2,10 +2,10 @@
 const info = useInfoStore()
 const { t } = useLanguageStore()
 const props = defineProps<{
-  skills: string[],
+  tools: string[],
   excludeSeeMore?: boolean,
 }>()
 </script>
 <template>
-  <BadgeList :items="info.idsToSkills(skills)" see-more-to="/about#tools" :exclude-see-more="excludeSeeMore"></BadgeList>
+  <BadgeList :items="info.idsToTools(tools)" see-more-to="/about#tools"></BadgeList>
 </template>

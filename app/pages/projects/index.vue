@@ -269,7 +269,7 @@ const filteredProjects = computed(() => {
                 icon: x.icon,
                 label: x.name,
                 id: x.id
-              })).sort((a, b) => stringKeySorter(a.label, b.label))"
+              })).sort((a, b) => stringKeySorter(t(a.label), t(b.label)))"
               :placeholder="t('Add skill to filter...||Tilføj færdighed til filter...')"
               :ui="{
                 base: 'rounded-r-none',

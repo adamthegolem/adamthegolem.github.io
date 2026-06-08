@@ -3,7 +3,7 @@ profile: Designer og produktudvikler med erfaring i Adobe, grafik og reklame. Ka
 date: 2026-01-31
 company: Fahlén Skilte
 url: https://fahlenskilte.dk/kontakt/
-status: pending
+status: rejected
 ---
 # Produktudvikler med grafisk erfaring
 Som produktudvikler og nyuddannet ingeniør møder jeg enhver opgave med samme indstilling:

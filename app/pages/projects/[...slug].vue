@@ -157,6 +157,11 @@ console.log(surround.value)
               slot: 'skills'
             },
             {
+              label: t('Tools||Værktøjer'),
+              include: project.tools,
+              slot: 'tools'
+            },
+            {
               label: t('Partner Company||Samarbejdsvirksomhed'),
               include: company,
               slot: 'company'
@@ -168,7 +173,7 @@ console.log(surround.value)
           }"
         >
           <template #skills>
-            <div class="flex items-start gap-2 flex-wrap">
+            <!-- <div class="flex items-start gap-2 flex-wrap">
               <UPopover
                 v-for="skill in useInfo.idsToSkills(project.skills)"
                 mode="click"
@@ -186,15 +191,16 @@ console.log(surround.value)
                 >
                 </UBadge>
                 <template #content>
-                  <!-- <div v-if="skill?.description" class="flex p-2 max-w-80 text-toned text-sm">
-                    <p>{{ t(skill?.description) }}</p>
-                  </div> -->
                   <PopoverContainer :text="skill.description"></PopoverContainer>
                 </template>
               </UPopover>
               <UButton :label="t('See more||Se mere')" size="xs" variant="link" to="/about#tools" trailing-icon="i-lucide-arrow-right">
               </UButton>
-            </div>
+            </div> -->
+            <SkillBadges :skills="project.skills"></SkillBadges>
+          </template>
+          <template #tools>
+            <ToolBadges :tools="project.tools"></ToolBadges>
           </template>
           <template #company>
             <UBlogPost
