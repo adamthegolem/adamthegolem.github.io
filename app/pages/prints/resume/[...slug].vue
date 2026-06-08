@@ -37,7 +37,7 @@ console.log(page.value?.highlightedSkills)
     <div class="flex relative">
       <ul class=" grow">
         <li v-for="item in [
-          {icon: 'lucide:map-pin', label: t('Odense, Denmark||Odense'), to: undefined},
+          {icon: 'lucide:map-pin', label: t('Holbæk, Denmark (willing to move)||Holbæk (klar på at flytte)'), to: undefined},
           {...info.contactInfo.phoneNumber, to: undefined},
           {...info.links.email,
             label: 'adamdamgolan@gmail.com'
@@ -94,7 +94,7 @@ console.log(page.value?.highlightedSkills)
           {
             title: 'Tools & Languages||Sprog & værktøj',
             icon: 'lucide:pocket-knife',
-            list: ['High level English||Engelsk på højt niveau', 'High level Danish||Dansk på højt niveau', 'Hebrew (high level spoken, low level written)||Hebraisk (mundtligt på højt niveau, skriftligt på lavt niveau)', 'JavaScript, TypeScript, HTML, CSS, Tailwind, Vue, Electron, C#, C++, Nuxt, Node, Git', 'Autodesk Inventor', 'Adobe Photoshop, InDesign, Premiere Pro, Illustrator', 'Blender', 'PrusaSlicer']
+            list: ['High level English||Engelsk på højt niveau', 'High level Danish||Dansk på højt niveau', 'Hebrew (high level spoken, low level written)||Hebraisk (mundtligt på højt niveau, skriftligt på lavt niveau)', 'Autodesk Inventor', 'Microsoft Excel, Word, PowerPoint', 'Adobe Photoshop, InDesign, Premiere Pro, Illustrator', 'JavaScript, TypeScript, HTML, CSS, Tailwind, Vue, Electron, C#, C++, Nuxt, Node, Git', 'Blender']
           },
           {
             title: 'Free Time||Fritid',
@@ -123,7 +123,7 @@ console.log(page.value?.highlightedSkills)
               <p>{{ t(child.description) }}</p>
               <template v-for="table in [
                 {
-                  list: (child.subjects) ? info.idsToSkills(child.subjects).map(skill => ({
+                  list: (child.subjects) ? info.idsToSkills(child.subjects.concat(child.additionalSubjects?.filter(subject => page?.highlightedSkills.includes(subject)) || [])).map(skill => ({
                     label: skill.name,
                     highlight: page?.highlightedSkills?.includes(skill.id || '')
                   })) : undefined,

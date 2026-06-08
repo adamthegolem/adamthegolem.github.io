@@ -34,6 +34,7 @@ export default defineContentConfig({
       schema: z.object({
         profile: z.string(),
         highlightedSkills: z.array(z.string()),
+        addSkills: z.array(z.string()),
         url: z.string(),
         company: z.string(),
         date: z.string(),

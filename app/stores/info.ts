@@ -590,6 +590,17 @@ export const useInfoStore = defineStore("infoStore", () => {
       name: "Mechanical Components||Konstruktionskomponenter",
       icon: "i-lucide-cog",
       description: "Understanding and designing machine elements for constructions, such as gears, springs, ball bearings, and belt and chain drives.||Forståelse for og design af maskineelementer til konstruktioner såsom tandhjul, fjedre, kuglelejer og rem- og kædetræk."
+    },
+    {
+      id: "market-research",
+      name: "Market Research||Markedsresearch",
+      icon: "lucide:trending-up",
+      description: "Analyzing market trends & understanding competitors.||Analyse af markeder & forståelse for konkurrenter.",
+    },
+    {
+      id: "technical-documentation",
+      name: "Technical Documentation||Teknisk dokumentation",
+      icon: "lucide:clipboard-list"
     }
   ]
   function idsToProjects(ids: string[], projects: ProjectsCollectionItem[] | undefined) {
@@ -624,6 +635,7 @@ export const useInfoStore = defineStore("infoStore", () => {
     image: string,
     readMore: string,
     subjects: string[],
+    additionalSubjects?: string[],
     projects?: string[]
   }
   const educationalItems: EducationalItem[] = [
@@ -652,6 +664,11 @@ export const useInfoStore = defineStore("infoStore", () => {
         "cad",
         "project-management",
         "graphic-design",
+      ],
+      additionalSubjects: [
+        "market-research",
+        "oop",
+        "technical-documentation",
       ],
       projects: [
         // "Design of playground equipment||Design af udstyr til legepladser",
@@ -696,9 +713,18 @@ export const useInfoStore = defineStore("infoStore", () => {
   }
   const jobItems: JobItem[] = [
     {
+      title: "Bachelor Project||Afgangsprojekt",
+      icon: "lucide:motorbike",
+      description: "Pilot project to redesign mechanical and interactive parts of a spring rider from KOMPAN.||Pilotprojekt for redesign af mekaniske og interaktive dele af et vippedyr fra KOMPAN.",
+      location: "KOMPAN A/S",
+      start: "2025-09-01",
+      end: "2026-01-01",
+      competences: "user-centered design, project management, CAD, programming||brugercentreret design, projektledelse, CAD, programmering",
+    },
+    {
       title: "Intern||Praktikant",
       icon: "i-lucide-rotate-3d",
-      description: "Development project for hand tracking.||Udviklingsprojekt til håndtracking.",
+      description: "Development project for hand tracking with integration of hardware and soft materials.||Udviklingsprojekt til håndtracking samt integration af hardware og bløde materialer.",
       location: "Amfitech ApS",
       // timeSpan: `${t('February||Februar')} 2025 - July 2025`,
       start: "2025-02-01",
@@ -719,22 +745,22 @@ export const useInfoStore = defineStore("infoStore", () => {
     {
       title: "Warehouse Worker||Lagerarbejder",
       icon: "i-lucide-warehouse",
-      description: "Repetitive and exhausting tasks involving physical labor.||Ensformige og udmattende opgaver og fysisk arbejde.",
+      description: "Product handling, logistics, and workflows during physical labor.||Varehåndtering, logistikforståelse og arbejdsgange under fysisk arbejde.",
       location: "Impulse A/S",
       // timeSpan: "August 2020 - September 2020",
       start: "2020-08-01",
       end: "2020-09-01",
-      competences: "resilience||udholdenhed"
+      competences: "resilience, structure, discipline||udholdenhed, struktur, disciplin"
     },
     {
       title: "Altar Server||Ministrant",
       icon: "i-lucide-church",
-      description: "Readings of scripture in front of strangers.||Skriftlæsninger foran fremmede.",
+      description: "Communication and scripture readings in front of large gatherings.||Formidling og skriftlæsninger foran større forsamlinger.",
       location: "Ugerløse Church||Ugerløse Kirke",
       // timeSpan: `${'June||Juni'} 2017 - August 2017`,
       start: "2017-06-01",
       end: "2017-08-01",
-      competences: "public speaking||offentlig tale"
+      competences: "verbal communication, presentation||mundtlig kommunikation, præsentation"
     },
   ]
   return {
